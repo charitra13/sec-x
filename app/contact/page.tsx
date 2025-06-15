@@ -1,10 +1,55 @@
 'use client'
 
+import { Suspense } from 'react'
 import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
-export default function ContactPage() {
+// Loading component for Suspense fallback
+function ContactPageLoading() {
+  return (
+    <main className="relative min-h-screen">
+      {/* Fixed Animated Background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50" />
+      </div>
+      
+      {/* Content Overlay */}
+      <div className="relative z-10">
+        {/* Header Section */}
+        <div className="pt-24 pb-12 px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-3xl md:text-4xl text-white mb-4">Contact Us</h1>
+            <p className="text-white/70 text-lg">Get in touch with our cybersecurity experts</p>
+          </div>
+        </div>
+
+        {/* Loading Form Section */}
+        <div className="px-8 pb-24">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-black/20 backdrop-blur-md rounded-2xl p-8 border border-white/10">
+              <div className="animate-pulse space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="h-12 bg-white/10 rounded-lg"></div>
+                  <div className="h-12 bg-white/10 rounded-lg"></div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="h-12 bg-white/10 rounded-lg"></div>
+                  <div className="h-12 bg-white/10 rounded-lg"></div>
+                </div>
+                <div className="h-32 bg-white/10 rounded-lg"></div>
+                <div className="h-12 bg-white/10 rounded-lg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+// ContactForm component that uses useSearchParams
+function ContactForm() {
   const searchParams = useSearchParams()
   const formType = searchParams.get('type') === 'assessment' ? 'assessment' : 'contact'
   
@@ -304,5 +349,14 @@ export default function ContactPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+// Main page component with Suspense boundary
+export default function ContactPage() {
+  return (
+    <Suspense fallback={<ContactPageLoading />}>
+      <ContactForm />
+    </Suspense>
   )
 } 

@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.2-blue.svg)
+![Version](https://img.shields.io/badge/version-1.3-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -195,7 +195,15 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.2 (Latest)
+### Version 1.3 (Latest)
+- **Deployment Fix**: Resolved Next.js 15 useSearchParams Suspense boundary error
+  - Refactored contact page to use proper Suspense boundaries for client-side hooks
+  - Created separate ContactForm component wrapped in Suspense for better error handling
+  - Added elegant loading fallback with skeleton UI for contact page
+  - Fixed Vercel deployment issue that was preventing static site generation
+  - Improved user experience with smooth loading states
+
+### Version 1.2
 - **Typography System Overhaul**: Implemented dual-font system
   - **Manrope** for all headings (h1-h6) with specific weights:
     - h1: Extra Bold (800)
