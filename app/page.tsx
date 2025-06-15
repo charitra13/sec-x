@@ -85,7 +85,7 @@ export default function Home() {
                 SecurityX is a trusted cybersecurity partner dedicated to protecting businesses from digital threats. Our comprehensive security solutions span threat detection, incident response, compliance management, and security awareness training.
               </p>
               <p className="text-lg text-white/80 leading-relaxed mb-12">
-                We serve organizations from emerging startups to established enterprises, delivering tailored security strategies that build resilience and trust in today's digital landscape.
+                We serve organizations from emerging startups to established enterprises, delivering tailored security strategies that build resilience and trust in today&apos;s digital landscape.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 px-4">
                 <div className={`text-center transition-all duration-700 delay-100 transform ${isAboutVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
