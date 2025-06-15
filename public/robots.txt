@@ -1,0 +1,85 @@
+# Allow all search engines
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /team
+Allow: /publications
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.ico$
+Disallow: /404
+Disallow: /500
+Disallow: /admin
+Disallow: /_next/*
+Disallow: /api/*
+
+# Google Search Engine Robot
+User-agent: Googlebot
+Allow: /
+Allow: /about
+Allow: /team
+Allow: /publications
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.ico$
+Disallow: /404
+Disallow: /500
+Disallow: /admin
+Disallow: /_next/*
+Disallow: /api/*
+
+# Google Smartphone Robot
+User-agent: Googlebot-smartphone
+Allow: /
+Allow: /about
+Allow: /team
+Allow: /publications
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.ico$
+Disallow: /404
+Disallow: /500
+Disallow: /admin
+Disallow: /_next/*
+Disallow: /api/*
+
+# Google Image Robot
+User-agent: Googlebot-Image
+Allow: /
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.png$
+Allow: /*.webp$
+Allow: /*.svg$
+Disallow: /_next/*
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
+Allow: /about
+Allow: /team
+Allow: /publications
+Disallow: /404
+Disallow: /500
+Disallow: /admin
+Disallow: /_next/*
+Disallow: /api/*
+
+# Host
+Host: https://sec-x.com
+
+# Sitemap
+Sitemap: https://sec-x.com/sitemap.xml 

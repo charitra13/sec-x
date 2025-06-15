@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Black circular background -->
+  <circle cx="256" cy="256" r="256" fill="black"/>
+  
+  <!-- White circular border -->
+  <circle cx="256" cy="256" r="240" stroke="white" stroke-opacity="0.1" stroke-width="2"/>
+  
+  <!-- Logo container -->
+  <g transform="translate(128, 128) scale(0.5)">
+    <!-- Insert the existing logo paths here, but with white fill -->
+    <path d="M256 64C384 64 486.4 166.4 486.4 294.4C486.4 422.4 384 524.8 256 524.8C128 524.8 25.6 422.4 25.6 294.4C25.6 166.4 128 64 256 64Z" fill="white" fill-opacity="0.9"/>
+  </g>
+</svg> 
