@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.1-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -204,13 +204,18 @@ This project is proprietary software owned by Sec-X. All rights reserved.
 
 ## 🔄 Version History
 
-### Version 1.0 (January 2025)
-- Initial release
-- Complete website functionality
-- Contact form integration
-- Team and publications pages
-- SEO optimization
-- Responsive design implementation
+### Version 1.1 (Latest)
+- **Enhancement**: Added escape key functionality to all modal/card components
+  - ContactForm modal can now be closed with Escape key
+  - Team member expanded cards can be closed with Escape key  
+  - Mobile navigation menu can be closed with Escape key
+  - Improved user experience and accessibility
+
+### Version 1.0
+- Initial release with core functionality
+- Modern responsive design with glassmorphism effects
+- Contact forms and team showcase
+- Publications section and SEO optimization
 
 ---
 

@@ -23,8 +23,29 @@ export default function TeamPage() {
   const [expandedMember, setExpandedMember] = useState<number | null>(null)
 
   useEffect(() => {
-    setIsVisible(true)
+    const timer = setTimeout(() => {
+      setIsVisible(true)
+    }, 100)
+
+    return () => clearTimeout(timer)
   }, [])
+
+  // Add escape key functionality for expanded member cards
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && expandedMember !== null) {
+        setExpandedMember(null)
+      }
+    }
+
+    if (expandedMember !== null) {
+      document.addEventListener('keydown', handleEscapeKey)
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey)
+    }
+  }, [expandedMember])
 
   const teamMembers: TeamMember[] = [
     {

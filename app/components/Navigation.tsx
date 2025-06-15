@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useContactForm } from './ContactFormProvider'
@@ -8,6 +8,23 @@ import { useContactForm } from './ContactFormProvider'
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { openAssessmentForm } = useContactForm()
+
+  // Add escape key functionality for mobile menu
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    if (isMobileMenuOpen) {
+      document.addEventListener('keydown', handleEscapeKey)
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey)
+    }
+  }, [isMobileMenuOpen])
 
   return (
     <nav className="relative flex items-center justify-between px-4 sm:px-8 py-2 sm:py-3 mt-2.5 z-50">
