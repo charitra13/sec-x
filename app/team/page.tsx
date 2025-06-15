@@ -169,7 +169,7 @@ export default function TeamPage() {
       <div className="w-full min-h-screen max-w-[1400px] mx-auto px-8 py-24 relative z-10">
         <div className={`max-w-6xl mx-auto transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-light mb-6 text-white">Our Security Experts</h1>
+            <h1 className="text-5xl mb-6 text-white">Our Security Experts</h1>
             <p className="text-lg text-white/80 max-w-3xl mx-auto">
               Meet the cybersecurity professionals who protect what matters most. Our team combines decades of experience with cutting-edge expertise to deliver unparalleled security solutions.
             </p>
@@ -211,7 +211,7 @@ export default function TeamPage() {
                             <span className="text-xl font-medium text-white">{member.avatar}</span>
                           </div>
                           <div>
-                            <h2 className="text-2xl font-light text-white">{member.name}</h2>
+                            <h2 className="text-2xl text-white">{member.name}</h2>
                             <p className="text-white/80">{member.role}</p>
                             <span className={`px-3 py-1 rounded-full text-xs font-medium ${getDepartmentColor(member.department)} mt-2 inline-block`}>
                               {member.department}

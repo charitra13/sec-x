@@ -35,6 +35,8 @@ const config: Config = {
   		},
   		fontFamily: {
   			sans: 'var(--font-inter)',
+  			heading: 'var(--font-manrope)',
+  			body: 'var(--font-inter)',
   		},
   		letterSpacing: {
   			widest: '0.2em',

@@ -18,13 +18,13 @@ export default function AboutPage() {
 
       <div className="w-full min-h-screen max-w-[1400px] mx-auto px-8 py-24 relative z-10">
         <div className={`max-w-4xl mx-auto transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <h1 className="text-5xl font-light mb-12 text-center text-white">
+          <h1 className="text-5xl mb-12 text-center text-white">
             About Sec-X
           </h1>
           
           {/* Our Story Section */}
           <div className="bg-black/20 backdrop-blur-md rounded-2xl p-8 border border-white/5 mb-12">
-            <h2 className="text-2xl font-light mb-6 text-white/90">Our Story</h2>
+            <h2 className="text-2xl mb-6 text-white/90">Our Story</h2>
             <p className="text-lg text-white/80 leading-relaxed mb-6">
               Founded in 2023 in Indore, Madhya Pradesh, Sec-X is a dedicated cybersecurity firm that provides exceptional security research services. We emerged from the growing need for specialized red teaming and penetration testing solutions, with our team of expert security researchers bringing deep expertise in their respective fields of interest.
             </p>
@@ -35,7 +35,7 @@ export default function AboutPage() {
 
           {/* Our Vision Section */}
           <div className="bg-black/20 backdrop-blur-md rounded-2xl p-8 border border-white/5 mb-12">
-            <h2 className="text-2xl font-light mb-6 text-white/90">Our Vision & Innovation</h2>
+            <h2 className="text-2xl mb-6 text-white/90">Our Vision & Innovation</h2>
             <p className="text-lg text-white/80 leading-relaxed mb-6">
               We&apos;re committed to staying ahead of the cybersecurity curve, with a special focus on AI Security and advanced penetration testing. As the technology landscape evolves, we&apos;re doubling down on AI Security to ensure that the systems shaping tomorrow are secure today. We&apos;re currently developing a FREE tool to help organizations assess the security of their AI systems, making advanced security accessible to all.
             </p>
@@ -67,7 +67,7 @@ export default function AboutPage() {
 
           {/* Our Team Section */}
           <div className={`bg-black/20 backdrop-blur-md rounded-2xl p-8 border border-white/5 mb-12 transition-all duration-700 delay-400 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <h2 className="text-2xl font-light mb-6 text-white/90">Our Expert Team</h2>
+            <h2 className="text-2xl mb-6 text-white/90">Our Expert Team</h2>
             <p className="text-lg text-white/80 leading-relaxed mb-6">
               Led by industry veterans like Nagendra Tiwari, our team comprises dedicated cybersecurity experts with prestigious certifications including OSCP, eWPTXv2, CRTP, and Security+. Each member brings specialized knowledge in ethical hacking, penetration testing, and advanced security research.
             </p>

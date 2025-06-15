@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import Navigation from './components/Navigation';
 import ClientLayout from './components/ClientLayout';
@@ -8,9 +8,16 @@ import ContactFormProvider from './components/ContactFormProvider';
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["300", "400", "500", "600"],
   display: "swap",
   variable: '--font-inter',
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  display: "swap",
+  variable: '--font-manrope',
 });
 
 export const metadata: Metadata = {
@@ -31,7 +38,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} antialiased`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${manrope.variable} antialiased`} suppressHydrationWarning>
         <ClientLayout>
           <ContactFormProvider>
             <div className="min-h-screen bg-black">

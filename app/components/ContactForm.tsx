@@ -80,7 +80,7 @@ export default function ContactForm({ isOpen, onClose, formType = 'contact' }: C
       <div className="bg-black/60 backdrop-blur-md rounded-2xl p-8 border border-white/10 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-start mb-6">
           <div>
-            <h2 className="text-2xl font-light text-white mb-2">{title}</h2>
+            <h2 className="text-2xl text-white mb-2">{title}</h2>
             <p className="text-white/70">{subtitle}</p>
           </div>
           <button 

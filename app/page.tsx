@@ -53,7 +53,7 @@ export default function Home() {
           <div className="relative min-h-[400px] h-[calc(100vh-3rem)] flex items-center justify-center px-4 sm:px-8">
             {/* Central Content */}
             <div className="text-center max-w-4xl mt-[-1rem] sm:mt-0">
-              <h1 className="text-[28px] sm:text-[48px] md:text-[64px] leading-tight font-light mb-3 sm:mb-4">
+              <h1 className="text-[28px] sm:text-[48px] md:text-[64px] leading-tight mb-3 sm:mb-4">
                 <span className="text-white/40">Advanced Cybersecurity for</span> Digital Business
               </h1>
               <p className="text-sm sm:text-base md:text-lg text-white/60 mb-4 sm:mb-6 max-w-2xl mx-auto px-2">
@@ -77,7 +77,7 @@ export default function Home() {
         {/* SecurityX Brief Section */}
         <div ref={aboutRef} id="about" className="w-full min-h-screen max-w-[1400px] mx-auto px-8 pt-36 pb-36 mt-36">
           <div className={`max-w-4xl mx-auto transition-all duration-1000 transform ${isAboutVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <h2 className="text-4xl font-light mb-12 text-center text-white">
+            <h2 className="text-4xl mb-12 text-center text-white">
               About SecurityX
             </h2>
             <div className="bg-black/20 backdrop-blur-md rounded-2xl p-8 border border-white/5">

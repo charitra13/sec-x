@@ -83,7 +83,7 @@ export default function PublicationsPage() {
       <div className="px-4 py-8 sm:py-12 relative z-10 min-h-screen">
         <div className="w-full max-w-[1200px] mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-3xl sm:text-4xl font-light text-white mb-4">SecurityX Publications</h1>
+            <h1 className="text-3xl sm:text-4xl text-white mb-4">SecurityX Publications</h1>
             <p className="text-lg text-white/80 max-w-2xl mx-auto">
               Insights, research, and best practices from our cybersecurity experts to help you stay ahead of evolving threats.
             </p>
@@ -129,7 +129,7 @@ export default function PublicationsPage() {
 
           {/* Contact Section */}
           <div className="bg-black/40 backdrop-blur-sm rounded-2xl border border-white/5 p-8 mt-12 text-center">
-            <h2 className="text-2xl font-light text-white mb-4">Need Custom Security Research?</h2>
+            <h2 className="text-2xl text-white mb-4">Need Custom Security Research?</h2>
             <p className="text-white/80 mb-6 max-w-2xl mx-auto">
               Our security experts can provide tailored research and analysis specific to your industry or threat landscape.
             </p>

@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.1-blue.svg)
+![Version](https://img.shields.io/badge/version-1.2-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -10,6 +10,7 @@ A modern, responsive cybersecurity company website built with Next.js, TypeScrip
 ## 🚀 Features
 
 - **Modern Design**: Clean, professional interface with glassmorphism effects
+- **Dual-Font Typography**: Manrope for headings, Inter for body text with optimized weights
 - **Responsive Layout**: Fully responsive across all devices
 - **Contact Forms**: Dynamic contact and security assessment forms
 - **Team Showcase**: Interactive team member profiles with achievements
@@ -191,6 +192,35 @@ npm run build
 - [ ] Dark/Light theme toggle
 - [ ] Multi-language support
 - [ ] Advanced animations
+
+## 📝 Changelog
+
+### Version 1.2 (Latest)
+- **Typography System Overhaul**: Implemented dual-font system
+  - **Manrope** for all headings (h1-h6) with specific weights:
+    - h1: Extra Bold (800)
+    - h2: Bold (700) 
+    - h3, h4: Semi Bold (600)
+    - h5, h6: Medium (500)
+  - **Inter** for body text with specific weights:
+    - Body/paragraphs: Regular (400)
+    - Navigation: Medium (500)
+    - Buttons: Medium (500)
+    - Light text: Light (300)
+    - Emphasis: Semi Bold (600)
+  - Enhanced letter spacing for headings (-0.02em) for better readability
+  - Improved visual hierarchy and modern typography styling
+
+### Version 1.1
+- Enhanced UI/UX with glassmorphism effects
+- Improved responsive design
+- Added interactive team member profiles
+- Performance optimizations
+
+### Version 1.0
+- Initial release with Next.js 14
+- Basic company website structure
+- Contact forms and navigation
 
 ## 📞 Contact
 

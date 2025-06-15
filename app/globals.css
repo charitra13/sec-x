@@ -44,6 +44,46 @@ body {
   }
 }
 
+/* Typography System */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-manrope);
+  letter-spacing: -0.02em;
+  font-feature-settings: "ss01", "ss02";
+}
+
+h1 {
+  @apply font-extrabold; /* 800 */
+}
+
+h2 {
+  @apply font-bold; /* 700 */
+}
+
+h3, h4 {
+  @apply font-semibold; /* 600 */
+}
+
+h5, h6 {
+  @apply font-medium; /* 500 */
+}
+
+body, p, li, td, input, textarea {
+  font-family: var(--font-inter);
+  @apply font-normal; /* 400 */
+}
+
+/* Navigation specific */
+nav, nav a {
+  @apply font-medium; /* 500 */
+}
+
+/* Button text */
+button, .button, [role="button"] {
+  @apply font-medium; /* 500 */
+}
+
+
+
 /* Custom Gradients */
 .gradient-green {
   background: radial-gradient(
