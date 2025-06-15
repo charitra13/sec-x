@@ -3,12 +3,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState, useRef } from 'react'
-import { useContactForm } from './components/ContactFormProvider'
+
 
 
 export default function Home() {
   const [isAboutVisible, setIsAboutVisible] = useState(false)
-  const { openContactForm } = useContactForm()
   const aboutRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -63,12 +62,12 @@ export default function Home() {
                 <Link href="/about" className="bg-black/40 hover:bg-black/60 text-white/80 px-6 py-2.5 rounded-lg transition-colors border border-white/10 backdrop-blur-sm text-center">
                   Learn More
                 </Link>
-                <button 
-                  onClick={openContactForm}
+                <Link 
+                  href="/contact"
                   className="bg-white/10 hover:bg-white/20 text-white/80 px-6 py-2.5 rounded-lg transition-colors border border-white/10 backdrop-blur-sm text-center"
                 >
                   Contact Us
-                </button>
+                </Link>
               </div>
             </div>
           </div>

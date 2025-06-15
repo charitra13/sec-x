@@ -204,7 +204,10 @@ export default function TeamPage() {
                 {/* Expanded Card */}
                 {expandedMember === member.id && (
                   <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-                    <div className="bg-black/60 backdrop-blur-md rounded-2xl p-8 border border-white/10 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                    <div 
+                      className="bg-black/60 backdrop-blur-md rounded-2xl p-8 border border-white/10 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                      style={{ transform: 'translateY(-150px)' }}
+                    >
                       <div className="flex justify-between items-start mb-6">
                         <div className="flex items-center">
                           <div className="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-teal-500/20 rounded-full flex items-center justify-center border border-white/10 mr-4">

@@ -3,11 +3,9 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useContactForm } from './ContactFormProvider'
 
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { openAssessmentForm } = useContactForm()
 
   // Add escape key functionality for mobile menu
   useEffect(() => {
@@ -62,12 +60,12 @@ export default function Navigation() {
         <Link href="/publications" className="text-sm text-white/80 hover:text-white transition-colors">
           Publications
         </Link>
-        <button 
-          onClick={openAssessmentForm}
-          className="bg-white/90 hover:bg-white text-black px-5 py-2 rounded-lg transition-colors"
+        <Link 
+          href="/contact?type=assessment"
+          className="bg-white/90 hover:bg-white text-black px-4 py-2 rounded-lg transition-colors"
         >
-          Get Security Assessment
-        </button>
+          Get Secure
+        </Link>
       </div>
 
       {/* Mobile Navigation Menu */}
@@ -107,15 +105,13 @@ export default function Navigation() {
         >
           Publications
         </Link>
-        <button
-          onClick={() => {
-            setIsMobileMenuOpen(false)
-            openAssessmentForm()
-          }}
-          className="bg-white/90 hover:bg-white text-black px-5 py-2 rounded-lg transition-colors"
+        <Link
+          href="/contact?type=assessment"
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="bg-white/90 hover:bg-white text-black px-4 py-2 rounded-lg transition-colors"
         >
-          Get Security Assessment
-        </button>
+          Get Secure
+        </Link>
       </div>
     </nav>
   )
