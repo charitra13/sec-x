@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Sarah Chen",
+    "role": "Chief Security Officer",
+    "department": "Leadership",
+    "bio": "Sarah leads our security strategy with 15+ years of experience in enterprise cybersecurity. She specializes in zero-trust architectures and has led security transformations for Fortune 500 companies.",
+    "achievements": [
+      "Led security transformation for 3 Fortune 500 companies",
+      "Designed zero-trust architecture for 50,000+ user environments",
+      "Reduced security incidents by 85% in previous role",
+      "Speaker at RSA Conference and Black Hat events"
+    ],
+    "certifications": ["CISSP", "CISM", "SABSA"],
+    "experience": "15+ years",
+    "linkedin": "",
+    "twitter": "",
+    "avatar": "SC"
+  },
+  {
+    "id": 2,
+    "name": "Marcus Rodriguez",
+    "role": "Principal Security Engineer",
+    "department": "Engineering",
+    "bio": "Marcus is our lead security engineer with deep expertise in threat detection and incident response. He has built security tools used by thousands of security professionals worldwide.",
+    "achievements": [
+      "Built threat detection platform with 99.9% uptime",
+      "Discovered 12 critical vulnerabilities in open-source projects",
+      "Authored security tools with 10,000+ GitHub stars",
+      "Mentor to 50+ junior security engineers"
+    ],
+    "certifications": ["OSCP", "GCIH", "CEH"],
+    "experience": "12+ years",
+    "linkedin": "",
+    "twitter": "",
+    "avatar": "MR"
+  },
+  {
+    "id": 3,
+    "name": "Dr. Elena Kowalski",
+    "role": "Head of Threat Intelligence",
+    "department": "Research",
+    "bio": "Elena leads our threat intelligence research with a PhD in Computer Security. She has published extensively on advanced persistent threats and nation-state attack patterns.",
+    "achievements": [
+      "Published 25+ peer-reviewed security research papers",
+      "Identified 8 new APT groups and attack vectors",
+      "PhD in Computer Security from MIT",
+      "Advisor to government cybersecurity initiatives"
+    ],
+    "certifications": ["GCTI", "SANS FOR578", "PhD Computer Security"],
+    "experience": "10+ years",
+    "linkedin": "",
+    "twitter": "",
+    "avatar": "EK"
+  },
+  {
+    "id": 4,
+    "name": "James Thompson",
+    "role": "Incident Response Lead",
+    "department": "Operations",
+    "bio": "James coordinates our incident response efforts with extensive experience in digital forensics and crisis management. He has handled some of the most complex security incidents in the industry.",
+    "achievements": [
+      "Led incident response for 200+ major security incidents",
+      "Reduced average incident response time by 60%",
+      "Certified in advanced digital forensics techniques",
+      "Built IR playbooks used by 100+ organizations"
+    ],
+    "certifications": ["GCFA", "GCFE", "CISSP"],
+    "experience": "14+ years",
+    "linkedin": "",
+    "twitter": "",
+    "avatar": "JT"
+  },
+  {
+    "id": 5,
+    "name": "Aisha Patel",
+    "role": "Compliance & Risk Manager",
+    "department": "Risk Management",
+    "bio": "Aisha ensures our solutions meet the highest compliance standards across industries. She has guided organizations through complex regulatory requirements and audit processes.",
+    "achievements": [
+      "Achieved 100% compliance success rate across 50+ audits",
+      "Expert in SOC2, ISO 27001, NIST frameworks",
+      "Reduced compliance costs by 40% through automation",
+      "Speaker at compliance and risk management conferences"
+    ],
+    "certifications": ["CISA", "CRISC", "ISO 27001 Lead Auditor"],
+    "experience": "11+ years",
+    "linkedin": "",
+    "twitter": "",
+    "avatar": "AP"
+  },
+  {
+    "id": 6,
+    "name": "David Kim",
+    "role": "Cloud Security Architect",
+    "department": "Architecture",
+    "bio": "David specializes in securing cloud-native environments and has architected security solutions for some of the largest cloud deployments in the world.",
+    "achievements": [
+      "Designed security for cloud environments serving 1M+ users",
+      "AWS Security Hero and Azure MVP recognition",
+      "Built automated security testing frameworks",
+      "Contributed to NIST cloud security guidelines"
+    ],
+    "certifications": ["AWS Security Specialty", "Azure Security Engineer", "CCSP"],
+    "experience": "9+ years",
+    "linkedin": "",
+    "twitter": "",
+    "avatar": "DK"
+  }
+] 
