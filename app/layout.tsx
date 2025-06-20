@@ -4,7 +4,6 @@ import "./globals.css";
 import Navigation from './components/Navigation';
 import ClientLayout from './components/ClientLayout';
 import Footer from './components/Footer';
-import MeshBackground from './components/MeshBackground';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,9 +38,6 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} h-full bg-black text-white font-[Inter] selection:bg-white/10 overflow-x-hidden antialiased`} suppressHydrationWarning>
         <ClientLayout>
-          {/* Mesh Background */}
-          <MeshBackground />
-          
           <div className="relative z-10 min-h-screen">
             {/* Navigation */}
             <Navigation />

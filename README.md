@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.6-blue.svg)
+![Version](https://img.shields.io/badge/version-1.7-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -195,7 +195,14 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.6 (Latest)
+### Version 1.7 (Latest)
+- **Mesh Background Removal**: Disabled mesh background animations from all pages while preserving component
+  - Removed `MeshBackground` import and usage from root layout (`app/layout.tsx`)
+  - Maintained `MeshBackground.tsx` component file for future use
+  - Simplified layout structure with clean background design
+  - Improved page load performance by removing complex CSS animations
+
+### Version 1.6
 - **Advanced Mesh Background System**: Complete refactoring of mesh background animations with production-ready enhancements
   - **Organic, Non-Linear Blob Movement**: Replaced predictable keyframes with randomized, multi-step transforms
     - Natural drifting patterns across the viewport with varying translate, rotate, and scale values
