@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import teamData from '@/lib/team.json'
 
@@ -67,10 +66,8 @@ export default function TeamPage() {
   }
 
   return (
-    <main className="relative">
-      {/* Animated Background */}
-
-      <div className="w-full min-h-screen max-w-[1400px] mx-auto px-8 py-24 relative z-10">
+    <main className="relative pt-16">
+      <div className="w-full min-h-screen max-w-7xl mx-auto px-8 py-24 relative z-10">
         <div className={`max-w-6xl mx-auto transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="text-center mb-12">
             <h1 className="text-5xl mb-6 text-white">Our Security Experts</h1>
@@ -84,7 +81,7 @@ export default function TeamPage() {
               <div key={member.id} className="relative">
                 {/* Small Profile Card */}
                 <div 
-                  className={`bg-black/40 backdrop-blur-md rounded-2xl p-6 border border-white/5 cursor-pointer transition-all duration-500 hover:bg-black/50 hover:scale-105 ${
+                  className={`glass rounded-2xl p-6 cursor-pointer transition-all duration-500 hover:scale-105 ${
                     expandedMember === member.id ? 'opacity-0 pointer-events-none' : 'opacity-100'
                   }`}
                   onClick={() => toggleMemberExpansion(member.id)}
@@ -109,7 +106,7 @@ export default function TeamPage() {
                 {expandedMember === member.id && (
                   <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
                     <div 
-                      className="bg-black/60 backdrop-blur-md rounded-2xl p-8 border border-white/10 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                      className="glass rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
                       style={{ transform: 'translateY(-150px)' }}
                     >
                       <div className="flex justify-between items-start mb-6">
@@ -127,7 +124,7 @@ export default function TeamPage() {
                         </div>
                         <button 
                           onClick={() => setExpandedMember(null)}
-                          className="text-white/60 hover:text-white p-2"
+                          className="text-white/60 hover:text-white p-2 transition-colors"
                         >
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

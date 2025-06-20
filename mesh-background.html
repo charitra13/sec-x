@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mesh Triangle UI Graphic - Dark Mode</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://geist-fonts.vercel.app/geist/Geist.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Geist', 'Lato', sans-serif; }
+    @media (max-width: 767px) {
+      .responsive-scale {
+        transform: scale(1.2);
+      }
+    }
+    .mix-overlay { mix-blend-mode: overlay; }
+    .triangle {
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
+    .custom-shadow {
+      box-shadow:
+        0 2.8px 2.2px rgba(0, 0, 0, 0.4),
+        0 6.7px 5.3px rgba(0, 0, 0, 0.55),
+        0 12.5px 10px rgba(0, 0, 0, 0.65),
+        0 22.3px 17.9px rgba(0, 0, 0, 0.75),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.85),
+        0 100px 80px rgba(0, 0, 0, 0.92);
+    }
+    @keyframes mesh1 {
+      0%   { transform: translate(-60%, -59%) rotate(12deg) scale(1);}
+      25%  { transform: translate(-80%, -69%) rotate(27deg) scale(1.28);}
+      50%  { transform: translate(-40%, -50%) rotate(7deg) scale(0.65);}
+      75%  { transform: translate(-75%, -81%) rotate(36deg) scale(1.35);}
+      100% { transform: translate(-60%, -59%) rotate(12deg) scale(1);}
+    }
+    @keyframes mesh2 {
+      0%   { transform: translate(-45%, -45%) rotate(-12deg) scale(1);}
+      20%  { transform: translate(-60%, -25%) rotate(-25deg) scale(1.30);}
+      50%  { transform: translate(-30%, -30%) rotate(-19deg) scale(0.62);}
+      80%  { transform: translate(-65%, -70%) rotate(-35deg) scale(1.39);}
+      100% { transform: translate(-45%, -45%) rotate(-12deg) scale(1);}
+    }
+    @keyframes mesh3 {
+      0%   { transform: translate(-42%, -49%) scale(1);}
+      30%  { transform: translate(-70%, -60%) scale(1.33);}
+      60%  { transform: translate(-15%, -25%) scale(0.58);}
+      100% { transform: translate(-42%, -49%) scale(1);}
+    }
+    @keyframes mesh4 {
+      0%   { transform: translate(-48%, -54%) scale(1);}
+      25%  { transform: translate(-70%, -80%) scale(1.25);}
+      50%  { transform: translate(-20%, -38%) scale(0.65);}
+      75%  { transform: translate(-60%, -72%) scale(1.34);}
+      100% { transform: translate(-48%, -54%) scale(1);}
+    }
+    .mesh1 { animation: mesh1 6s ease-in-out infinite alternate; }
+    .mesh2 { animation: mesh2 7s ease-in-out infinite alternate; }
+    .mesh3 { animation: mesh3 5.5s ease-in-out infinite alternate; }
+    .mesh4 { animation: mesh4 7.4s ease-in-out infinite alternate; }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-tr from-gray-950 to-neutral-900">
+  <div class="relative w-[41vmin] h-[56vmin] bg-neutral-900 custom-shadow responsive-scale rounded-3xl overflow-hidden border border-neutral-800">
+    <!-- Animated Mesh gradient blobs (more vibrant for dark mode) -->
+    <div class="absolute top-1/2 left-1/2 w-[24vmin] h-[22vmin] rounded-full pointer-events-none mesh1"
+      style="background: linear-gradient(97deg, #2563eb 80%, transparent 100%); filter: blur(3vmin); opacity:0.55;"></div>
+    <div class="absolute top-1/2 left-1/2 w-[20vmin] h-[25vmin] rounded-full pointer-events-none mesh2"
+      style="background: linear-gradient(120deg, #6366f1 95%, transparent 100%); filter: blur(2vmin); opacity:0.55;"></div>
+    <div class="absolute top-1/2 left-1/2 w-[19vmin] h-[18vmin] rounded-full bg-white mix-overlay pointer-events-none mesh3"
+      style="filter: blur(2vmin); opacity:0.12;"></div>
+    <div class="absolute top-1/2 left-1/2 w-[18vmin] h-[18vmin] rounded-full pointer-events-none mesh4"
+      style="background: linear-gradient(105deg, #fb923c 85%, transparent 100%); filter: blur(1.5vmin); opacity:0.55;"></div>
+    <!-- Main triangle shape (now white) -->
+    <div class="absolute top-1/2 left-1/2 w-[21vmin] h-[21vmin] -translate-x-1/2 -translate-y-1/2 bg-white/90 triangle"></div>
+    <!-- Texts -->
+    <div class="absolute inset-0 font-normal">
+      <!-- Top-right -->
+      <div class="absolute top-0 right-0 pt-[2.5vmin] pr-[2.5vmin] text-right font-extrabold text-[3.2vmin] text-white/80 tracking-tight leading-none select-none drop-shadow-[0_2px_10px_rgba(0,0,0,0.37)]">
+        042
+      </div>
+      <!-- Top-left -->
+      <div class="absolute top-0 left-0 pt-[2.5vmin] pl-[2.5vmin] text-white/80 leading-snug select-none">
+        <span class="block font-extrabold text-[2.6vmin] tracking-tight">Mesh Gradient</span>
+        <span class="block font-medium text-[1.4vmin] opacity-80">Modern UI Graphic</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
