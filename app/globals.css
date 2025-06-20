@@ -2,9 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Instrument Serif font */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&display=swap');
+
 :root {
   --foreground: 255, 255, 255;
   --background: 0, 0, 0;
+}
+
+/* Glassmorphism effects */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-button {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Mesh Background - styles now handled by component */
+
+/* Fade in animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeIn {
@@ -19,7 +55,100 @@
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.3s ease-out forwards;
+  animation: fade-in 0.8s ease-out;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* Card stack system for interactive components */
+.card-stack {
+  --_offset-steps: 4rem;
+  --_scale-steps: 12;
+  --_opacity-steps: 15;
+  
+  --_offset-steps-two: calc(var(--_offset-steps) * -1);
+  --_offset-steps-three: calc(var(--_offset-steps) * -2);
+  --scale-steps-two: calc(1 - var(--_scale-steps) * 0.01);
+  --scale-steps-three: calc(1 - var(--_scale-steps) * 0.02);
+  --opacity-steps-two: calc(1 - var(--_opacity-steps) * 0.02);
+  --opacity-steps-three: calc(1 - var(--_opacity-steps) * 0.04);
+  
+  display: grid;
+  grid-template-areas: "stack";
+  width: min(calc(100% - 2rem), 32rem);
+}
+
+.card-stack .card {
+  grid-area: stack;
+  transition: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  translate: var(--_offset) 0;
+  order: var(--_order);
+  z-index: var(--_order);
+  scale: var(--_scale);
+  opacity: var(--_opacity);
+  cursor: grab;
+  user-select: none;
+  transform-style: preserve-3d;
+}
+
+.card-stack .card:active { 
+  cursor: grabbing; 
+}
+
+.card-stack .card.card-1 {
+  --_order: var(--_1-order);
+  --_scale: var(--_1-scale);
+  --_opacity: var(--_1-opacity);
+  --_offset: var(--_1-offset);
+}
+
+.card-stack .card.card-2 {
+  --_order: var(--_2-order);
+  --_scale: var(--_2-scale);
+  --_opacity: var(--_2-opacity);
+  --_offset: var(--_2-offset);
+}
+
+.card-stack .card.card-3 {
+  --_order: var(--_3-order);
+  --_scale: var(--_3-scale);
+  --_opacity: var(--_3-opacity);
+  --_offset: var(--_3-offset);
+}
+
+.card-stack .card.card-4 {
+  --_order: var(--_4-order);
+  --_scale: var(--_4-scale);
+  --_opacity: var(--_4-opacity);
+  --_offset: var(--_4-offset);
+}
+
+.card-stack.card-1-active {
+  --_1-order: 4; --_1-scale: 1; --_1-opacity: 1; --_1-offset: 0;
+  --_2-order: 3; --_2-scale: var(--scale-steps-two); --_2-opacity: var(--opacity-steps-two); --_2-offset: var(--_offset-steps-two);
+  --_3-order: 2; --_3-scale: var(--scale-steps-three); --_3-opacity: var(--opacity-steps-three); --_3-offset: var(--_offset-steps-three);
+  --_4-order: 1; --_4-scale: calc(1 - var(--_scale-steps) * 0.03); --_4-opacity: calc(1 - var(--_opacity-steps) * 0.06); --_4-offset: calc(var(--_offset-steps) * -3);
+}
+
+.card-stack.card-2-active {
+  --_2-order: 4; --_2-scale: 1; --_2-opacity: 1; --_2-offset: 0;
+  --_3-order: 3; --_3-scale: var(--scale-steps-two); --_3-opacity: var(--opacity-steps-two); --_3-offset: var(--_offset-steps-two);
+  --_4-order: 2; --_4-scale: var(--scale-steps-three); --_4-opacity: var(--opacity-steps-three); --_4-offset: var(--_offset-steps-three);
+  --_1-order: 1; --_1-scale: calc(1 - var(--_scale-steps) * 0.03); --_1-opacity: calc(1 - var(--_opacity-steps) * 0.06); --_1-offset: calc(var(--_offset-steps) * -3);
+}
+
+.card-stack.card-3-active {
+  --_3-order: 4; --_3-scale: 1; --_3-opacity: 1; --_3-offset: 0;
+  --_4-order: 3; --_4-scale: var(--scale-steps-two); --_4-opacity: var(--opacity-steps-two); --_4-offset: var(--_offset-steps-two);
+  --_1-order: 2; --_1-scale: var(--scale-steps-three); --_1-opacity: var(--opacity-steps-three); --_1-offset: var(--_offset-steps-three);
+  --_2-order: 1; --_2-scale: calc(1 - var(--_scale-steps) * 0.03); --_2-opacity: calc(1 - var(--_opacity-steps) * 0.06); --_2-offset: calc(var(--_offset-steps) * -3);
+}
+
+.card-stack.card-4-active {
+  --_4-order: 4; --_4-scale: 1; --_4-opacity: 1; --_4-offset: 0;
+  --_1-order: 3; --_1-scale: var(--scale-steps-two); --_1-opacity: var(--opacity-steps-two); --_1-offset: var(--_offset-steps-two);
+  --_2-order: 2; --_2-scale: var(--scale-steps-three); --_2-opacity: var(--opacity-steps-three); --_2-offset: var(--_offset-steps-three);
+  --_3-order: 1; --_3-scale: calc(1 - var(--_scale-steps) * 0.03); --_3-opacity: calc(1 - var(--_opacity-steps) * 0.06); --_3-offset: calc(var(--_offset-steps) * -3);
 }
 
 body {
@@ -27,6 +156,9 @@ body {
   background: rgb(var(--background));
   min-height: 100vh;
   font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  font-family: 'Inter', sans-serif;
+  selection: rgba(255, 255, 255, 0.1);
+  overflow-x: hidden;
 }
 
 @layer utilities {
@@ -39,20 +171,26 @@ body {
   .backdrop-blur-md {
     backdrop-filter: blur(8px);
   }
+  .backdrop-blur-xl {
+    backdrop-filter: blur(20px);
+  }
   .text-balance {
     text-wrap: balance;
+  }
+  .font-instrument-serif {
+    font-family: 'Instrument Serif', serif !important;
   }
 }
 
 /* Typography System */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-manrope);
+  font-family: 'Inter', sans-serif;
   letter-spacing: -0.02em;
   font-feature-settings: "ss01", "ss02";
 }
 
 h1 {
-  @apply font-extrabold; /* 800 */
+  @apply font-medium; /* Updated to match new design */
 }
 
 h2 {
@@ -68,7 +206,7 @@ h5, h6 {
 }
 
 body, p, li, td, input, textarea {
-  font-family: var(--font-inter);
+  font-family: 'Inter', sans-serif;
   @apply font-normal; /* 400 */
 }
 
@@ -81,8 +219,6 @@ nav, nav a {
 button, .button, [role="button"] {
   @apply font-medium; /* 500 */
 }
-
-
 
 /* Custom Gradients */
 .gradient-green {
@@ -169,4 +305,65 @@ button, .button, [role="button"] {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Mesh Background Animations */
+@keyframes mesh1 {
+  0%   { transform: translate(-60%, -59%) rotate(12deg) scale(1);}
+  25%  { transform: translate(-80%, -69%) rotate(27deg) scale(1.28);}
+  50%  { transform: translate(-40%, -50%) rotate(7deg) scale(0.65);}
+  75%  { transform: translate(-75%, -81%) rotate(36deg) scale(1.35);}
+  100% { transform: translate(-60%, -59%) rotate(12deg) scale(1);}
+}
+
+@keyframes mesh2 {
+  0%   { transform: translate(-45%, -45%) rotate(-12deg) scale(1);}
+  20%  { transform: translate(-60%, -25%) rotate(-25deg) scale(1.30);}
+  50%  { transform: translate(-30%, -30%) rotate(-19deg) scale(0.62);}
+  80%  { transform: translate(-65%, -70%) rotate(-35deg) scale(1.39);}
+  100% { transform: translate(-45%, -45%) rotate(-12deg) scale(1);}
+}
+
+@keyframes mesh3 {
+  0%   { transform: translate(-42%, -49%) scale(1);}
+  30%  { transform: translate(-70%, -60%) scale(1.33);}
+  60%  { transform: translate(-15%, -25%) scale(0.58);}
+  100% { transform: translate(-42%, -49%) scale(1);}
+}
+
+@keyframes mesh4 {
+  0%   { transform: translate(-48%, -54%) scale(1);}
+  25%  { transform: translate(-70%, -80%) scale(1.25);}
+  50%  { transform: translate(-20%, -38%) scale(0.65);}
+  75%  { transform: translate(-60%, -72%) scale(1.34);}
+  100% { transform: translate(-48%, -54%) scale(1);}
+}
+
+.mesh1 { animation: mesh1 6s ease-in-out infinite alternate; }
+.mesh2 { animation: mesh2 7s ease-in-out infinite alternate; }
+.mesh3 { animation: mesh3 5.5s ease-in-out infinite alternate; }
+.mesh4 { animation: mesh4 7.4s ease-in-out infinite alternate; }
+
+.triangle {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.custom-shadow {
+  box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.4),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.55),
+    0 12.5px 10px rgba(0, 0, 0, 0.65),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.75),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.85),
+    0 100px 80px rgba(0, 0, 0, 0.92);
+}
+
+@media (max-width: 767px) {
+  .responsive-scale {
+    transform: scale(1.2);
+  }
+}
+
+.mix-overlay { 
+  mix-blend-mode: overlay; 
 }

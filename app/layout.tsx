@@ -1,23 +1,16 @@
 import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navigation from './components/Navigation';
 import ClientLayout from './components/ClientLayout';
 import Footer from './components/Footer';
-
+import MeshBackground from './components/MeshBackground';
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
   variable: '--font-inter',
-});
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  display: "swap",
-  variable: '--font-manrope',
 });
 
 export const metadata: Metadata = {
@@ -37,23 +30,29 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${manrope.variable} antialiased`} suppressHydrationWarning>
+    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" async></script>
+      </head>
+      <body className={`${inter.variable} h-full bg-black text-white font-[Inter] selection:bg-white/10 overflow-x-hidden antialiased`} suppressHydrationWarning>
         <ClientLayout>
-          <div className="min-h-screen bg-black">
-            <div className="relative w-full min-h-screen max-w-[1400px] mx-auto rounded-[32px] overflow-hidden">
-              {/* Background gradient */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50" />
-              
-              {/* Navigation */}
-              <Navigation />
-              
-              {/* Page Content */}
+          {/* Mesh Background */}
+          <MeshBackground />
+          
+          <div className="relative z-10 min-h-screen">
+            {/* Navigation */}
+            <Navigation />
+            
+            {/* Page Content */}
+            <main className="relative z-10">
               {children}
-              
-              {/* Footer */}
-              <Footer />
-            </div>
+            </main>
+            
+            {/* Footer */}
+            <Footer />
           </div>
         </ClientLayout>
       </body>

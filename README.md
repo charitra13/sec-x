@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.3-blue.svg)
+![Version](https://img.shields.io/badge/version-1.5-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -195,7 +195,32 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.3 (Latest)
+### Version 1.5 (Latest)
+- **Organic Mesh Animations**: Refactored mesh background animations to be more randomized and organic
+  - **Enhanced Transform Values**: Increased translation range to ±85% for more dramatic movement patterns
+  - **Non-linear Motion**: Implemented asymmetric translation offsets and irregular keyframe percentages (18%, 41%, 67%, 89%)
+  - **Dynamic Rotation**: Added complex rotation patterns (12° → 35° → 4° → 28° → 41°) for natural, unpredictable movement
+  - **Varied Scaling**: Introduced diverse scale values (0.58 to 1.47) across keyframes for organic size fluctuations
+  - **Staggered Animation Timing**: 
+    - mesh1: 5.3s with cubic-bezier(0.4, 0.0, 0.6, 1.0) - no delay
+    - mesh2: 6.7s with cubic-bezier(0.25, 0.46, 0.45, 0.94) - 0.8s delay
+    - mesh3: 7.1s with cubic-bezier(0.17, 0.67, 0.83, 0.67) - 1.6s delay  
+    - mesh4: 6.4s with cubic-bezier(0.55, 0.06, 0.68, 0.19) - 2.3s delay
+  - **Improved User Experience**: Eliminated predictable looping patterns for more immersive, natural-feeling animations
+  - **Performance Optimized**: Maintained smooth 60fps performance while enhancing visual complexity
+
+### Version 1.4
+- **Mesh Background**: Implemented animated mesh triangle background component
+  - Created reusable `MeshBackground` React component with CSS animations  
+  - Extracted mesh animations from HTML and integrated into Next.js app
+  - Added site-wide animated background positioned behind all content
+  - Preserved all original animations (rotation, scaling, blur effects)
+  - Replaced aurora canvas with mesh background in root layout
+  - Added responsive design support with mobile scaling
+  - Removed central triangle shape while maintaining vibrant animated mesh blobs
+  - Enhanced mesh blob sizes by 30-50% for more immersive viewport coverage
+
+### Version 1.3
 - **Deployment Fix**: Resolved Next.js 15 useSearchParams Suspense boundary error
   - Refactored contact page to use proper Suspense boundaries for client-side hooks
   - Created separate ContactForm component wrapped in Suspense for better error handling
