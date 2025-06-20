@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.5-blue.svg)
+![Version](https://img.shields.io/badge/version-1.6-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -195,19 +195,33 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.5 (Latest)
-- **Organic Mesh Animations**: Refactored mesh background animations to be more randomized and organic
-  - **Enhanced Transform Values**: Increased translation range to ±85% for more dramatic movement patterns
-  - **Non-linear Motion**: Implemented asymmetric translation offsets and irregular keyframe percentages (18%, 41%, 67%, 89%)
-  - **Dynamic Rotation**: Added complex rotation patterns (12° → 35° → 4° → 28° → 41°) for natural, unpredictable movement
-  - **Varied Scaling**: Introduced diverse scale values (0.58 to 1.47) across keyframes for organic size fluctuations
-  - **Staggered Animation Timing**: 
-    - mesh1: 5.3s with cubic-bezier(0.4, 0.0, 0.6, 1.0) - no delay
-    - mesh2: 6.7s with cubic-bezier(0.25, 0.46, 0.45, 0.94) - 0.8s delay
-    - mesh3: 7.1s with cubic-bezier(0.17, 0.67, 0.83, 0.67) - 1.6s delay  
-    - mesh4: 6.4s with cubic-bezier(0.55, 0.06, 0.68, 0.19) - 2.3s delay
-  - **Improved User Experience**: Eliminated predictable looping patterns for more immersive, natural-feeling animations
-  - **Performance Optimized**: Maintained smooth 60fps performance while enhancing visual complexity
+### Version 1.6 (Latest)
+- **Advanced Mesh Background System**: Complete refactoring of mesh background animations with production-ready enhancements
+  - **Organic, Non-Linear Blob Movement**: Replaced predictable keyframes with randomized, multi-step transforms
+    - Natural drifting patterns across the viewport with varying translate, rotate, and scale values
+    - Eliminated centralized movement for more dynamic visual flow
+  - **Individual Animation Speeds**: Unique timing for each blob to ensure desynchronized movement
+    - Mesh1: 7.4s duration with no delay
+    - Mesh2: 9.1s duration with 1.1s delay  
+    - Mesh3: 6.3s duration with 2.3s delay
+    - Mesh4: 10.2s duration with 0.8s delay
+  - **Responsive Design Optimization**: Mobile-specific enhancements for better performance
+    - Reduced blob sizes (22vmin) for mobile devices
+    - Lowered opacity (0.35) and adjusted blur (2.5vmin) to prevent visual overload
+    - Proper transform-origin centering for consistent behavior
+  - **Accessibility Support**: Full compliance with user motion preferences
+    - Added `@media (prefers-reduced-motion: reduce)` rule to disable all animations
+    - Respects user accessibility settings with `!important` declarations
+
+### Version 1.5
+- **Organic Mesh Animations**: Enhanced mesh background blob animations for more natural, randomized movement
+  - Refined `@keyframes` animations with subtle variations in translate, rotate, and scale values
+  - Introduced staggered animation delays (0s, 0.7s, 1.2s, 2.1s) to prevent synchronized looping
+  - Adjusted animation durations (6.3s, 7.7s, 5.8s, 8s) to create non-repetitive cycles
+  - Implemented unique cubic-bezier timing functions for each blob for organic motion feel
+  - Added additional keyframe points (20%, 30%, 40%, etc.) for smoother intermediate transitions
+  - Enhanced mesh4 with subtle rotation variations for more dynamic movement
+  - Maintained smooth performance while eliminating predictable animation patterns
 
 ### Version 1.4
 - **Mesh Background**: Implemented animated mesh triangle background component
