@@ -296,8 +296,8 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Navigation Dots */}
-        <div className="flex space-x-3 opacity-0 animate-fade-in mb-8" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
+                  {/* Navigation Dots */}
+          <div className="flex space-x-3 opacity-0 animate-fade-in mb-8 mt-2.5" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
           <button onClick={() => { setActiveCard(1); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-blue-400 transition-all duration-300 scale-125"></button>
           <button onClick={() => { setActiveCard(2); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
           <button onClick={() => { setActiveCard(3); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
