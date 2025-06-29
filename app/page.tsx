@@ -89,7 +89,7 @@ export default function Home() {
             <button
               onClick={goToPreviousCard}
               disabled={isAnimating}
-              className="absolute left-2 sm:left-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed opacity-0 animate-fade-in"
+              className="absolute left-1 sm:left-2 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed opacity-0 animate-fade-in"
               style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
               aria-label="Previous card"
             >
@@ -286,7 +286,7 @@ export default function Home() {
           <button
             onClick={goToNextCard}
             disabled={isAnimating}
-            className="absolute right-2 sm:right-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed opacity-0 animate-fade-in"
+            className="absolute right-1 sm:right-2 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed opacity-0 animate-fade-in"
             style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
             aria-label="Next card"
           >

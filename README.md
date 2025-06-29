@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.11.1-blue.svg)
+![Version](https://img.shields.io/badge/version-1.11.2-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -195,7 +195,14 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.11.1 (Latest)
+### Version 1.11.2 (Latest)
+- **UX Enhancement**: Improved navigation arrows positioning for better user experience
+  - Moved left and right arrows closer to rotating cards for better visual association
+  - Reduced arrow positioning distance: Mobile (4px from edges) and Desktop (8px from edges)
+  - Enhanced intuitive navigation where arrows are clearly linked to the cards they control
+  - Improved accessibility and user interaction with manual navigation controls
+
+### Version 1.11.1
 - **UI Polish**: Improved navigation dots spacing for cleaner visual hierarchy
   - Added 10px additional spacing below rotating cards before navigation dots
   - Enhanced visual separation between card stack and navigation controls
