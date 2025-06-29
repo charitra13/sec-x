@@ -196,11 +196,16 @@ npm run build
 ## 📝 Changelog
 
 ### Version 1.11.2 (Latest)
-- **UX Enhancement**: Improved navigation arrows positioning for better user experience
-  - Moved left and right arrows closer to rotating cards for better visual association
-  - Reduced arrow positioning distance: Mobile (4px from edges) and Desktop (8px from edges)
-  - Enhanced intuitive navigation where arrows are clearly linked to the cards they control
-  - Improved accessibility and user interaction with manual navigation controls
+- **Navigation UX Enhancement**: Moved left and right navigation arrows closer to rotating cards
+  - **Improved Positioning**: Reduced distance between arrows and card edges for better UX
+    - Left arrow: Changed from `left-2 sm:left-4` to `left-1 sm:left-2`
+    - Right arrow: Changed from `right-2 sm:right-4` to `right-1 sm:right-2`
+    - Mobile: Now 4px from edges (reduced from 8px)
+    - Desktop: Now 8px from edges (reduced from 16px)
+  - **Enhanced User Experience**: More intuitive navigation controls with clearer visual connection
+    - Better accessibility and easier interaction
+    - Arrows feel more connected to the cards they control
+    - Improved visual hierarchy and navigation clarity
 
 ### Version 1.11.1
 - **UI Polish**: Improved navigation dots spacing for cleaner visual hierarchy
