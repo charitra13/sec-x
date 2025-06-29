@@ -329,27 +329,40 @@ export default function Home() {
 
         {/* Features List - Now Below Header */}
         <div className="text-center mb-16">
-          <div className="space-y-6 text-lg text-white/70 opacity-0 animate-fade-in max-w-2xl mx-auto" style={{ animationDelay: '0.7s', animationFillMode: 'forwards' }}>
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center space-y-4 sm:space-y-0 sm:space-x-8">
-              <div className="flex items-center justify-center space-x-3">
-                <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
-                <span>Expert penetration testing and red team services</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto opacity-0 animate-fade-in" style={{ animationDelay: '0.7s', animationFillMode: 'forwards' }}>
+            
+            {/* Feature Card 1: Penetration Testing */}
+            <div className="glass rounded-xl p-6 flex items-center space-x-4 hover:bg-white/5 transition-all duration-300">
+              <div className="w-12 h-12 bg-blue-400/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-4 h-4 bg-blue-400 rounded-full"></div>
               </div>
-              <div className="flex items-center justify-center space-x-3">
-                <div className="w-3 h-3 bg-purple-400 rounded-full"></div>
-                <span>Cutting-edge AI security assessments</span>
-              </div>
+              <span className="text-white/80 text-sm sm:text-base font-medium">Expert penetration testing and red team services</span>
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center space-y-4 sm:space-y-0 sm:space-x-8">
-              <div className="flex items-center justify-center space-x-3">
-                <div className="w-3 h-3 bg-pink-400 rounded-full"></div>
-                <span>Free cybersecurity training programs</span>
+
+            {/* Feature Card 2: AI Security */}
+            <div className="glass rounded-xl p-6 flex items-center space-x-4 hover:bg-white/5 transition-all duration-300">
+              <div className="w-12 h-12 bg-purple-400/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-4 h-4 bg-purple-400 rounded-full"></div>
               </div>
-              <div className="flex items-center justify-center space-x-3">
-                <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                <span>Hall of Fame recognition from Google & Mastercard</span>
-              </div>
+              <span className="text-white/80 text-sm sm:text-base font-medium">Cutting-edge AI security assessments</span>
             </div>
+
+            {/* Feature Card 3: Training */}
+            <div className="glass rounded-xl p-6 flex items-center space-x-4 hover:bg-white/5 transition-all duration-300">
+              <div className="w-12 h-12 bg-pink-400/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-4 h-4 bg-pink-400 rounded-full"></div>
+              </div>
+              <span className="text-white/80 text-sm sm:text-base font-medium">Free cybersecurity training programs</span>
+            </div>
+
+            {/* Feature Card 4: Recognition */}
+            <div className="glass rounded-xl p-6 flex items-center space-x-4 hover:bg-white/5 transition-all duration-300">
+              <div className="w-12 h-12 bg-green-400/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-4 h-4 bg-green-400 rounded-full"></div>
+              </div>
+              <span className="text-white/80 text-sm sm:text-base font-medium">Hall of Fame recognition from Google & Mastercard</span>
+            </div>
+
           </div>
         </div>
 

@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.10-blue.svg)
+![Version](https://img.shields.io/badge/version-1.11-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -195,7 +195,27 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.10 (Latest)
+### Version 1.11 (Latest)
+- **Feature Cards Design**: Transformed bullet point features into modern rectangular cards
+  - **Glass-style Cards**: Converted simple bullet points into elegant glassmorphism feature cards
+    - Each feature now displayed in its own rounded rectangular card with glass effect
+    - Consistent styling with existing design system and rotating service cards
+    - Enhanced visual hierarchy and improved readability
+  - **Color-coded Icon System**: Maintained brand color scheme with enhanced visual presentation
+    - Blue card: Expert penetration testing and red team services
+    - Purple card: Cutting-edge AI security assessments
+    - Pink card: Free cybersecurity training programs  
+    - Green card: Hall of Fame recognition from Google & Mastercard
+  - **Responsive Grid Layout**: Optimized for all device sizes
+    - Single column layout on mobile devices for easy reading
+    - Two-column grid on larger screens for efficient space usage
+    - Proper spacing and padding for clean visual presentation
+  - **Interactive Elements**: Added hover effects for enhanced user engagement
+    - Subtle background color transitions on card hover
+    - Smooth animations maintaining modern user experience
+    - Consistent with overall site interaction patterns
+
+### Version 1.10
 - **Header Section Repositioning**: Moved main header content below rotating cards for enhanced visual flow
   - **Layout Restructure**: Repositioned SecurityX branding, main title, and description section
     - Rotating cards now appear first as the primary visual element
