@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.7-blue.svg)
+![Version](https://img.shields.io/badge/version-1.8-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -195,7 +195,25 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.7 (Latest)
+### Version 1.8 (Latest)
+- **Hero Section Layout Restructure**: Complete redesign of homepage hero section for improved user experience
+  - **Centered Layout Design**: Transformed from horizontal left/right layout to vertical centered layout
+    - Moved SecurityX branding, main title, and description to centered header section
+    - Enhanced readability with `max-w-3xl mx-auto` constraint for description text
+  - **Rotating Cards as Centerpiece**: Repositioned service cards to be the main focal point
+    - All 4 rotating cards (Penetration Testing, AI Security, Red Teaming, Free Training) now prominently centered
+    - Preserved all auto-rotation functionality and navigation dots below cards
+    - Maintained card animations and interactive features
+  - **Features Section Reorganization**: Relocated "quick about" features below rotating cards
+    - Transformed bullet-point features into responsive 2x2 grid layout
+    - Mobile-first responsive design (stacked on mobile, side-by-side on desktop)
+    - Enhanced visual balance with larger feature indicators (3x3 colored dots)
+  - **Improved Visual Hierarchy**: Created natural user flow from brand → services → features → CTA
+    - Adjusted animation timing sequences for smooth visual progression
+    - Maintained all responsive design principles and mobile optimization
+    - Preserved navigation bar and footer positioning and design integrity
+
+### Version 1.7
 - **Mesh Background Removal**: Disabled mesh background animations from all pages while preserving component
   - Removed `MeshBackground` import and usage from root layout (`app/layout.tsx`)
   - Maintained `MeshBackground.tsx` component file for future use
