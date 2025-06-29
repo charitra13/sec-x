@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.8-blue.svg)
+![Version](https://img.shields.io/badge/version-1.9-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -195,7 +195,26 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.8 (Latest)
+### Version 1.9 (Latest)
+- **Manual Navigation Controls**: Added left/right arrow buttons for manual card navigation with seamless auto-rotation integration
+  - **Arrow Button Implementation**: Glass-styled left and right navigation arrows positioned on card stack sides
+    - Responsive design with smaller sizing on mobile devices (40x40px) and larger on desktop (48x48px)
+    - Glass-morphism styling with backdrop blur, white/10 background, and subtle borders
+    - Smooth hover effects with enhanced opacity and border visibility
+  - **Seamless Auto-Rotation Integration**: Manual controls work harmoniously with automatic rotation
+    - Timer reset functionality when user manually navigates to prevent abrupt behavior
+    - Auto-rotation continues after manual interaction with fresh 5-second intervals
+    - Animation state respect - buttons disabled during card transitions for smooth UX
+  - **Enhanced Navigation Dots**: Updated dot navigation to also reset auto-rotation timer
+    - Consistent behavior across all manual navigation methods
+    - Prevents conflicts between different navigation approaches
+  - **Accessibility & UX Improvements**: 
+    - Proper ARIA labels for screen reader compatibility
+    - Disabled state styling with reduced opacity during animations
+    - Touch-friendly button sizing optimized for mobile interaction
+    - Keyboard navigation support with proper focus management
+
+### Version 1.8
 - **Hero Section Layout Restructure**: Complete redesign of homepage hero section for improved user experience
   - **Centered Layout Design**: Transformed from horizontal left/right layout to vertical centered layout
     - Moved SecurityX branding, main title, and description to centered header section

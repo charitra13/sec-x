@@ -6,6 +6,7 @@ import { useEffect, useState, useRef } from 'react'
 export default function Home() {
   const [currentCard, setCurrentCard] = useState(1)
   const [isAnimating, setIsAnimating] = useState(false)
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   // Card stack functionality
   const updateDots = (cardNumber: number) => {
@@ -35,19 +36,47 @@ export default function Home() {
     }, 500)
   }
 
-  useEffect(() => {
-    // Auto-rotate cards
-    const interval = setInterval(() => {
+  // Manual navigation functions
+  const goToPreviousCard = () => {
+    if (isAnimating) return
+    const prevCard = currentCard === 1 ? 4 : currentCard - 1
+    setActiveCard(prevCard)
+    resetAutoRotation()
+  }
+
+  const goToNextCard = () => {
+    if (isAnimating) return
+    const nextCard = currentCard === 4 ? 1 : currentCard + 1
+    setActiveCard(nextCard)
+    resetAutoRotation()
+  }
+
+  // Reset auto-rotation timer
+  const resetAutoRotation = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+    }
+    startAutoRotation()
+  }
+
+  // Start auto-rotation
+  const startAutoRotation = () => {
+    intervalRef.current = setInterval(() => {
       if (!isAnimating) {
         const nextCard = currentCard === 4 ? 1 : currentCard + 1
         setActiveCard(nextCard)
       }
     }, 5000)
+  }
 
-    return () => clearInterval(interval)
+  useEffect(() => {
+    startAutoRotation()
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
   }, [currentCard, isAnimating])
-
-
 
   return (
     <main className="relative min-h-screen pt-16">
@@ -76,7 +105,22 @@ export default function Home() {
 
         {/* Center: Services Card Stack */}
         <div className="flex flex-col items-center mb-16">
-          <section id="services-cards" className="card-stack card-1-active opacity-0 animate-fade-in mb-8" style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}>
+          <div className="relative flex items-center justify-center w-full">
+            {/* Left Arrow Button */}
+            <button
+              onClick={goToPreviousCard}
+              disabled={isAnimating}
+              className="absolute left-2 sm:left-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed opacity-0 animate-fade-in"
+              style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
+              aria-label="Previous card"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-5 sm:h-5">
+                <path d="m15 18-6-6 6-6"/>
+              </svg>
+            </button>
+
+            {/* Card Stack */}
+            <section id="services-cards" className="card-stack card-1-active opacity-0 animate-fade-in" style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}>
             
             {/* Card 1: Penetration Testing */}
             <article className="card card-1 relative h-[32rem] glass rounded-2xl shadow-2xl">
@@ -259,14 +303,28 @@ export default function Home() {
             </article>
           </section>
 
-          {/* Navigation Dots */}
-          <div className="flex space-x-3 opacity-0 animate-fade-in" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
-            <button onClick={() => setActiveCard(1)} className="nav-dot w-2 h-2 rounded-full bg-blue-400 transition-all duration-300 scale-125"></button>
-            <button onClick={() => setActiveCard(2)} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
-            <button onClick={() => setActiveCard(3)} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
-            <button onClick={() => setActiveCard(4)} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
-          </div>
+          {/* Right Arrow Button */}
+          <button
+            onClick={goToNextCard}
+            disabled={isAnimating}
+            className="absolute right-2 sm:right-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed opacity-0 animate-fade-in"
+            style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
+            aria-label="Next card"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-5 sm:h-5">
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </button>
         </div>
+
+        {/* Navigation Dots */}
+        <div className="flex space-x-3 opacity-0 animate-fade-in mb-8" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
+          <button onClick={() => { setActiveCard(1); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-blue-400 transition-all duration-300 scale-125"></button>
+          <button onClick={() => { setActiveCard(2); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
+          <button onClick={() => { setActiveCard(3); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
+          <button onClick={() => { setActiveCard(4); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
+        </div>
+      </div>
 
         {/* Features List - Now Below Cards */}
         <div className="text-center mb-16">
