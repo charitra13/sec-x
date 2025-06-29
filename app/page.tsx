@@ -81,29 +81,8 @@ export default function Home() {
   return (
     <main className="relative min-h-screen pt-16">
       <div className="max-w-7xl w-full mx-auto px-8 pt-8">
-        {/* Header Section - Centered */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center space-x-2 mb-6 opacity-0 animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <p className="text-sm uppercase tracking-widest text-white/60 font-medium">SecurityX • Founded 2023 • Elite Cybersecurity</p>
-          </div>
-          
-          <div className="mb-8 opacity-0 animate-fade-in" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
-            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-medium leading-tight tracking-tighter mb-4">
-              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80">
-                Advanced Cybersecurity for
-              </span>
-              <span className="block bg-clip-text italic text-transparent font-instrument-serif bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-                Digital Business
-              </span>
-            </h1>
-            <p className="text-lg text-white/70 leading-relaxed max-w-3xl mx-auto">
-              Comprehensive security solutions designed to protect, detect, and respond to cyber threats. Enhanced security posture, compliance, and resilience—all in one intelligent platform.
-            </p>
-          </div>
-        </div>
-
-        {/* Center: Services Card Stack */}
+        
+        {/* Center: Services Card Stack - Now First */}
         <div className="flex flex-col items-center mb-16">
           <div className="relative flex items-center justify-center w-full">
             {/* Left Arrow Button */}
@@ -111,7 +90,7 @@ export default function Home() {
               onClick={goToPreviousCard}
               disabled={isAnimating}
               className="absolute left-2 sm:left-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed opacity-0 animate-fade-in"
-              style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
+              style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
               aria-label="Previous card"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-5 sm:h-5">
@@ -120,7 +99,7 @@ export default function Home() {
             </button>
 
             {/* Card Stack */}
-            <section id="services-cards" className="card-stack card-1-active opacity-0 animate-fade-in" style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}>
+            <section id="services-cards" className="card-stack card-1-active opacity-0 animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
             
             {/* Card 1: Penetration Testing */}
             <article className="card card-1 relative h-[32rem] glass rounded-2xl shadow-2xl">
@@ -308,7 +287,7 @@ export default function Home() {
             onClick={goToNextCard}
             disabled={isAnimating}
             className="absolute right-2 sm:right-4 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed opacity-0 animate-fade-in"
-            style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}
+            style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
             aria-label="Next card"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-5 sm:h-5">
@@ -318,15 +297,37 @@ export default function Home() {
         </div>
 
         {/* Navigation Dots */}
-        <div className="flex space-x-3 opacity-0 animate-fade-in mb-8" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
+        <div className="flex space-x-3 opacity-0 animate-fade-in mb-8" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
           <button onClick={() => { setActiveCard(1); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-blue-400 transition-all duration-300 scale-125"></button>
           <button onClick={() => { setActiveCard(2); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
           <button onClick={() => { setActiveCard(3); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
           <button onClick={() => { setActiveCard(4); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
         </div>
-      </div>
+              </div>
 
-        {/* Features List - Now Below Cards */}
+        {/* Header Section - Now Below Cards */}
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center space-x-2 mb-6 opacity-0 animate-fade-in" style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}>
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <p className="text-sm uppercase tracking-widest text-white/60 font-medium">SecurityX • Founded 2023 • Elite Cybersecurity</p>
+          </div>
+          
+          <div className="mb-8 opacity-0 animate-fade-in" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
+            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-medium leading-tight tracking-tighter mb-4">
+              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80">
+                Advanced Cybersecurity for
+              </span>
+              <span className="block bg-clip-text italic text-transparent font-instrument-serif bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+                Digital Business
+              </span>
+            </h1>
+            <p className="text-lg text-white/70 leading-relaxed max-w-3xl mx-auto">
+              Comprehensive security solutions designed to protect, detect, and respond to cyber threats. Enhanced security posture, compliance, and resilience—all in one intelligent platform.
+            </p>
+          </div>
+        </div>
+
+        {/* Features List - Now Below Header */}
         <div className="text-center mb-16">
           <div className="space-y-6 text-lg text-white/70 opacity-0 animate-fade-in max-w-2xl mx-auto" style={{ animationDelay: '0.7s', animationFillMode: 'forwards' }}>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center space-y-4 sm:space-y-0 sm:space-x-8">

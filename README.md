@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.9-blue.svg)
+![Version](https://img.shields.io/badge/version-1.10-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -195,7 +195,23 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.9 (Latest)
+### Version 1.10 (Latest)
+- **Header Section Repositioning**: Moved main header content below rotating cards for enhanced visual flow
+  - **Layout Restructure**: Repositioned SecurityX branding, main title, and description section
+    - Rotating cards now appear first as the primary visual element
+    - Header section (SecurityX branding + "Advanced Cybersecurity for Digital Business" title) moved below cards
+    - Features section remains at the bottom for complete information hierarchy
+  - **Improved Animation Sequence**: Adjusted animation delays for smooth visual progression
+    - Cards animate first (0.2s delay) as the primary focus
+    - Arrow buttons and navigation dots follow (0.3s-0.4s delays)
+    - Header section appears after cards (0.5s-0.6s delays)
+    - Features and CTA sections complete the sequence (0.7s-0.8s delays)
+    - **Enhanced User Experience**: Cards-first approach creates immediate visual impact
+    - Services showcase takes precedence over introductory text
+    - Maintains all existing functionality and responsive design
+    - Preserves manual navigation controls and auto-rotation features
+
+### Version 1.9
 - **Manual Navigation Controls**: Added left/right arrow buttons for manual card navigation with seamless auto-rotation integration
   - **Arrow Button Implementation**: Glass-styled left and right navigation arrows positioned on card stack sides
     - Responsive design with smaller sizing on mobile devices (40x40px) and larger on desktop (48x48px)
