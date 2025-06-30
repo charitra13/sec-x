@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.11.3-blue.svg)
+![Version](https://img.shields.io/badge/version-1.12-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -195,7 +195,43 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.11.3 (Latest)
+### Version 1.12 (Latest)
+- **Contact Page Modern Glass Design**: Complete transformation of contact page with cutting-edge glassmorphism design
+  - **Split-Screen Layout**: Implemented 50/50 split design with animated visual section and contact form
+    - Left side: Branding section with animated connection diagram, floating feature icons, and central logo
+    - Right side: Enhanced contact form with modern glass-morphism styling and improved user experience
+    - Responsive vertical stacking on mobile devices with optimized spacing and sizing
+  - **Animated Wave Canvas Background**: Added dynamic 8-layer wave visualizer with real-time frequency updates
+    - Blue-purple gradient color scheme with customizable intensity and speed
+    - Responsive canvas sizing that adapts to all screen dimensions
+    - Smooth 60fps animations with optimized performance
+  - **Enhanced Form Features**: Upgraded contact form with advanced functionality
+    - **Country Code Dropdown**: Comprehensive phone input with searchable country selection
+      - Flag icons for 10+ major countries (US, UK, CA, AU, DE, FR, JP, CN, IN, BR)
+      - Search functionality within dropdown for quick country finding
+      - Mobile-responsive dropdown sizing and positioning
+    - **Preserved Functionality**: All existing form validation, submission handling, and success states maintained
+    - **Glass-Morphism Styling**: Form inputs with backdrop blur, gradient borders, and inner glow effects
+  - **Advanced Visual Effects**: Premium glassmorphism design system implementation
+    - **Gradient Borders**: Multi-color animated borders with mask composite techniques
+    - **Inner Glow Effects**: Multi-layer box-shadow system for depth and premium feel
+    - **Floating Animations**: Service icons with staggered animation delays for organic movement
+    - **Connection Diagram**: SVG-based animated connection lines with gradient colors and pulse effects
+  - **Typography & Branding**: Integrated Geist font family for modern, clean typography
+    - Updated layout.tsx to include Geist font loading for optimal performance
+    - Consistent font-weight hierarchy throughout the contact experience
+  - **Mobile-First Responsive Design**: Comprehensive responsive implementation
+    - Vertical layout stacking on mobile with appropriate spacing adjustments
+    - Touch-friendly form controls and dropdown interactions
+    - Optimized visual hierarchy for smaller screen sizes
+    - Horizontal to vertical divider transitions for clean mobile presentation
+  - **Accessibility Enhancements**: Improved form accessibility and user experience
+    - Proper ARIA labels for all form fields and interactive elements
+    - Keyboard navigation support throughout the interface
+    - Screen reader compatibility with semantic HTML structure
+    - Focus indicators that work seamlessly with glass design aesthetic
+
+### Version 1.11.3
 - **Card Buttons Functionality**: Updated all rotating card buttons to navigate to contact page
   - **Contact Page Integration**: All 4 service card buttons now link to `/contact` for user inquiries
     - Card 1 (Penetration Testing): "Learn More" button → Links to contact page
