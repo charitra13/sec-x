@@ -22,9 +22,11 @@ const COUNTRY_CODES = [
 // Loading component for Suspense fallback
 function ContactPageLoading() {
   return (
-    <div className="bg-black m-0 p-0 overflow-hidden h-screen w-screen font-geist">
-      <canvas className="fixed inset-0 w-full h-full" />
-      <div className="fixed inset-0 flex items-center justify-center z-10 p-4">
+    <div className="relative min-h-screen bg-black font-geist pt-20">
+      {/* Wave Visualizer Background */}
+      <canvas className="fixed inset-0 w-full h-full -z-10" />
+      
+      <div className="flex items-center justify-center min-h-[calc(100vh-5rem)] p-4">
         <div className="w-full max-w-4xl">
           <div className="card-border overflow-hidden rounded-2xl flex flex-col lg:flex-row animate-pulse">
             <div className="w-full lg:w-1/2 p-8">
@@ -227,9 +229,11 @@ function ContactForm() {
 
   if (submitSuccess) {
     return (
-      <div className="bg-black m-0 p-0 overflow-hidden h-screen w-screen font-geist">
-        <canvas id="visualizer" className="fixed inset-0 w-full h-full" />
-        <div className="fixed inset-0 flex items-center justify-center z-10 p-4">
+      <div className="relative min-h-screen bg-black font-geist pt-20">
+        {/* Wave Visualizer Background */}
+        <canvas id="visualizer" className="fixed inset-0 w-full h-full -z-10" />
+        
+        <div className="flex items-center justify-center min-h-[calc(100vh-5rem)] p-4">
           <div className="text-center card-border rounded-2xl p-8">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center inner-glow">
               <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -251,12 +255,12 @@ function ContactForm() {
   }
 
   return (
-    <div className="bg-black m-0 p-0 overflow-hidden h-screen w-screen font-geist">
+    <div className="relative min-h-screen bg-black font-geist pt-20">
       {/* Wave Visualizer Background */}
-      <canvas id="visualizer" className="fixed inset-0 w-full h-full" />
+      <canvas id="visualizer" className="fixed inset-0 w-full h-full -z-10" />
       
       {/* Main Card */}
-      <div className="fixed inset-0 flex items-center justify-center z-10 p-4">
+      <div className="flex items-center justify-center min-h-[calc(100vh-5rem)] p-4">
         <div className="w-full relative max-w-4xl">
           <div className="relative card-border overflow-hidden rounded-2xl flex flex-col lg:flex-row animate-float">
             
@@ -508,6 +512,7 @@ function ContactFormWithCanvas() {
     if (!ctx) return
 
     let time = 0
+    let animationId: number
     let waveData = Array(8).fill(0).map(() => ({
       value: Math.random() * 0.5 + 0.1,
       targetValue: Math.random() * 0.5 + 0.1,
@@ -568,7 +573,7 @@ function ContactFormWithCanvas() {
       time += 0.02
       updateWaveData()
       draw()
-      requestAnimationFrame(animate)
+      animationId = requestAnimationFrame(animate)
     }
     
     window.addEventListener('resize', resizeCanvas)
@@ -577,6 +582,9 @@ function ContactFormWithCanvas() {
     
     return () => {
       window.removeEventListener('resize', resizeCanvas)
+      if (animationId) {
+        cancelAnimationFrame(animationId)
+      }
     }
   }, [])
 
