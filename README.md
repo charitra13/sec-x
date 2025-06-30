@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.12-blue.svg)
+![Version](https://img.shields.io/badge/version-1.12.1-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -195,7 +195,17 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.12 (Latest)
+### Version 1.12.1 (Latest)
+- **Contact Page Layout Fix**: Resolved overlay issue where navigation and footer appeared behind contact form
+  - **Proper Page Integration**: Converted from fixed overlay positioning to normal page flow with `min-h-screen`
+  - **Navigation Visibility**: Contact page now properly integrates with site navigation instead of covering it
+  - **Canvas Background**: Updated wave visualizer to use `-z-10` positioning behind content while maintaining animations
+  - **Responsive Padding**: Added proper top padding (`pt-20`) to account for fixed navigation bar
+  - **Animation Cleanup**: Improved canvas animation cleanup with proper `cancelAnimationFrame` for better performance
+  - **Layout Structure**: Maintained exact visual design while fixing underlying layout architecture
+  - **User Experience**: Navigation remains fully functional and footer appears below contact form as intended
+
+### Version 1.12
 - **Contact Page Modern Glass Design**: Complete transformation of contact page with cutting-edge glassmorphism design
   - **Split-Screen Layout**: Implemented 50/50 split design with animated visual section and contact form
     - Left side: Branding section with animated connection diagram, floating feature icons, and central logo
