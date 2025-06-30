@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
 export default function Home() {
   const [currentCard, setCurrentCard] = useState(1)
@@ -60,14 +60,19 @@ export default function Home() {
   }
 
   // Start auto-rotation
-  const startAutoRotation = () => {
+  const startAutoRotation = useCallback(() => {
     intervalRef.current = setInterval(() => {
-      if (!isAnimating) {
-        const nextCard = currentCard === 4 ? 1 : currentCard + 1
-        setActiveCard(nextCard)
-      }
+      setCurrentCard(prev => {
+        if (!isAnimating) {
+          const nextCard = prev === 4 ? 1 : prev + 1
+          // Use setTimeout to avoid stale closure
+          setTimeout(() => setActiveCard(nextCard), 0)
+          return nextCard
+        }
+        return prev
+      })
     }, 5000)
-  }
+  }, [isAnimating])
 
   useEffect(() => {
     startAutoRotation()
@@ -76,7 +81,7 @@ export default function Home() {
         clearInterval(intervalRef.current)
       }
     }
-  }, [currentCard, isAnimating])
+  }, [startAutoRotation])
 
   return (
     <main className="relative min-h-screen pt-16">

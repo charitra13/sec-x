@@ -535,6 +535,8 @@ function ContactFormWithCanvas() {
     }
     
     function draw() {
+      if (!ctx) return
+      
       ctx.fillStyle = 'black'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
       
