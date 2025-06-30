@@ -139,9 +139,9 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <button className="w-full py-3 px-4 glass rounded-xl text-white hover:bg-white/10 transition-all duration-300 font-medium">
+                <Link href="/contact" className="w-full py-3 px-4 glass rounded-xl text-white hover:bg-white/10 transition-all duration-300 font-medium text-center block">
                   Learn More
-                </button>
+                </Link>
               </div>
             </article>
 
@@ -185,9 +185,9 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <button className="w-full py-3 px-4 glass rounded-xl text-white hover:bg-white/10 transition-all duration-300 font-medium">
-                  Coming Soon
-                </button>
+                <Link href="/contact" className="w-full py-3 px-4 glass rounded-xl text-white hover:bg-white/10 transition-all duration-300 font-medium text-center block">
+                  Get In Touch
+                </Link>
               </div>
             </article>
 
@@ -232,9 +232,9 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <button className="w-full py-3 px-4 glass rounded-xl text-white hover:bg-white/10 transition-all duration-300 font-medium">
+                <Link href="/contact" className="w-full py-3 px-4 glass rounded-xl text-white hover:bg-white/10 transition-all duration-300 font-medium text-center block">
                   Get Started
-                </button>
+                </Link>
               </div>
             </article>
 
@@ -275,9 +275,9 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <button className="w-full py-3 px-4 glass rounded-xl text-white hover:bg-white/10 transition-all duration-300 font-medium">
+                <Link href="/contact" className="w-full py-3 px-4 glass rounded-xl text-white hover:bg-white/10 transition-all duration-300 font-medium text-center block">
                   Join Training
-                </button>
+                </Link>
               </div>
             </article>
           </section>

@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.11.2-blue.svg)
+![Version](https://img.shields.io/badge/version-1.11.3-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -195,7 +195,23 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.11.2 (Latest)
+### Version 1.11.3 (Latest)
+- **Card Buttons Functionality**: Updated all rotating card buttons to navigate to contact page
+  - **Contact Page Integration**: All 4 service card buttons now link to `/contact` for user inquiries
+    - Card 1 (Penetration Testing): "Learn More" button → Links to contact page
+    - Card 2 (AI Security): Changed "Coming Soon" to "Get In Touch" → Links to contact page
+    - Card 3 (Red Teaming): "Get Started" button → Links to contact page
+    - Card 4 (Training): "Join Training" button → Links to contact page
+  - **Technical Implementation**: Converted button elements to Next.js Link components
+    - Maintained all existing glassmorphism styling and hover effects
+    - Added proper `text-center block` classes for Link behavior
+    - Preserved responsive design and visual consistency
+  - **Improved User Journey**: Enhanced call-to-action functionality for better conversion
+    - Direct path from service showcase to contact/inquiry form
+    - Consistent user experience across all service cards
+    - Better lead generation and customer engagement flow
+
+### Version 1.11.2
 - **Navigation UX Enhancement**: Moved left and right navigation arrows closer to rotating cards
   - **Improved Positioning**: Reduced distance between arrows and card edges for better UX
     - Left arrow: Changed from `left-2 sm:left-4` to `left-1 sm:left-2`
