@@ -82,14 +82,14 @@ function CountryCodeDropdown({ selectedCode, onSelectCode }: {
       </button>
       
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1 w-full sm:w-64 glass border border-white/20 rounded-lg z-50 max-h-64 overflow-hidden">
+        <div className="absolute top-full left-0 mt-1 w-full sm:w-64 bg-black/90 backdrop-blur-xl border border-white/30 rounded-lg z-50 max-h-64 overflow-hidden shadow-2xl">
           <div className="p-2">
             <input
               type="text"
               placeholder="Search countries..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-3 py-2 glass border border-white/20 rounded text-white placeholder-white/50 text-sm focus:outline-none focus:border-indigo-400"
+              className="w-full px-3 py-2 bg-white/10 backdrop-blur border border-white/20 rounded text-white placeholder-white/50 text-sm focus:outline-none focus:border-indigo-400"
             />
           </div>
           <div className="max-h-48 overflow-y-auto">
@@ -102,7 +102,7 @@ function CountryCodeDropdown({ selectedCode, onSelectCode }: {
                   setIsOpen(false)
                   setSearchTerm('')
                 }}
-                className="w-full flex items-center px-3 py-2 text-white hover:bg-white/10 transition text-sm text-left"
+                className="w-full flex items-center px-3 py-2 text-white hover:bg-white/20 transition text-sm text-left"
               >
                 <span className="mr-2">{country.flag}</span>
                 <span className="mr-2">{country.code}</span>
