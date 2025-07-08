@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.13-blue.svg)
+![Version](https://img.shields.io/badge/version-1.14-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -125,7 +125,16 @@ Sec-X is a cybersecurity firm founded in 2023 in Indore, Madhya Pradesh, special
 - Comprehensive blog layout with cybersecurity articles
 - Featured categories: AI Security, Red Teaming, Penetration Testing, Security Architecture
 - Newsletter subscription functionality
-- Sample articles with metadata and excerpts
+- Clickable article cards with navigation to individual posts
+- Dynamic routing for individual blog posts using slug-based URLs
+
+### Individual Blog Posts (`/blog/[slug]`)
+- Professional blog post template with rich content formatting
+- Complete SEO metadata including OpenGraph and Twitter cards
+- Social sharing buttons for Twitter and LinkedIn
+- Author information and publication date
+- Tag system for content categorization
+- Related articles section and back navigation
 
 ### Publications Page (`/publications`)
 - Security research papers and whitepapers
@@ -203,7 +212,19 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.13 (Latest)
+### Version 1.14 (Latest)
+- **Blog Template System**: Implemented comprehensive blog post template with dynamic routing
+  - **Dynamic Routes**: Added `/blog/[slug]` routing for individual blog posts
+  - **Blog Post Template**: Created reusable BlogPostTemplate component with rich content formatting
+  - **Content Management**: Comprehensive blog data structure with full articles, metadata, and SEO information
+  - **Interactive Navigation**: Clickable blog cards that navigate to individual posts
+  - **SEO Optimization**: Complete metadata generation including OpenGraph and Twitter cards
+  - **Social Features**: Social sharing buttons for Twitter and LinkedIn
+  - **Rich Content**: Markdown-style content rendering with proper typography
+  - **Tagging System**: Tag-based content categorization and display
+  - **Professional Layout**: Article header with author info, date, category, and read time
+
+### Version 1.13
 - **Blog Feature Implementation**: Added comprehensive blog section with modern layout
   - **Navigation Update**: Added Blog button to both desktop and mobile navigation menus
   - **Blog Page Layout**: Created `/blog` page with hero section, featured categories, and article grid

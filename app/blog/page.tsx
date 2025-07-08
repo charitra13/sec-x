@@ -2,53 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-
-// Sample blog posts data
-const blogPosts = [
-  {
-    id: 1,
-    title: "The Future of AI Security: Challenges and Opportunities",
-    excerpt: "As artificial intelligence becomes more prevalent in our daily lives, understanding and securing AI systems has become a critical priority for cybersecurity professionals.",
-    date: "2024-01-15",
-    author: "SecurityX Team",
-    category: "AI Security",
-    readTime: "5 min read",
-    image: "/shield.png"
-  },
-  {
-    id: 2,
-    title: "Advanced Red Team Techniques for Modern Enterprises",
-    excerpt: "Explore cutting-edge red team methodologies that help organizations identify vulnerabilities before malicious actors do.",
-    date: "2024-01-10",
-    author: "Nagendra Tiwari",
-    category: "Red Teaming",
-    readTime: "8 min read",
-    image: "/shield.png"
-  },
-  {
-    id: 3,
-    title: "Zero-Trust Architecture: Implementation Best Practices",
-    excerpt: "Learn how to implement a zero-trust security model that assumes no implicit trust and continuously validates every transaction.",
-    date: "2024-01-05",
-    author: "SecurityX Team",
-    category: "Security Architecture",
-    readTime: "6 min read",
-    image: "/shield.png"
-  },
-  {
-    id: 4,
-    title: "Penetration Testing Methodologies: A Comprehensive Guide",
-    excerpt: "Dive deep into systematic approaches for conducting effective penetration tests that provide actionable security insights.",
-    date: "2023-12-28",
-    author: "SecurityX Team",
-    category: "Penetration Testing",
-    readTime: "10 min read",
-    image: "/shield.png"
-  }
-]
+import { getAllBlogPosts } from '@/lib/blog-data'
 
 export default function BlogPage() {
   const [isVisible, setIsVisible] = useState(false)
+  const blogPosts = getAllBlogPosts()
 
   useEffect(() => {
     setIsVisible(true)
@@ -110,47 +68,50 @@ export default function BlogPage() {
             <h2 className="text-3xl mb-8 text-white/90">Latest Articles</h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {blogPosts.map((post, index) => (
-                <article 
-                  key={post.id} 
-                  className={`glass rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 cursor-pointer group transition-all duration-700 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+                <Link 
+                  key={post.id}
+                  href={`/blog/${post.slug}`}
+                  className={`block transition-all duration-700 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
                   style={{ transitionDelay: `${500 + index * 100}ms` }}
                 >
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="px-3 py-1 bg-blue-500/20 text-blue-400 text-sm rounded-full">
-                      {post.category}
-                    </span>
-                    <span className="text-white/60 text-sm">{post.readTime}</span>
-                  </div>
-                  
-                  <h3 className="text-xl text-white/90 font-medium mb-3 group-hover:text-white transition-colors">
-                    {post.title}
-                  </h3>
-                  
-                  <p className="text-white/70 leading-relaxed mb-4">
-                    {post.excerpt}
-                  </p>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-gradient-to-r from-red-400 to-orange-400 rounded-full flex items-center justify-center">
-                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="text-white/80 text-sm font-medium">{post.author}</p>
-                        <p className="text-white/60 text-xs">{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                      </div>
+                  <article className="glass rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 cursor-pointer group h-full">
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="px-3 py-1 bg-blue-500/20 text-blue-400 text-sm rounded-full">
+                        {post.category}
+                      </span>
+                      <span className="text-white/60 text-sm">{post.readTime}</span>
                     </div>
                     
-                    <div className="flex items-center text-white/60 group-hover:text-white/80 transition-colors">
-                      <span className="text-sm mr-2">Read more</span>
-                      <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
+                    <h3 className="text-xl text-white/90 font-medium mb-3 group-hover:text-white transition-colors">
+                      {post.title}
+                    </h3>
+                    
+                    <p className="text-white/70 leading-relaxed mb-4">
+                      {post.excerpt}
+                    </p>
+                    
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-gradient-to-r from-red-400 to-orange-400 rounded-full flex items-center justify-center">
+                          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="text-white/80 text-sm font-medium">{post.author}</p>
+                          <p className="text-white/60 text-xs">{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center text-white/60 group-hover:text-white/80 transition-colors">
+                        <span className="text-sm mr-2">Read more</span>
+                        <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
                     </div>
-                  </div>
-                </article>
+                  </article>
+                </Link>
               ))}
             </div>
           </div>
