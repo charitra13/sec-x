@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.12.1-blue.svg)
+![Version](https://img.shields.io/badge/version-1.13-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -15,6 +15,7 @@ A modern, responsive cybersecurity company website built with Next.js, TypeScrip
 - **Contact Forms**: Dynamic contact and security assessment forms
 - **Team Showcase**: Interactive team member profiles with achievements
 - **Publications**: Security research and whitepapers section
+- **Blog Section**: Comprehensive blog layout with cybersecurity articles and insights
 - **SEO Optimized**: Proper meta tags, sitemap, and robots.txt
 - **Performance**: Optimized for speed and Core Web Vitals
 
@@ -41,6 +42,8 @@ sec-x/
 │   ├── about/
 │   │   └── page.tsx
 │   ├── team/
+│   │   └── page.tsx
+│   ├── blog/
 │   │   └── page.tsx
 │   ├── publications/
 │   │   └── page.tsx
@@ -118,6 +121,12 @@ Sec-X is a cybersecurity firm founded in 2023 in Indore, Madhya Pradesh, special
 - Detailed achievements and certifications
 - Expandable member information cards
 
+### Blog Page (`/blog`)
+- Comprehensive blog layout with cybersecurity articles
+- Featured categories: AI Security, Red Teaming, Penetration Testing, Security Architecture
+- Newsletter subscription functionality
+- Sample articles with metadata and excerpts
+
 ### Publications Page (`/publications`)
 - Security research papers and whitepapers
 - Categorized by expertise areas
@@ -186,7 +195,6 @@ npm run build
 
 ## 🌟 Future Enhancements
 
-- [ ] Blog/News section
 - [ ] Case studies page
 - [ ] Client testimonials
 - [ ] Dark/Light theme toggle
@@ -195,7 +203,16 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.12.1 (Latest)
+### Version 1.13 (Latest)
+- **Blog Feature Implementation**: Added comprehensive blog section with modern layout
+  - **Navigation Update**: Added Blog button to both desktop and mobile navigation menus
+  - **Blog Page Layout**: Created `/blog` page with hero section, featured categories, and article grid
+  - **Content Management**: Sample blog posts with metadata including author, date, category, and read time
+  - **Interactive Elements**: Newsletter subscription form and hover effects on articles
+  - **Responsive Design**: Full mobile and desktop compatibility with smooth animations
+  - **Category System**: Organized content by AI Security, Red Teaming, Penetration Testing, and Security Architecture
+
+### Version 1.12.1
 - **Contact Page Layout Fix**: Resolved overlay issue where navigation and footer appeared behind contact form
   - **Proper Page Integration**: Converted from fixed overlay positioning to normal page flow with `min-h-screen`
   - **Navigation Visibility**: Contact page now properly integrates with site navigation instead of covering it

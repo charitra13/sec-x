@@ -61,6 +61,9 @@ export default function Navigation() {
             <Link href="/team" className="text-white/60 hover:text-white transition-colors">
               Team
             </Link>
+            <Link href="/blog" className="text-white/60 hover:text-white transition-colors">
+              Blog
+            </Link>
             <Link href="/publications" className="text-white/60 hover:text-white transition-colors">
               Publications
             </Link>
@@ -103,6 +106,13 @@ export default function Navigation() {
           onClick={() => setIsMobileMenuOpen(false)}
         >
           Team
+        </Link>
+        <Link 
+          href="/blog" 
+          className="text-lg text-white/80 hover:text-white transition-colors"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          Blog
         </Link>
         <Link 
           href="/publications" 
