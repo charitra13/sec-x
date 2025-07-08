@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.14-blue.svg)
+![Version](https://img.shields.io/badge/version-1.14.1-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -212,7 +212,11 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.14 (Latest)
+### Version 1.14.1 (Latest)
+- **Bug Fix**: Corrected the API endpoint for fetching blog posts.
+  - **API URL Fix**: Removed the `/api/v1` prefix from the `baseURL` in `lib/api.ts` to align with the Express server's routing structure. This resolves the "Failed to load blog posts" error.
+
+### **Version 1.14**
 - **Blog Template System**: Implemented comprehensive blog post template with dynamic routing
   - **Dynamic Routes**: Added `/blog/[slug]` routing for individual blog posts
   - **Blog Post Template**: Created reusable BlogPostTemplate component with rich content formatting
