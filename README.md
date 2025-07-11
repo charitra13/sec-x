@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.14.1-blue.svg)
+![Version](https://img.shields.io/badge/version-1.14.3-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -212,7 +212,15 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.14.1 (Latest)
+### Version 1.14.3 (Latest)
+- **Bug Fix**: Resolved React hydration mismatch caused by browser extension altering DOM attributes.
+  - Added `suppressHydrationWarning` to the shared `Input` component so unexpected attributes injected by extensions (e.g., `data-sharkid`) no longer break hydration.
+
+### Version 1.14.2
+- **Bug Fix**: Corrected the backend API port in the frontend configuration.
+  - **API URL Fix**: Updated the `baseURL` in `lib/api.ts` to use port `8080` instead of `3000`, aligning the frontend's API requests with the running backend server. This resolves the 404 error when fetching blog posts.
+
+### Version 1.14.1
 - **Bug Fix**: Corrected the API endpoint for fetching blog posts.
   - **API URL Fix**: Removed the `/api/v1` prefix from the `baseURL` in `lib/api.ts` to align with the Express server's routing structure. This resolves the "Failed to load blog posts" error.
 
@@ -303,199 +311,4 @@ npm run build
 - **Navigation UX Enhancement**: Moved left and right navigation arrows closer to rotating cards
   - **Improved Positioning**: Reduced distance between arrows and card edges for better UX
     - Left arrow: Changed from `left-2 sm:left-4` to `left-1 sm:left-2`
-    - Right arrow: Changed from `right-2 sm:right-4` to `right-1 sm:right-2`
-    - Mobile: Now 4px from edges (reduced from 8px)
-    - Desktop: Now 8px from edges (reduced from 16px)
-  - **Enhanced User Experience**: More intuitive navigation controls with clearer visual connection
-    - Better accessibility and easier interaction
-    - Arrows feel more connected to the cards they control
-    - Improved visual hierarchy and navigation clarity
-
-### Version 1.11.1
-- **UI Polish**: Improved navigation dots spacing for cleaner visual hierarchy
-  - Added 10px additional spacing below rotating cards before navigation dots
-  - Enhanced visual separation between card stack and navigation controls
-  - Refined overall layout balance and professional appearance
-
-### Version 1.11
-- **Feature Cards Design**: Transformed bullet point features into modern rectangular cards
-  - **Glass-style Cards**: Converted simple bullet points into elegant glassmorphism feature cards
-    - Each feature now displayed in its own rounded rectangular card with glass effect
-    - Consistent styling with existing design system and rotating service cards
-    - Enhanced visual hierarchy and improved readability
-  - **Color-coded Icon System**: Maintained brand color scheme with enhanced visual presentation
-    - Blue card: Expert penetration testing and red team services
-    - Purple card: Cutting-edge AI security assessments
-    - Pink card: Free cybersecurity training programs  
-    - Green card: Hall of Fame recognition from Google & Mastercard
-  - **Responsive Grid Layout**: Optimized for all device sizes
-    - Single column layout on mobile devices for easy reading
-    - Two-column grid on larger screens for efficient space usage
-    - Proper spacing and padding for clean visual presentation
-  - **Interactive Elements**: Added hover effects for enhanced user engagement
-    - Subtle background color transitions on card hover
-    - Smooth animations maintaining modern user experience
-    - Consistent with overall site interaction patterns
-
-### Version 1.10
-- **Header Section Repositioning**: Moved main header content below rotating cards for enhanced visual flow
-  - **Layout Restructure**: Repositioned SecurityX branding, main title, and description section
-    - Rotating cards now appear first as the primary visual element
-    - Header section (SecurityX branding + "Advanced Cybersecurity for Digital Business" title) moved below cards
-    - Features section remains at the bottom for complete information hierarchy
-  - **Improved Animation Sequence**: Adjusted animation delays for smooth visual progression
-    - Cards animate first (0.2s delay) as the primary focus
-    - Arrow buttons and navigation dots follow (0.3s-0.4s delays)
-    - Header section appears after cards (0.5s-0.6s delays)
-    - Features and CTA sections complete the sequence (0.7s-0.8s delays)
-    - **Enhanced User Experience**: Cards-first approach creates immediate visual impact
-    - Services showcase takes precedence over introductory text
-    - Maintains all existing functionality and responsive design
-    - Preserves manual navigation controls and auto-rotation features
-
-### Version 1.9
-- **Manual Navigation Controls**: Added left/right arrow buttons for manual card navigation with seamless auto-rotation integration
-  - **Arrow Button Implementation**: Glass-styled left and right navigation arrows positioned on card stack sides
-    - Responsive design with smaller sizing on mobile devices (40x40px) and larger on desktop (48x48px)
-    - Glass-morphism styling with backdrop blur, white/10 background, and subtle borders
-    - Smooth hover effects with enhanced opacity and border visibility
-  - **Seamless Auto-Rotation Integration**: Manual controls work harmoniously with automatic rotation
-    - Timer reset functionality when user manually navigates to prevent abrupt behavior
-    - Auto-rotation continues after manual interaction with fresh 5-second intervals
-    - Animation state respect - buttons disabled during card transitions for smooth UX
-  - **Enhanced Navigation Dots**: Updated dot navigation to also reset auto-rotation timer
-    - Consistent behavior across all manual navigation methods
-    - Prevents conflicts between different navigation approaches
-  - **Accessibility & UX Improvements**: 
-    - Proper ARIA labels for screen reader compatibility
-    - Disabled state styling with reduced opacity during animations
-    - Touch-friendly button sizing optimized for mobile interaction
-    - Keyboard navigation support with proper focus management
-
-### Version 1.8
-- **Hero Section Layout Restructure**: Complete redesign of homepage hero section for improved user experience
-  - **Centered Layout Design**: Transformed from horizontal left/right layout to vertical centered layout
-    - Moved SecurityX branding, main title, and description to centered header section
-    - Enhanced readability with `max-w-3xl mx-auto` constraint for description text
-  - **Rotating Cards as Centerpiece**: Repositioned service cards to be the main focal point
-    - All 4 rotating cards (Penetration Testing, AI Security, Red Teaming, Free Training) now prominently centered
-    - Preserved all auto-rotation functionality and navigation dots below cards
-    - Maintained card animations and interactive features
-  - **Features Section Reorganization**: Relocated "quick about" features below rotating cards
-    - Transformed bullet-point features into responsive 2x2 grid layout
-    - Mobile-first responsive design (stacked on mobile, side-by-side on desktop)
-    - Enhanced visual balance with larger feature indicators (3x3 colored dots)
-  - **Improved Visual Hierarchy**: Created natural user flow from brand → services → features → CTA
-    - Adjusted animation timing sequences for smooth visual progression
-    - Maintained all responsive design principles and mobile optimization
-    - Preserved navigation bar and footer positioning and design integrity
-
-### Version 1.7
-- **Mesh Background Removal**: Disabled mesh background animations from all pages while preserving component
-  - Removed `MeshBackground` import and usage from root layout (`app/layout.tsx`)
-  - Maintained `MeshBackground.tsx` component file for future use
-  - Simplified layout structure with clean background design
-  - Improved page load performance by removing complex CSS animations
-
-### Version 1.6
-- **Advanced Mesh Background System**: Complete refactoring of mesh background animations with production-ready enhancements
-  - **Organic, Non-Linear Blob Movement**: Replaced predictable keyframes with randomized, multi-step transforms
-    - Natural drifting patterns across the viewport with varying translate, rotate, and scale values
-    - Eliminated centralized movement for more dynamic visual flow
-  - **Individual Animation Speeds**: Unique timing for each blob to ensure desynchronized movement
-    - Mesh1: 7.4s duration with no delay
-    - Mesh2: 9.1s duration with 1.1s delay  
-    - Mesh3: 6.3s duration with 2.3s delay
-    - Mesh4: 10.2s duration with 0.8s delay
-  - **Responsive Design Optimization**: Mobile-specific enhancements for better performance
-    - Reduced blob sizes (22vmin) for mobile devices
-    - Lowered opacity (0.35) and adjusted blur (2.5vmin) to prevent visual overload
-    - Proper transform-origin centering for consistent behavior
-  - **Accessibility Support**: Full compliance with user motion preferences
-    - Added `@media (prefers-reduced-motion: reduce)` rule to disable all animations
-    - Respects user accessibility settings with `!important` declarations
-
-### Version 1.5
-- **Organic Mesh Animations**: Enhanced mesh background blob animations for more natural, randomized movement
-  - Refined `@keyframes` animations with subtle variations in translate, rotate, and scale values
-  - Introduced staggered animation delays (0s, 0.7s, 1.2s, 2.1s) to prevent synchronized looping
-  - Adjusted animation durations (6.3s, 7.7s, 5.8s, 8s) to create non-repetitive cycles
-  - Implemented unique cubic-bezier timing functions for each blob for organic motion feel
-  - Added additional keyframe points (20%, 30%, 40%, etc.) for smoother intermediate transitions
-  - Enhanced mesh4 with subtle rotation variations for more dynamic movement
-  - Maintained smooth performance while eliminating predictable animation patterns
-
-### Version 1.4
-- **Mesh Background**: Implemented animated mesh triangle background component
-  - Created reusable `MeshBackground` React component with CSS animations  
-  - Extracted mesh animations from HTML and integrated into Next.js app
-  - Added site-wide animated background positioned behind all content
-  - Preserved all original animations (rotation, scaling, blur effects)
-  - Replaced aurora canvas with mesh background in root layout
-  - Added responsive design support with mobile scaling
-  - Removed central triangle shape while maintaining vibrant animated mesh blobs
-  - Enhanced mesh blob sizes by 30-50% for more immersive viewport coverage
-
-### Version 1.3
-- **Deployment Fix**: Resolved Next.js 15 useSearchParams Suspense boundary error
-  - Refactored contact page to use proper Suspense boundaries for client-side hooks
-  - Created separate ContactForm component wrapped in Suspense for better error handling
-  - Added elegant loading fallback with skeleton UI for contact page
-  - Fixed Vercel deployment issue that was preventing static site generation
-  - Improved user experience with smooth loading states
-
-### Version 1.2
-- **Typography System Overhaul**: Implemented dual-font system
-  - **Manrope** for all headings (h1-h6) with specific weights:
-    - h1: Extra Bold (800)
-    - h2: Bold (700) 
-    - h3, h4: Semi Bold (600)
-    - h5, h6: Medium (500)
-  - **Inter** for body text with specific weights:
-    - Body/paragraphs: Regular (400)
-    - Navigation: Medium (500)
-    - Buttons: Medium (500)
-    - Light text: Light (300)
-    - Emphasis: Semi Bold (600)
-  - Enhanced letter spacing for headings (-0.02em) for better readability
-  - Improved visual hierarchy and modern typography styling
-
-### Version 1.1
-- Enhanced UI/UX with glassmorphism effects
-- Improved responsive design
-- Added interactive team member profiles
-- Performance optimizations
-
-### Version 1.0
-- Initial release with Next.js 14
-- Basic company website structure
-- Contact forms and navigation
-
-## 📞 Contact
-
-- **Website**: [https://sec-x.com](https://sec-x.com)
-- **Email**: info@securityx.com
-- **LinkedIn**: [https://www.linkedin.com/company/sec-x](https://www.linkedin.com/company/sec-x)
-
-## 📝 License
-
-This project is proprietary software owned by Sec-X. All rights reserved.
-
-## 🔄 Version History
-
-### Version 1.1 (Latest)
-- **Enhancement**: Added escape key functionality to all modal/card components
-  - ContactForm modal can now be closed with Escape key
-  - Team member expanded cards can be closed with Escape key  
-  - Mobile navigation menu can be closed with Escape key
-  - Improved user experience and accessibility
-
-### Version 1.0
-- Initial release with core functionality
-- Modern responsive design with glassmorphism effects
-- Contact forms and team showcase
-- Publications section and SEO optimization
-
----
-
-**Built with ❤️ by the Sec-X Development Team**
+    - Right arrow: Changed from `right-2 sm:right-4` to `
