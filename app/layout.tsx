@@ -4,6 +4,8 @@ import "./globals.css";
 import Navigation from './components/Navigation';
 import ClientLayout from './components/ClientLayout';
 import Footer from './components/Footer';
+import { AuthProvider } from '@/context/AuthContext';
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,20 +39,23 @@ export default function RootLayout({
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" async></script>
       </head>
       <body className={`${inter.variable} h-full bg-black text-white font-[Inter] selection:bg-white/10 overflow-x-hidden antialiased`} suppressHydrationWarning>
-        <ClientLayout>
-          <div className="relative z-10 min-h-screen">
-            {/* Navigation */}
-            <Navigation />
-            
-            {/* Page Content */}
-            <main className="relative z-10">
-              {children}
-            </main>
-            
-            {/* Footer */}
-            <Footer />
-          </div>
-        </ClientLayout>
+        <AuthProvider>
+          <ClientLayout>
+            <div className="relative z-10 flex min-h-screen flex-col">
+              {/* Navigation */}
+              <Navigation />
+              
+              {/* Page Content */}
+              <main className="relative z-10 flex-grow pt-16">
+                {children}
+              </main>
+              
+              {/* Footer */}
+              <Footer />
+            </div>
+            <Toaster position="bottom-right" />
+          </ClientLayout>
+        </AuthProvider>
       </body>
     </html>
   );

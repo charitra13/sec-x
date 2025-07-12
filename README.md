@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.14.3-blue.svg)
+![Version](https://img.shields.io/badge/version-1.15.0-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -212,7 +212,41 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.14.3 (Latest)
+### Version 1.15.0 (Latest)
+- **Blog UI Redesign**: Complete transformation of blog page to match Publications page design
+  - **Publications-Style Layout**: Implemented dual-view system with list and detail views
+    - **List View**: Professional blog cards with cover images, category badges, author info, and statistics
+    - **Detail View**: Full blog post display with enhanced formatting, comments, and social sharing
+  - **New BlogCard Component**: Created comprehensive blog preview cards with:
+    - Cover image with hover animations and scale effects
+    - Category color-coding system (12 different categories)
+    - Author information with avatars and publication dates
+    - Tag system with truncation for space efficiency
+    - View counts, comment counts, and reading time statistics
+    - Professional glassmorphism styling with backdrop blur effects
+  - **Enhanced Content Formatting**: Implemented advanced content formatter utility
+    - **Markdown Support**: Automatic parsing of headings (H1, H2, H3), bullet points, and paragraphs
+    - **Professional Typography**: Consistent styling with `text-white/80`, `leading-relaxed`, and proper spacing
+    - **Code Block Support**: Formatted code snippets with syntax highlighting
+    - **Quote Formatting**: Styled blockquotes with border and background effects
+    - **List Formatting**: Custom bullet points with matching Publications page styling
+  - **Improved Blog Features**: Enhanced existing blog functionality
+    - **Comments Integration**: Professional comments section with glassmorphism styling
+    - **Social Sharing**: Enhanced sharing buttons with consistent design
+    - **Navigation**: Smooth transitions between list and detail views
+    - **Search Integration**: Maintained search functionality with improved layout
+  - **Visual Consistency**: Matched Publications page aesthetic throughout
+    - **Glass Morphism**: Consistent backdrop blur and border effects
+    - **Color Scheme**: Proper category color mapping and typography
+    - **Responsive Design**: Mobile-first approach with proper spacing
+    - **Animations**: Staggered loading animations and hover effects
+  - **Technical Improvements**: Enhanced performance and maintainability
+    - **Content Formatter Utility**: Reusable formatting system for blog content
+    - **TypeScript Support**: Full type safety for blog components
+    - **Next.js 15 Compatibility**: Updated params handling for dynamic routes
+    - **Build Optimization**: Maintained performance with new components
+
+### Version 1.14.3
 - **Bug Fix**: Resolved React hydration mismatch caused by browser extension altering DOM attributes.
   - Added `suppressHydrationWarning` to the shared `Input` component so unexpected attributes injected by extensions (e.g., `data-sharkid`) no longer break hydration.
 

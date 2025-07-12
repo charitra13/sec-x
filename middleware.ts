@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { jwtVerify } from 'jose';
+
+const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 // Simple in-memory store for rate limiting
 const ipRequests = new Map<string, { count: number; timestamp: number }>()
@@ -26,8 +29,27 @@ const BYPASS_PATHS = [
   '/public',
 ]
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
+  const token = request.cookies.get('token')?.value;
+
+  // Admin route protection
+  if (pathname.startsWith('/admin')) {
+    if (!token) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+
+    try {
+      const { payload } = await jwtVerify(token, secret) as any;
+      if (payload.role !== 'admin') {
+        // Redirect to a dedicated "unauthorized" page
+        return NextResponse.redirect(new URL('/unauthorized', request.url));
+      }
+    } catch (err) {
+      // Token is invalid or expired
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+  }
 
   // Check if the path should bypass middleware
   if (BYPASS_PATHS.some(path => pathname.startsWith(path))) {

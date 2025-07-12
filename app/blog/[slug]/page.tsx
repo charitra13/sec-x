@@ -1,15 +1,29 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import BlogPostTemplate from '@/app/components/BlogPostTemplate'
-import { getBlogPostBySlug, getAllBlogPosts } from '@/lib/blog-data'
+import { IBlog } from '@/types'
 
 interface PageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
-// Generate metadata for SEO
+async function getPost(slug: string): Promise<IBlog | undefined> {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/slug/${slug}`, { next: { revalidate: 60 } });
+    if (!res.ok) {
+      return undefined;
+    }
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error('Failed to fetch post:', error);
+    return undefined;
+  }
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const post = getBlogPostBySlug(params.slug)
+  const { slug } = await params
+  const post = await getPost(slug)
   
   if (!post) {
     return {
@@ -18,48 +32,41 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
   }
 
+  const { title, seo, excerpt, tags, author, publishedAt, createdAt, coverImage } = post;
+
   return {
-    title: `${post.title} | SecurityX Blog`,
-    description: post.metaDescription || post.excerpt,
-    keywords: post.tags.join(', '),
-    authors: [{ name: post.author }],
+    title: seo?.metaTitle || title,
+    description: seo?.metaDescription || excerpt,
+    keywords: seo?.metaKeywords || tags,
+    authors: [{ name: author.name }],
     openGraph: {
-      title: post.title,
-      description: post.metaDescription || post.excerpt,
+      title: seo?.metaTitle || title,
+      description: seo?.metaDescription || excerpt,
       type: 'article',
-      publishedTime: post.date,
-      authors: [post.author],
-      tags: post.tags,
-      siteName: 'SecurityX Blog',
+      publishedTime: (publishedAt || createdAt)?.toString(),
+      authors: [author.name],
+      tags: tags,
       images: [
         {
-          url: post.image,
+          url: coverImage,
           width: 1200,
           height: 630,
-          alt: post.title,
+          alt: title,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
-      description: post.metaDescription || post.excerpt,
-      images: [post.image],
+      title: seo?.metaTitle || title,
+      description: seo?.metaDescription || excerpt,
+      images: [coverImage],
     },
   }
 }
 
-// Generate static params for all blog posts
-export async function generateStaticParams() {
-  const posts = getAllBlogPosts()
-  
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
-}
-
-export default function BlogPostPage({ params }: PageProps) {
-  const post = getBlogPostBySlug(params.slug)
+export default async function BlogPostPage({ params }: PageProps) {
+  const { slug } = await params
+  const post = await getPost(slug)
 
   if (!post) {
     notFound()
