@@ -212,7 +212,19 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.15.2 (Latest)
+### Version 1.15.4
+- **Conditional Navigation**: Implemented conditional logic in the navigation bar.
+  - On the blog page (`/blog`), the "Contact" button is now hidden.
+  - A "Log In" button is displayed in its place, directing users to the `/login` page.
+  - This change applies to both desktop and mobile navigation menus for a consistent user experience.
+
+### Version 1.15.3 (Latest)
+- **Hero Animation Fix**: Resolved a visual glitch in the hero section's card animation that occurred on page reload.
+  - Replaced the CSS `animation` with a more stable CSS `transition` to prevent flickering during hydration.
+  - Used `isMounted` state to reliably trigger the fade-in effect only on the client-side, ensuring a smooth and professional entry animation on all loads.
+  - Removed redundant animation-delay styles and classes in favor of streamlined Tailwind CSS transition and opacity utilities.
+  
+### Version 1.15.2
 - **Missing Dependencies Resolution**: Comprehensive audit and installation of missing packages
   - **react-share**: Installed `react-share` package for social media sharing functionality
   - **@types/react-share**: Added TypeScript definitions for proper type support

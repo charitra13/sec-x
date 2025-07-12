@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
+  const isBlogPage = pathname.startsWith('/blog')
 
   // Add escape key functionality for mobile menu
   useEffect(() => {
@@ -67,12 +70,21 @@ export default function Navigation() {
             <Link href="/publications" className="text-white/60 hover:text-white transition-colors">
               Publications
             </Link>
-            <Link 
-              href="/contact"
-              className="glass-button px-4 py-2 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
-            >
-              Contact
-            </Link>
+            {isBlogPage ? (
+              <Link 
+                href="/login"
+                className="glass-button px-4 py-2 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
+              >
+                Log In
+              </Link>
+            ) : (
+              <Link 
+                href="/contact"
+                className="glass-button px-4 py-2 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
+              >
+                Contact
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -121,13 +133,23 @@ export default function Navigation() {
         >
           Publications
         </Link>
-        <Link
-          href="/contact"
-          onClick={() => setIsMobileMenuOpen(false)}
-          className="glass-button px-6 py-3 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
-        >
-          Contact
-        </Link>
+        {isBlogPage ? (
+          <Link
+            href="/login"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="glass-button px-6 py-3 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
+          >
+            Log In
+          </Link>
+        ) : (
+          <Link
+            href="/contact"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="glass-button px-6 py-3 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
+          >
+            Contact
+          </Link>
+        )}
       </div>
     </nav>
   )
