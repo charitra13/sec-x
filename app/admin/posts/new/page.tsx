@@ -2,7 +2,7 @@
 
 import { useForm, Controller } from 'react-hook-form';
 import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css';
+import 'react-quill-new/dist/quill.snow.css';
 import { useState } from 'react';
 import api from '@/lib/api';
 import toast from 'react-hot-toast';
@@ -16,7 +16,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 // Dynamically import ReactQuill to avoid SSR issues
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
 const categories = ['AI Security', 'Red Teaming', 'Penetration Testing', 'Security Architecture', 'Cybersecurity'] as const;
 const statuses = ['draft', 'published'] as const;

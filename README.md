@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.15.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.15.1-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -212,7 +212,16 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.15.0 (Latest)
+### Version 1.15.1 (Latest)
+- **Dependency Update**: Fixed React 19 compatibility issue
+  - **react-quill Migration**: Replaced `react-quill@^2.0.0` with `react-quill-new@^3.4.6`
+  - **React 19 Support**: Resolved Vercel deployment error caused by dependency conflict
+  - **Build Optimization**: Ensured compatibility with React 19 and Quill 2.0+
+  - **Admin Panel**: Updated rich text editor imports in post creation and editing pages
+  - **TypeScript Support**: Maintained full type safety with built-in declarations
+  - **Production Ready**: Successful build verification without dependency conflicts
+
+### Version 1.15.0
 - **Blog UI Redesign**: Complete transformation of blog page to match Publications page design
   - **Publications-Style Layout**: Implemented dual-view system with list and detail views
     - **List View**: Professional blog cards with cover images, category badges, author info, and statistics
