@@ -1,14 +1,16 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState, useRef, useCallback } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 export default function Home() {
   const [currentCard, setCurrentCard] = useState(1)
   const [isAnimating, setIsAnimating] = useState(false)
-  const [isInitialized, setIsInitialized] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
-  const initTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  // Refs to always have the latest values inside async callbacks
+  const isAnimatingRef = useRef(false)
+  const currentCardRef = useRef(1)
 
   // Card stack functionality
   const updateDots = (cardNumber: number) => {
@@ -26,92 +28,65 @@ export default function Home() {
     if (isAnimating || cardNumber === currentCard) return
     
     setIsAnimating(true)
+    isAnimatingRef.current = true
     const container = document.getElementById('services-cards')
     if (container) {
-      // Preserve existing classes and only update the active card class
-      const existingClasses = container.className.split(' ').filter(cls => 
-        !cls.startsWith('card-') || cls === 'card-stack'
-      )
-      container.className = `${existingClasses.join(' ')} card-${cardNumber}-active`
+      container.className = `card-stack card-${cardNumber}-active`
       setCurrentCard(cardNumber)
+      currentCardRef.current = cardNumber
       updateDots(cardNumber)
     }
     
     setTimeout(() => {
       setIsAnimating(false)
+      isAnimatingRef.current = false
     }, 500)
   }
 
   // Manual navigation functions
   const goToPreviousCard = () => {
-    if (isAnimating || !isInitialized) return
+    if (isAnimating) return
     const prevCard = currentCard === 1 ? 4 : currentCard - 1
     setActiveCard(prevCard)
     resetAutoRotation()
   }
 
   const goToNextCard = () => {
-    if (isAnimating || !isInitialized) return
+    if (isAnimating) return
     const nextCard = currentCard === 4 ? 1 : currentCard + 1
     setActiveCard(nextCard)
     resetAutoRotation()
   }
+
+  // Utility to create a fresh auto-rotation interval
+  const createAutoRotation = () => setInterval(() => {
+    if (isAnimatingRef.current) return
+    const nextCard = currentCardRef.current === 4 ? 1 : currentCardRef.current + 1
+    setActiveCard(nextCard)
+  }, 5000)
 
   // Reset auto-rotation timer
   const resetAutoRotation = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current)
     }
-    if (isInitialized) {
-      startAutoRotation()
-    }
+    intervalRef.current = createAutoRotation()
   }
 
-  // Start auto-rotation
-  const startAutoRotation = useCallback(() => {
-    if (!isInitialized) return
-    
-    intervalRef.current = setInterval(() => {
-      if (!isAnimating) {
-        setCurrentCard(prev => {
-          const nextCard = prev === 4 ? 1 : prev + 1
-          // Use requestAnimationFrame to ensure proper timing
-          requestAnimationFrame(() => {
-            setActiveCard(nextCard)
-          })
-          return nextCard
-        })
-      }
-    }, 5000)
-  }, [isAnimating, isInitialized])
+  // Keep refs up-to-date with state changes
+  useEffect(() => { isAnimatingRef.current = isAnimating }, [isAnimating])
+  useEffect(() => { currentCardRef.current = currentCard }, [currentCard])
 
-  // Initialize the component after the fade-in animation completes
+  // Kick-off auto-rotation once on mount
   useEffect(() => {
-    // Wait for the initial fade-in animation to complete
-    // (0.2s delay + 0.8s duration = 1s total)
-    initTimeoutRef.current = setTimeout(() => {
-      setIsInitialized(true)
-    }, 1200) // Add a small buffer to ensure animation is complete
-
-    return () => {
-      if (initTimeoutRef.current) {
-        clearTimeout(initTimeoutRef.current)
-      }
-    }
-  }, [])
-
-  // Start auto-rotation only after initialization
-  useEffect(() => {
-    if (isInitialized) {
-      startAutoRotation()
-    }
-    
+    setIsMounted(true)
+    intervalRef.current = createAutoRotation()
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current)
       }
     }
-  }, [isInitialized, startAutoRotation])
+  }, [])
 
   return (
     <main className="relative min-h-screen pt-16">
@@ -123,7 +98,7 @@ export default function Home() {
             {/* Left Arrow Button */}
             <button
               onClick={goToPreviousCard}
-              disabled={isAnimating || !isInitialized}
+              disabled={isAnimating}
               className="absolute left-1 sm:left-2 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed opacity-0 animate-fade-in"
               style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
               aria-label="Previous card"
@@ -134,7 +109,12 @@ export default function Home() {
             </button>
 
             {/* Card Stack */}
-            <section id="services-cards" className="card-stack card-1-active opacity-0 animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
+            <section
+              id="services-cards"
+              className={`card-stack card-1-active transition-opacity duration-500 ease-out ${
+                isMounted ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
             
             {/* Card 1: Penetration Testing */}
             <article className="card card-1 relative h-[32rem] glass rounded-2xl shadow-2xl">
@@ -320,7 +300,7 @@ export default function Home() {
           {/* Right Arrow Button */}
           <button
             onClick={goToNextCard}
-            disabled={isAnimating || !isInitialized}
+            disabled={isAnimating}
             className="absolute right-1 sm:right-2 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed opacity-0 animate-fade-in"
             style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
             aria-label="Next card"
@@ -333,10 +313,10 @@ export default function Home() {
 
                   {/* Navigation Dots */}
           <div className="flex space-x-3 opacity-0 animate-fade-in mb-8 mt-2.5" style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}>
-          <button onClick={() => { setActiveCard(1); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-blue-400 transition-all duration-300 scale-125" disabled={!isInitialized}></button>
-          <button onClick={() => { setActiveCard(2); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" disabled={!isInitialized}></button>
-          <button onClick={() => { setActiveCard(3); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" disabled={!isInitialized}></button>
-          <button onClick={() => { setActiveCard(4); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" disabled={!isInitialized}></button>
+          <button onClick={() => { setActiveCard(1); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-blue-400 transition-all duration-300 scale-125"></button>
+          <button onClick={() => { setActiveCard(2); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
+          <button onClick={() => { setActiveCard(3); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
+          <button onClick={() => { setActiveCard(4); resetAutoRotation(); }} className="nav-dot w-2 h-2 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300"></button>
         </div>
               </div>
 

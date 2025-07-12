@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.16.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.15.2-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -212,27 +212,7 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.16.0 (Latest)
-- **Hero Section Card Animation Fix**: Resolved critical animation timing issue that caused cards to display in stuck/odd positions on page load
-  - **Animation Timing Resolution**: Fixed conflict between initial fade-in animation and auto-rotation logic
-    - **Initialization State**: Added `isInitialized` state to prevent auto-rotation until fade-in completes
-    - **Delayed Auto-rotation**: Auto-rotation now starts after 1.2 seconds, ensuring smooth initial animation
-    - **Class Name Preservation**: Improved `setActiveCard` function to preserve existing classes while updating active state
-    - **Race Condition Fix**: Replaced `setTimeout` with `requestAnimationFrame` for better animation timing
-  - **Enhanced User Experience**: Improved interaction controls to prevent actions during initialization
-    - **Button State Management**: Navigation arrows and dots disabled until animation system is ready
-    - **Smooth Transitions**: Eliminated jarring card position changes during page load and reload
-    - **Consistent Animation**: Cards now properly fade in and begin rotation smoothly
-  - **Technical Improvements**: Enhanced animation system reliability and performance
-    - **Memory Management**: Added proper cleanup for initialization timeout
-    - **State Synchronization**: Improved coordination between animation states and user interactions
-    - **Responsive Design**: Maintained full responsiveness while fixing animation timing
-  - **Quality Assurance**: Thoroughly tested animation behavior across different loading scenarios
-    - **Page Load**: Cards properly initialize and begin rotation without visual glitches
-    - **Page Reload**: Animation system consistently resets and functions correctly
-    - **User Interaction**: Manual navigation works seamlessly with auto-rotation system
-
-### Version 1.15.2
+### Version 1.15.2 (Latest)
 - **Missing Dependencies Resolution**: Comprehensive audit and installation of missing packages
   - **react-share**: Installed `react-share` package for social media sharing functionality
   - **@types/react-share**: Added TypeScript definitions for proper type support
