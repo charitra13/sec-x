@@ -1,6 +1,6 @@
 {
   "name": "securityx-website",
-  "version": "1.15.3",
+  "version": "1.15.2",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000 --hostname 0.0.0.0",
@@ -43,6 +43,7 @@
     "@types/node": "20.17.16",
     "@types/react": "18.3.18",
     "@types/react-dom": "^18.2.18",
+    "@types/react-share": "^3.0.3",
     "eslint": "^8.56.0",
     "eslint-config-next": "^15.1.7",
     "postcss": "^8",

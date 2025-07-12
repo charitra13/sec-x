@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.15.3-blue.svg)
+![Version](https://img.shields.io/badge/version-1.15.2-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -212,20 +212,18 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.15.3 (Latest)
-- **Dependency Fixes**: Resolved missing dependencies causing build failures
-  - **react-share Package**: Added missing `react-share` dependency for SocialShareButtons component
-  - **@radix-ui/react-avatar Package**: Added missing `@radix-ui/react-avatar` dependency for Avatar component
-  - **Facebook Share Button Fix**: Corrected FacebookShareButton props from `quote` to `hashtag`
-  - **Build Verification**: Ensured successful production build with all dependencies resolved
-  - **TypeScript Compatibility**: Fixed all TypeScript errors in social sharing components
-
-### Version 1.15.2
-- **Version Synchronization Fix**: Corrected package-lock.json version inconsistency
-  - **Package Lock Update**: Fixed version mismatch between package.json (1.15.1) and package-lock.json (3.0.0)
-  - **Dependency Sync**: Ensured both files now correctly reflect version 1.15.2
-  - **Build Stability**: Resolved potential build issues caused by version inconsistencies
-  - **Project Integrity**: Maintained consistent versioning across all project files
+### Version 1.15.2 (Latest)
+- **Missing Dependencies Resolution**: Comprehensive audit and installation of missing packages
+  - **react-share**: Installed `react-share` package for social media sharing functionality
+  - **@types/react-share**: Added TypeScript definitions for proper type support
+  - **@radix-ui/react-avatar**: Installed missing Radix UI Avatar component
+  - **Security Updates**: Fixed security vulnerabilities through `npm audit fix`
+    - Resolved brace-expansion Regular Expression Denial of Service vulnerability
+    - Fixed Next.js Authorization Bypass and Information exposure vulnerabilities
+    - Updated to Next.js 15.3.5 with security patches
+  - **TypeScript Fixes**: Corrected FacebookShareButton prop from `quote` to `title`
+  - **Build Verification**: Successful production build with all dependencies resolved
+  - **Performance Optimization**: Updated 36 packages and added 3 new security patches
 
 ### Version 1.15.1
 - **Dependency Update**: Fixed React 19 compatibility issue
