@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.15.2-blue.svg)
+![Version](https://img.shields.io/badge/version-1.15.3-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -212,7 +212,15 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.15.2 (Latest)
+### Version 1.15.3 (Latest)
+- **Dependency Fixes**: Resolved missing dependencies causing build failures
+  - **react-share Package**: Added missing `react-share` dependency for SocialShareButtons component
+  - **@radix-ui/react-avatar Package**: Added missing `@radix-ui/react-avatar` dependency for Avatar component
+  - **Facebook Share Button Fix**: Corrected FacebookShareButton props from `quote` to `hashtag`
+  - **Build Verification**: Ensured successful production build with all dependencies resolved
+  - **TypeScript Compatibility**: Fixed all TypeScript errors in social sharing components
+
+### Version 1.15.2
 - **Version Synchronization Fix**: Corrected package-lock.json version inconsistency
   - **Package Lock Update**: Fixed version mismatch between package.json (1.15.1) and package-lock.json (3.0.0)
   - **Dependency Sync**: Ensured both files now correctly reflect version 1.15.2

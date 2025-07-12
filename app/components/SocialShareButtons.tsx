@@ -20,7 +20,7 @@ const SocialShareButtons = ({ url, title }: SocialShareButtonsProps) => {
       <TwitterShareButton url={url} title={title}>
         <TwitterIcon size={32} round />
       </TwitterShareButton>
-      <FacebookShareButton url={url} quote={title}>
+      <FacebookShareButton url={url} hashtag="#cybersecurity">
         <FacebookIcon size={32} round />
       </FacebookShareButton>
       <LinkedinShareButton url={url} title={title}>
