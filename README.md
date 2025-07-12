@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.15.1-blue.svg)
+![Version](https://img.shields.io/badge/version-1.15.2-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -212,7 +212,14 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.15.1 (Latest)
+### Version 1.15.2 (Latest)
+- **Version Synchronization Fix**: Corrected package-lock.json version inconsistency
+  - **Package Lock Update**: Fixed version mismatch between package.json (1.15.1) and package-lock.json (3.0.0)
+  - **Dependency Sync**: Ensured both files now correctly reflect version 1.15.2
+  - **Build Stability**: Resolved potential build issues caused by version inconsistencies
+  - **Project Integrity**: Maintained consistent versioning across all project files
+
+### Version 1.15.1
 - **Dependency Update**: Fixed React 19 compatibility issue
   - **react-quill Migration**: Replaced `react-quill@^2.0.0` with `react-quill-new@^3.4.6`
   - **React 19 Support**: Resolved Vercel deployment error caused by dependency conflict
