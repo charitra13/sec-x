@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.15.2-blue.svg)
+![Version](https://img.shields.io/badge/version-1.15.4-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -212,13 +212,13 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.15.4
+### Version 1.15.4 (Latest)
 - **Conditional Navigation**: Implemented conditional logic in the navigation bar.
   - On the blog page (`/blog`), the "Contact" button is now hidden.
   - A "Log In" button is displayed in its place, directing users to the `/login` page.
   - This change applies to both desktop and mobile navigation menus for a consistent user experience.
 
-### Version 1.15.3 (Latest)
+### Version 1.15.3
 - **Hero Animation Fix**: Resolved a visual glitch in the hero section's card animation that occurred on page reload.
   - Replaced the CSS `animation` with a more stable CSS `transition` to prevent flickering during hydration.
   - Used `isMounted` state to reliably trigger the fade-in effect only on the client-side, ensuring a smooth and professional entry animation on all loads.
