@@ -17,6 +17,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "SecurityX - Advanced Cybersecurity for Digital Business",
   description: "Comprehensive security solutions designed to protect, detect, and respond to cyber threats. Enhanced security posture, compliance, and resilience for modern businesses.",
+  // Add Content Security Policy as a meta tag to bypass Vercel's header overrides
+  other: {
+    'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.vercel.app; style-src 'self' 'unsafe-inline'; img-src * data:; font-src 'self'; connect-src 'self' *.vercel.app https://sec-x-backend.onrender.com;",
+  },
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
