@@ -13,7 +13,7 @@ const nextConfig = {
               style-src 'self' 'unsafe-inline' *.vercel.app;
               img-src 'self' data: https: *.vercel.app;
               font-src 'self' *.vercel.app;
-              connect-src 'self' *.vercel.app ${process.env.NEXT_PUBLIC_API_URL ? new URL(process.env.NEXT_PUBLIC_API_URL).origin : 'https://sec-x-backend.onrender.com'};
+              connect-src 'self' *.vercel.app https://sec-x-backend.onrender.com;
             `.replace(/\s{2,}/g, ' ').trim()
           }
         ]
