@@ -1,18 +1,10 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-// Determine the base URL dynamically.  
-//  • On the **client** we use a relative `/api` path so the request is always made to the same
-//    origin that served the Next.js app (avoids mixed-content errors in production where the
-//    site is likely served over HTTPS). A rewrite rule in `next.config.mjs` forwards these
-//    requests to the real backend.
-//  • On the **server** (SSR / getServerSideProps / Route Handlers) we fall back to the absolute
-//    URL supplied via the `NEXT_PUBLIC_API_URL` env-var, or to the local default during
-//    development.
-const isBrowser = typeof window !== 'undefined';
-
+// Use the environment variable for both client and server-side requests
+// This ensures all requests go directly to the backend instead of relying on Next.js rewrites
 const api = axios.create({
-  baseURL: isBrowser ? '/api' : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api',
   headers: {
     'Content-Type': 'application/json',
   },
