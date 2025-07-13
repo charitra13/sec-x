@@ -7,14 +7,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: `
-              default-src 'self';
-              script-src 'self' 'unsafe-eval' 'unsafe-inline' *.vercel.app;
-              style-src 'self' 'unsafe-inline' *.vercel.app;
-              img-src 'self' data: https: *.vercel.app;
-              font-src 'self' *.vercel.app;
-              connect-src 'self' *.vercel.app https://sec-x-backend.onrender.com;
-            `.replace(/\s{2,}/g, ' ').trim()
+            value: "default-src 'self'; connect-src 'self' https://sec-x-backend.onrender.com; script-src 'self';"
           }
         ]
       }

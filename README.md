@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.15.4-blue.svg)
+![Version](https://img.shields.io/badge/version-1.15.5-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -211,6 +211,12 @@ npm run build
 - [ ] Advanced animations
 
 ## 📝 Changelog
+
+### Version 1.15.5 (Latest)
+- **Security Enhancement**: Added a strict Content Security Policy (CSP).
+  - Defined CSP headers in `vercel.json` to enforce security policies on Vercel deployments.
+  - Mirrored the CSP headers in `next.config.mjs` for consistent security during local development.
+  - The policy restricts sources for scripts and connections, enhancing protection against XSS and other injection attacks.
 
 ### Version 1.15.4 (Latest)
 - **Conditional Navigation**: Implemented conditional logic in the navigation bar.
