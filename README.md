@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.15.6-blue.svg)
+![Version](https://img.shields.io/badge/version-1.16.0-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -212,7 +212,23 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.15.6 (Latest)
+### Version 1.16.0 (Latest)
+- **Critical Fix**: Resolved Content Security Policy (CSP) blocking external CDN scripts.
+  - **Three.js CDN Support**: Fixed CSP violation preventing Three.js from loading from `cdnjs.cloudflare.com`
+  - **Extended CDN Whitelist**: Added support for trusted CDNs including:
+    - `cdnjs.cloudflare.com` for Three.js library
+    - `unpkg.com` for Lucide icons
+    - `cdn.tailwindcss.com` for Tailwind CSS
+    - `fonts.googleapis.com` and `fonts.gstatic.com` for Google Fonts
+  - **Comprehensive CSP Update**: Updated CSP policies across all configuration files:
+    - `middleware.ts` - Main runtime CSP policy
+    - `next.config.mjs` - Development and build-time CSP
+    - `vercel.json` - Deployment CSP configuration
+    - `app/layout.tsx` - Meta tag CSP fallback
+  - **Background Animation Fix**: Aurora background animation now loads properly without CSP violations
+  - **Enhanced Security**: Maintained strict security while allowing necessary trusted external resources
+
+### Version 1.15.6
 - **Bug Fix**: Resolved Content Security Policy (CSP) blocking API calls to backend.
   - Fixed CSP directive in `middleware.ts` to allow connections to `https://sec-x-backend.onrender.com`
   - Resolved "Network Error" caused by CSP blocking axios requests to the backend API

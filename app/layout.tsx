@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description: "Comprehensive security solutions designed to protect, detect, and respond to cyber threats. Enhanced security posture, compliance, and resilience for modern businesses.",
   // Add Content Security Policy as a meta tag to bypass Vercel's header overrides
   other: {
-    'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.vercel.app; style-src 'self' 'unsafe-inline'; img-src * data:; font-src 'self'; connect-src 'self' *.vercel.app https://sec-x-backend.onrender.com;",
+    'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com unpkg.com cdn.tailwindcss.com *.vercel.app; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.googleapis.com fonts.gstatic.com; connect-src 'self' *.vercel.app https://sec-x-backend.onrender.com; img-src * data: https: blob:;",
   },
   icons: {
     icon: [
