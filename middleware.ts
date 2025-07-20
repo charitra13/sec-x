@@ -120,7 +120,7 @@ export async function middleware(request: NextRequest) {
   // More permissive CSP for crawlers
   const cspValue = isBot
     ? "default-src 'self' * data: blob: 'unsafe-inline' 'unsafe-eval'"
-    : "default-src 'self' vercel.app *.vercel.app; script-src 'self' 'unsafe-inline' 'unsafe-eval' vercel.app *.vercel.app; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; connect-src 'self' *.vercel.app;"
+    : "default-src 'self' vercel.app *.vercel.app; script-src 'self' 'unsafe-inline' 'unsafe-eval' vercel.app *.vercel.app; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; connect-src 'self' *.vercel.app https://sec-x-backend.onrender.com;"
 
   response.headers.set('Content-Security-Policy', cspValue)
 

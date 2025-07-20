@@ -1,6 +1,6 @@
 # Sec-X - Advanced Cybersecurity Solutions
 
-![Version](https://img.shields.io/badge/version-1.15.5-blue.svg)
+![Version](https://img.shields.io/badge/version-1.15.6-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
@@ -212,7 +212,13 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.15.5 (Latest)
+### Version 1.15.6 (Latest)
+- **Bug Fix**: Resolved Content Security Policy (CSP) blocking API calls to backend.
+  - Fixed CSP directive in `middleware.ts` to allow connections to `https://sec-x-backend.onrender.com`
+  - Resolved "Network Error" caused by CSP blocking axios requests to the backend API
+  - This fixes blog loading, authentication, user management, and all backend API functionality
+
+### Version 1.15.5
 - **Security Enhancement**: Added a strict Content Security Policy (CSP).
   - Defined CSP headers in `vercel.json` to enforce security policies on Vercel deployments.
   - Mirrored the CSP headers in `next.config.mjs` for consistent security during local development.
