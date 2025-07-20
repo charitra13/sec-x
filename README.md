@@ -212,7 +212,16 @@ npm run build
 
 ## 📝 Changelog
 
-### Version 1.16.0 (Latest)
+### Version 1.17.0 (Latest)
+- **Password Visibility Toggle**: Added show/hide password functionality to login and register pages.
+  - **New PasswordInput Component**: Created a custom password input component with integrated show/hide toggle
+  - **Eye Icon Integration**: Uses Lucide React icons (Eye/EyeOff) for intuitive password visibility control
+  - **Consistent Theming**: Follows the website's design system with proper hover states and accessibility
+  - **Enhanced UX**: Users can now toggle password visibility on both login and register forms
+  - **Accessibility**: Includes proper ARIA labels and screen reader support
+  - **Responsive Design**: Works seamlessly across all device sizes
+
+### Version 1.16.0
 - **Critical Fix**: Resolved Content Security Policy (CSP) blocking external CDN scripts.
   - **Three.js CDN Support**: Fixed CSP violation preventing Three.js from loading from `cdnjs.cloudflare.com`
   - **Extended CDN Whitelist**: Added support for trusted CDNs including:
