@@ -101,6 +101,13 @@ security-x/
 
 ## 📝 Changelog
 
+### Version 1.17.2
+- **Contact Page S Logo Opacity Enhancement**: Increased S logo visibility for better prominence
+  - **Full Opacity**: Added `opacity-100` class to ensure maximum visibility
+  - **Text Glow Effect**: Added white text shadow `textShadow: '0 0 10px rgba(255,255,255,0.8)'` for enhanced prominence
+  - **Visual Impact**: S logo now appears brighter and more prominent as the central focal point
+  - **User Experience**: Improved readability and visual hierarchy in the contact page design
+
 ### Version 1.17.1
 - **Contact Page S Logo Alignment Fix**: Fixed misalignment of central "S" logo with SVG connection lines
   - **Perfect Positioning**: Replaced Tailwind positioning classes with inline styles using `style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}`
