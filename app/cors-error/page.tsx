@@ -109,7 +109,7 @@ export default function CORSErrorPage() {
             </h3>
             <p className="text-sm text-gray-300">
               This error occurs when the frontend and backend are hosted on different domains 
-              and the backend hasn't authorized this domain. This is a security feature that 
+              and the backend hasn&apos;t authorized this domain. This is a security feature that 
               prevents unauthorized websites from accessing the API.
             </p>
             {process.env.NODE_ENV === 'development' && (

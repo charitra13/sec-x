@@ -4,7 +4,14 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## 📋 Version History
 
-### v1.18.0 - CORS Implementation (Current)
+### v1.18.1 - Build Error Fix (Current)
+- **ESLint Error Resolution**: Fixed unescaped single quote character in CORS error page
+  - **Build Fix**: Replaced unescaped single quote (`'`) with HTML entity (`&apos;`) in `app/cors-error/page.tsx`
+  - **Deployment Success**: Resolved Vercel build failure that was preventing deployment
+  - **Code Quality**: Maintained proper HTML entity usage for apostrophes in React components
+  - **Technical Implementation**: Fixed line 112 in CORS error page text content
+
+### v1.18.0 - CORS Implementation
 - **Enhanced Error Handling**: Comprehensive CORS error handling in API client
 - **CORS Error Page**: User-friendly error page for CORS issues
 - **Environment Configuration**: Separate configs for development and production
