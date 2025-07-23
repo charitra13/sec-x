@@ -23,7 +23,7 @@ const registerSchema = z.object({
 type RegisterValues = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
-  const { login } = useAuth();
+  const { register: registerUser } = useAuth();
   const router = useRouter();
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<RegisterValues>({
     resolver: zodResolver(registerSchema)
@@ -31,12 +31,9 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterValues) => {
     try {
-      const response = await api.post('/auth/register', data);
-      toast.success(response.data.message || 'Registration successful!');
-      login(response.data.token);
-      router.push('/admin/dashboard');
+      await registerUser(data.name, data.email, data.password);
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Registration failed');
+      // Error handling is already done in the AuthContext
     }
   };
 

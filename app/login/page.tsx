@@ -30,12 +30,9 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginValues) => {
     try {
-      const response = await api.post('/auth/login', data);
-      toast.success(response.data.message || 'Login successful!');
-      login(response.data.token);
-      router.push('/admin/dashboard');
+      await login(data.email, data.password);
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Login failed');
+      // Error handling is already done in the AuthContext
     }
   };
 

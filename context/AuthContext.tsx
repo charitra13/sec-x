@@ -5,14 +5,7 @@ import Cookies from 'js-cookie';
 import api, { isCORSError } from '../lib/api';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-
-interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  role: 'admin' | 'reader';
-  avatar?: string;
-}
+import { IUser } from '@/types';
 
 interface AuthContextType {
   user: IUser | null;

@@ -4,7 +4,26 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## 📋 Version History
 
-### v1.18.1 - Build Error Fix (Current)
+### v1.18.2 - TypeScript Build Fixes (Current)
+- **TypeScript Error Resolution**: Fixed critical build errors preventing Vercel deployment
+  - **IUser Interface Unification**: Resolved `Property '_id' does not exist on type 'IUser'` error
+    - Updated AuthContext to use global IUser type from `@/types` instead of local interface
+    - Fixed inconsistency between local IUser (using `id`) and global IUser (using `_id`)
+    - Resolved CommentList component TypeScript error on line 71
+  - **Authentication Flow Fixes**: Corrected function signature mismatches in auth components
+    - Fixed login page: Removed redundant API call, used AuthContext's login function properly
+    - Fixed register page: Used AuthContext's register function instead of manual API calls
+    - Eliminated "Expected 2 arguments, but got 1" TypeScript errors
+  - **Code Architecture Improvement**: Centralized authentication logic in AuthContext
+    - Removed duplicate authentication code from login and register pages
+    - Enhanced error handling consistency across authentication flows
+    - Maintained all existing functionality while fixing type safety issues
+  - **Build Success**: Achieved successful TypeScript compilation and build process
+    - ✅ Compiled successfully with all TypeScript errors resolved
+    - ✅ Vercel deployment compatibility restored
+    - ✅ All authentication features remain fully functional
+
+### v1.18.1 - Build Error Fix
 - **ESLint Error Resolution**: Fixed unescaped single quote character in CORS error page
   - **Build Fix**: Replaced unescaped single quote (`'`) with HTML entity (`&apos;`) in `app/cors-error/page.tsx`
   - **Deployment Success**: Resolved Vercel build failure that was preventing deployment
