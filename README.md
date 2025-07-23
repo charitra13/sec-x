@@ -101,6 +101,14 @@ security-x/
 
 ## 📝 Changelog
 
+### Version 1.17.5
+- **Contact Page S Logo Box Dark Enhancement**: Changed background from white to black opacity for better contrast
+  - **Background Opacity**: Updated background to `rgba(0, 0, 0, 0.20)` for 20% black opacity
+  - **Enhanced Contrast**: Dark background provides better contrast with white S text and glow effect
+  - **Backdrop Filter**: Maintained `backdropFilter: 'blur(10px)'` for glassmorphism effect
+  - **Visual Impact**: S logo box now has a more sophisticated dark glass appearance
+  - **Design Improvement**: Better readability and more prominent central focal point
+
 ### Version 1.17.4
 - **Contact Page S Logo Box Opacity Enhancement**: Increased opacity of translucent glass box around S icon
   - **Background Opacity**: Enhanced background to `rgba(255, 255, 255, 0.15)` for 15% white opacity
