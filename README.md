@@ -101,6 +101,14 @@ security-x/
 
 ## 📝 Changelog
 
+### Version 1.17.4
+- **Contact Page S Logo Box Opacity Enhancement**: Increased opacity of translucent glass box around S icon
+  - **Background Opacity**: Enhanced background to `rgba(255, 255, 255, 0.15)` for 15% white opacity
+  - **Backdrop Filter**: Maintained `backdropFilter: 'blur(10px)'` for glassmorphism effect
+  - **Direct Styling**: Replaced `glass` class with inline styles for precise opacity control
+  - **Visual Impact**: S logo box now appears more prominent and visible while preserving elegant glass aesthetic
+  - **Design Balance**: Perfect balance between visibility and translucent glassmorphism design
+
 ### Version 1.17.3
 - **Contact Page Connector Lines Enhancement**: Extended connection lines by 25% for more elegant UI design
   - **Line Extension**: Increased connector line length from center to corner icons by 25%

@@ -328,7 +328,7 @@ function ContactForm() {
                 
                 {/* Central logo/brand */}
                 <div className="absolute" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                  <div className="w-16 h-16 glass flex items-center justify-center inner-glow border border-blue-400/50 rounded-2xl animate-schema-pulse">
+                  <div className="w-16 h-16 flex items-center justify-center inner-glow border border-blue-400/50 rounded-2xl animate-schema-pulse" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)', backdropFilter: 'blur(10px)' }}>
                     <div className="text-2xl font-bold text-white opacity-100" style={{ textShadow: '0 0 10px rgba(255,255,255,0.8)' }}>S</div>
                   </div>
                 </div>
