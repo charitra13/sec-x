@@ -1,241 +1,115 @@
-# Sec-X - Advanced Cybersecurity Solutions
+# SecurityX - Advanced Cybersecurity for Digital Business
 
-![Version](https://img.shields.io/badge/version-1.16.0-blue.svg)
-![Next.js](https://img.shields.io/badge/Next.js-14.0-black.svg)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)
-![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38bdf8.svg)
-
-A modern, responsive cybersecurity company website built with Next.js, TypeScript, and Tailwind CSS. Showcasing advanced security services including red teaming, penetration testing, and AI security assessments.
+Comprehensive security solutions designed to protect, detect, and respond to cyber threats. Enhanced security posture, compliance, and resilience for modern businesses.
 
 ## 🚀 Features
 
-- **Modern Design**: Clean, professional interface with glassmorphism effects
-- **Dual-Font Typography**: Manrope for headings, Inter for body text with optimized weights
-- **Responsive Layout**: Fully responsive across all devices
-- **Contact Forms**: Dynamic contact and security assessment forms
-- **Team Showcase**: Interactive team member profiles with achievements
-- **Publications**: Security research and whitepapers section
-- **Blog Section**: Comprehensive blog layout with cybersecurity articles and insights
-- **SEO Optimized**: Proper meta tags, sitemap, and robots.txt
-- **Performance**: Optimized for speed and Core Web Vitals
+- **Advanced Security Solutions**: Penetration testing, AI security, red teaming, and training
+- **Professional Blog**: Industry insights and cybersecurity expertise
+- **Team Showcase**: Meet our security experts and researchers
+- **Publications**: Research papers and security publications
+- **Contact System**: Get in touch for security assessments and consultations
+- **Admin Panel**: Content management and user administration
+- **Authentication**: Secure login and user management
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Next.js 14 with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: Custom React components
-- **State Management**: React Context API
-- **Deployment**: Vercel-ready
+- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS
+- **Backend**: Node.js, Express, MongoDB
+- **Authentication**: JWT with secure cookie storage
+- **UI Components**: Radix UI, Lucide Icons
+- **Styling**: Glassmorphism effects, custom gradients
+- **Deployment**: Vercel (Frontend), Render (Backend)
+
+## 📦 Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/security-x.git
+   cd security-x
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env.local
+   ```
+   Update the environment variables with your configuration.
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+# Backend API URL
+NEXT_PUBLIC_API_URL=https://your-backend-url.com
+
+# Authentication
+NEXTAUTH_SECRET=your-secret-key
+NEXTAUTH_URL=http://localhost:3000
+```
+
+### Backend Setup
+
+The backend API should be running and accessible. Update the API URL in `lib/api.ts` to match your backend configuration.
 
 ## 📁 Project Structure
 
 ```
-sec-x/
-├── app/
-│   ├── components/
-│   │   ├── ContactForm.tsx
-│   │   ├── ContactFormProvider.tsx
-│   │   ├── Navigation.tsx
-│   │   ├── Footer.tsx
-│   │   └── ClientLayout.tsx
-│   ├── about/
-│   │   └── page.tsx
-│   ├── team/
-│   │   └── page.tsx
-│   ├── blog/
-│   │   └── page.tsx
-│   ├── publications/
-│   │   └── page.tsx
-│   ├── layout.tsx
-│   ├── page.tsx
-│   └── globals.css
-├── public/
-│   ├── robots.txt
-│   ├── sitemap.xml
-│   └── favicon.ico
-└── README.md
+security-x/
+├── app/                    # Next.js app directory
+│   ├── components/        # Reusable UI components
+│   ├── admin/            # Admin panel pages
+│   ├── blog/             # Blog pages and components
+│   ├── contact/          # Contact form and layout
+│   └── globals.css       # Global styles
+├── components/           # Shared UI components
+├── context/             # React context providers
+├── lib/                 # Utility functions and API
+├── types/               # TypeScript type definitions
+└── public/              # Static assets
 ```
 
-## 🚀 Getting Started
+## 🚀 Deployment
 
-### Prerequisites
+### Frontend (Vercel)
 
-- Node.js 18+ 
-- npm or yarn package manager
+1. **Connect your repository** to Vercel
+2. **Set environment variables** in Vercel dashboard
+3. **Deploy** - Vercel will automatically build and deploy
 
-### Installation
+### Backend (Render)
 
-1. Clone the repository:
-```bash
-git clone https://github.com/charitra13/sec-x.git
-cd sec-x
-```
-
-2. Install dependencies:
-```bash
-npm install
-# or
-yarn install
-```
-
-3. Run the development server:
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## 🏢 About Sec-X
-
-Sec-X is a cybersecurity firm founded in 2023 in Indore, Madhya Pradesh, specializing in:
-
-- **Red Team Operations**: Advanced penetration testing and security assessments
-- **AI Security**: Cutting-edge AI system security validation
-- **Penetration Testing**: Comprehensive vulnerability assessments
-- **Security Training**: Free cybersecurity education programs
-- **Incident Response**: Rapid security incident handling
-
-### Team Recognition
-
-- Hall of Fame recognition from Google and Mastercard
-- Industry certifications: OSCP, eWPTXv2, CRTP, Security+
-- Expertise in ethical hacking and responsible disclosure
-
-## 📄 Pages Overview
-
-### Home Page (`/`)
-- Hero section with service overview
-- Company introduction with animated elements
-- Call-to-action buttons for contact and assessments
-
-### About Page (`/about`)
-- Company story and mission
-- Vision and innovation focus
-- Service offerings and team expertise
-
-### Team Page (`/team`)
-- Interactive team member profiles
-- Detailed achievements and certifications
-- Expandable member information cards
-
-### Blog Page (`/blog`)
-- Comprehensive blog layout with cybersecurity articles
-- Featured categories: AI Security, Red Teaming, Penetration Testing, Security Architecture
-- Newsletter subscription functionality
-- Clickable article cards with navigation to individual posts
-- Dynamic routing for individual blog posts using slug-based URLs
-
-### Individual Blog Posts (`/blog/[slug]`)
-- Professional blog post template with rich content formatting
-- Complete SEO metadata including OpenGraph and Twitter cards
-- Social sharing buttons for Twitter and LinkedIn
-- Author information and publication date
-- Tag system for content categorization
-- Related articles section and back navigation
-
-### Publications Page (`/publications`)
-- Security research papers and whitepapers
-- Categorized by expertise areas
-- Regular updates on cybersecurity trends
-
-## 🎨 Key Components
-
-### ContactForm
-Dynamic modal form component with:
-- Contact form for general inquiries
-- Security assessment form with service selection
-- Form validation and success messaging
-
-### Navigation
-Responsive navigation with:
-- Desktop and mobile layouts
-- Contact form integration
-- Smooth transitions and hover effects
-
-### ContactFormProvider
-Context-based state management for:
-- Global contact form state
-- Modal management across pages
-- Type-specific form rendering
-
-## 🔧 Development
-
-### Available Scripts
-
-```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-```
-
-### Build & Deployment
-
-The project is optimized for deployment on Vercel:
-
-```bash
-npm run build
-```
-
-## 📈 SEO & Performance
-
-- **Sitemap**: Auto-generated for all pages
-- **Robots.txt**: Search engine optimization
-- **Meta Tags**: Comprehensive SEO metadata
-- **Performance**: Optimized images and code splitting
-- **Accessibility**: WCAG compliance considerations
-
-## 🔒 Security Features
-
-- Input validation on all forms
-- XSS protection
-- CSRF protection through Next.js
-- Secure headers configuration
-
-## 📱 Responsive Design
-
-- Mobile-first approach
-- Tablet and desktop optimization
-- Touch-friendly interactions
-- Cross-browser compatibility
-
-## 🌟 Future Enhancements
-
-- [ ] Case studies page
-- [ ] Client testimonials
-- [ ] Dark/Light theme toggle
-- [ ] Multi-language support
-- [ ] Advanced animations
+1. **Create a new Web Service** on Render
+2. **Connect your backend repository**
+3. **Set environment variables** for database and secrets
+4. **Deploy** the backend service
 
 ## 📝 Changelog
 
-### Version 1.17.0 (Latest)
-- **Password Visibility Toggle**: Added show/hide password functionality to login and register pages.
-  - **New PasswordInput Component**: Created a custom password input component with integrated show/hide toggle
-  - **Eye Icon Integration**: Uses Lucide React icons (Eye/EyeOff) for intuitive password visibility control
-  - **Consistent Theming**: Follows the website's design system with proper hover states and accessibility
-  - **Enhanced UX**: Users can now toggle password visibility on both login and register forms
-  - **Accessibility**: Includes proper ARIA labels and screen reader support
-  - **Responsive Design**: Works seamlessly across all device sizes
-
 ### Version 1.16.0
-- **Critical Fix**: Resolved Content Security Policy (CSP) blocking external CDN scripts.
-  - **Three.js CDN Support**: Fixed CSP violation preventing Three.js from loading from `cdnjs.cloudflare.com`
-  - **Extended CDN Whitelist**: Added support for trusted CDNs including:
-    - `cdnjs.cloudflare.com` for Three.js library
-    - `unpkg.com` for Lucide icons
-    - `cdn.tailwindcss.com` for Tailwind CSS
-    - `fonts.googleapis.com` and `fonts.gstatic.com` for Google Fonts
-  - **Comprehensive CSP Update**: Updated CSP policies across all configuration files:
-    - `middleware.ts` - Main runtime CSP policy
-    - `next.config.mjs` - Development and build-time CSP
-    - `vercel.json` - Deployment CSP configuration
-    - `app/layout.tsx` - Meta tag CSP fallback
-  - **Background Animation Fix**: Aurora background animation now loads properly without CSP violations
-  - **Enhanced Security**: Maintained strict security while allowing necessary trusted external resources
+- **Navigation UX Improvement**: Removed conditional button logic for consistent navigation experience.
+  - **Eliminated Conditional Logic**: Removed the `isBlogPage` check that changed "Contact" to "Log In" on blog pages
+  - **Permanent Button Display**: Both "Contact" and "Log In" buttons are now always visible in the navigation
+  - **Consistent User Experience**: Users can access both contact and login functionality from any page
+  - **Desktop Navigation**: Added both buttons side by side with proper spacing
+  - **Mobile Navigation**: Both buttons are available in the mobile menu with vertical layout
+  - **Improved Accessibility**: Clear, predictable navigation without confusing button changes
+  - **Technical Implementation**: Updated Navigation component to remove conditional rendering and add permanent button layout
 
 ### Version 1.15.6
 - **Bug Fix**: Resolved Content Security Policy (CSP) blocking API calls to backend.
@@ -249,7 +123,7 @@ npm run build
   - Mirrored the CSP headers in `next.config.mjs` for consistent security during local development.
   - The policy restricts sources for scripts and connections, enhancing protection against XSS and other injection attacks.
 
-### Version 1.15.4 (Latest)
+### Version 1.15.4
 - **Conditional Navigation**: Implemented conditional logic in the navigation bar.
   - On the blog page (`/blog`), the "Contact" button is now hidden.
   - A "Log In" button is displayed in its place, directing users to the `/login` page.

@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation'
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const pathname = usePathname()
-  const isBlogPage = pathname.startsWith('/blog')
 
   // Add escape key functionality for mobile menu
   useEffect(() => {
@@ -70,21 +69,20 @@ export default function Navigation() {
             <Link href="/publications" className="text-white/60 hover:text-white transition-colors">
               Publications
             </Link>
-            {isBlogPage ? (
-              <Link 
-                href="/login"
-                className="glass-button px-4 py-2 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
-              >
-                Log In
-              </Link>
-            ) : (
+            <div className="flex items-center space-x-4">
               <Link 
                 href="/contact"
                 className="glass-button px-4 py-2 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
               >
                 Contact
               </Link>
-            )}
+              <Link 
+                href="/login"
+                className="glass-button px-4 py-2 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
+              >
+                Log In
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -133,15 +131,7 @@ export default function Navigation() {
         >
           Publications
         </Link>
-        {isBlogPage ? (
-          <Link
-            href="/login"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="glass-button px-6 py-3 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
-          >
-            Log In
-          </Link>
-        ) : (
+        <div className="flex flex-col space-y-4">
           <Link
             href="/contact"
             onClick={() => setIsMobileMenuOpen(false)}
@@ -149,7 +139,14 @@ export default function Navigation() {
           >
             Contact
           </Link>
-        )}
+          <Link
+            href="/login"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="glass-button px-6 py-3 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
+          >
+            Log In
+          </Link>
+        </div>
       </div>
     </nav>
   )
