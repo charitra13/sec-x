@@ -101,6 +101,27 @@ security-x/
 
 ## 📝 Changelog
 
+### Version 1.18.0
+- **Logo Branding Update**: Replaced lock icons with sec-x-logo.png in navigation and footer
+  - **Navigation Component**: Replaced lock SVG icon with sec-x-logo.png image in the navigation bar
+    - Removed orange gradient background container for cleaner appearance
+    - Added Next.js Image component for optimized logo display
+    - Set logo size to 32x32px (w-8 h-8) for proper visibility
+    - Maintained aspect ratio with object-contain class
+  - **Footer Component**: Replaced lock SVG icon with sec-x-logo.png image in the footer
+    - Removed orange gradient background container for consistent branding
+    - Added Next.js Image component for optimized logo display
+    - Set logo size to 24x24px (w-6 h-6) for footer scaling
+    - Maintained aspect ratio with object-contain class
+  - **Brand Consistency**: Unified logo usage across the entire website
+    - Consistent sec-x-logo.png display in both navigation and footer
+    - Professional shield and circuit board design prominently featured
+    - Enhanced brand recognition and visual identity
+  - **Technical Implementation**: Added Image import from next/image in both components
+    - Proper alt text for accessibility
+    - Optimized image loading with Next.js Image component
+    - Clean, direct logo display without background containers
+
 ### Version 1.17.6
 - **Contact Page Wave Background Removal**: Removed animated wave visualizer background for cleaner design
   - **Canvas Elements Removed**: Eliminated all canvas elements from contact page, success state, and loading component
