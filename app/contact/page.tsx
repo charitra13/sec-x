@@ -284,12 +284,12 @@ function ContactForm() {
                   </defs>
                   
                   <g stroke="url(#connectionGradient)" strokeWidth="2" fill="none">
-                    <path className="connector" d="M200,125 L120,80 M200,125 L280,80 M200,125 L120,170 M200,125 L280,170" />
+                    <path className="connector" d="M200,125 L100,68 M200,125 L300,68 M200,125 L100,182 M200,125 L300,182" />
                     <circle cx="200" cy="125" r="4" fill="#3b82f6" />
-                    <circle cx="120" cy="80" r="3" fill="#4f46e5" />
-                    <circle cx="280" cy="80" r="3" fill="#8b5cf6" />
-                    <circle cx="120" cy="170" r="3" fill="#f59e0b" />
-                    <circle cx="280" cy="170" r="3" fill="#ef4444" />
+                    <circle cx="100" cy="68" r="3" fill="#4f46e5" />
+                    <circle cx="300" cy="68" r="3" fill="#8b5cf6" />
+                    <circle cx="100" cy="182" r="3" fill="#f59e0b" />
+                    <circle cx="300" cy="182" r="3" fill="#ef4444" />
                   </g>
                 </svg>
                 
