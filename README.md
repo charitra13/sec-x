@@ -101,6 +101,15 @@ security-x/
 
 ## 📝 Changelog
 
+### Version 1.17.1
+- **Contact Page S Logo Alignment Fix**: Fixed misalignment of central "S" logo with SVG connection lines
+  - **Perfect Positioning**: Replaced Tailwind positioning classes with inline styles using `style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}`
+  - **Enhanced Visibility**: Added `inner-glow` class and updated border to `border-blue-400/50` for better prominence
+  - **Animation Optimization**: Moved `animate-schema-pulse` class to inner div for proper animation flow
+  - **SVG Alignment**: Logo now perfectly aligns with connection lines convergence point at coordinates (200,125) in 400x250 viewBox
+  - **Visual Impact**: S logo appears more alive and prominent with full opacity and enhanced glow effects
+  - **Technical Accuracy**: Inline styles ensure exact positioning at 50% horizontal and vertical alignment
+
 ### Version 1.17.0
 - **Contact Page Color Theme Fix**: Updated contact page to match the website's main black/white/glass aesthetic
   - **CSS Classes Updated**: Modified `.card-border`, `.gradient-border`, and `.inner-glow` classes in globals.css
