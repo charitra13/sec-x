@@ -2,6 +2,18 @@
 
 Comprehensive security solutions designed to protect, detect, and respond to cyber threats. Enhanced security posture, compliance, and resilience for modern businesses.
 
+## 📋 Version History
+
+### v1.18.0 - CORS Implementation (Current)
+- **Enhanced Error Handling**: Comprehensive CORS error handling in API client
+- **CORS Error Page**: User-friendly error page for CORS issues
+- **Environment Configuration**: Separate configs for development and production
+- **Authentication CORS Handling**: CORS-aware authentication with proper error states
+- **Custom CORSError Class**: Specialized error handling for CORS violations
+- **Network Error Detection**: Improved handling of network and CORS-related errors
+- **Session Management**: Enhanced session expiration and redirect handling
+- **Toast Notifications**: User-friendly error messages for CORS issues
+
 ## 🚀 Features
 
 - **Advanced Security Solutions**: Penetration testing, AI security, red teaming, and training
@@ -55,12 +67,25 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 Create a `.env.local` file in the root directory:
 
 ```env
-# Backend API URL
-NEXT_PUBLIC_API_URL=https://your-backend-url.com
+# API Configuration
+NEXT_PUBLIC_API_URL=http://localhost:8080/api
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 
-# Authentication
-NEXTAUTH_SECRET=your-secret-key
-NEXTAUTH_URL=http://localhost:3000
+# Feature Flags
+NEXT_PUBLIC_ENABLE_CORS_DEBUG=true
+NEXT_PUBLIC_SHOW_API_ERRORS=true
+```
+
+For production, create a `.env.production` file:
+
+```env
+# API Configuration
+NEXT_PUBLIC_API_URL=https://your-backend-domain.com/api
+NEXT_PUBLIC_APP_URL=https://sec-x.netlify.app
+
+# Feature Flags
+NEXT_PUBLIC_ENABLE_CORS_DEBUG=false
+NEXT_PUBLIC_SHOW_API_ERRORS=false
 ```
 
 ### Backend Setup
