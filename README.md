@@ -101,6 +101,15 @@ security-x/
 
 ## 📝 Changelog
 
+### Version 1.17.6
+- **Contact Page Wave Background Removal**: Removed animated wave visualizer background for cleaner design
+  - **Canvas Elements Removed**: Eliminated all canvas elements from contact page, success state, and loading component
+  - **Animation Code Cleanup**: Removed ContactFormWithCanvas function and entire wave animation useEffect
+  - **React Import Cleanup**: Removed React import that was only used for wave animation
+  - **Simplified Architecture**: Updated main export to use ContactForm directly instead of wrapper component
+  - **Performance Improvement**: Reduced JavaScript bundle size and eliminated canvas rendering overhead
+  - **Visual Impact**: Clean black background without animated waves for better focus on contact form content
+
 ### Version 1.17.5
 - **Contact Page S Logo Box Dark Enhancement**: Changed background from white to black opacity for better contrast
   - **Background Opacity**: Updated background to `rgba(0, 0, 0, 0.20)` for 20% black opacity
