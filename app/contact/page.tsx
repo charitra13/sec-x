@@ -72,7 +72,7 @@ function CountryCodeDropdown({ selectedCode, onSelectCode }: {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center px-3 py-3 glass border border-white/20 text-white rounded-lg focus:border-indigo-400 focus:outline-none transition min-w-[80px] w-full sm:w-auto"
+        className="flex items-center px-3 py-3 glass border border-white/20 text-white rounded-lg focus:border-blue-400 focus:outline-none transition min-w-[80px] w-full sm:w-auto"
       >
         <span className="mr-1">{selectedCountry.flag}</span>
         <span className="text-sm">{selectedCountry.code}</span>
@@ -89,7 +89,7 @@ function CountryCodeDropdown({ selectedCode, onSelectCode }: {
               placeholder="Search countries..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-3 py-2 bg-white/10 backdrop-blur border border-white/20 rounded text-white placeholder-white/50 text-sm focus:outline-none focus:border-indigo-400"
+              className="w-full px-3 py-2 bg-white/10 backdrop-blur border border-white/20 rounded text-white placeholder-white/50 text-sm focus:outline-none focus:border-blue-400"
             />
           </div>
           <div className="max-h-48 overflow-y-auto">
@@ -244,7 +244,7 @@ function ContactForm() {
             <p className="text-white/70 mb-6">We&apos;ll get back to you within 24 hours.</p>
             <Link 
               href="/" 
-              className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg font-medium hover:from-indigo-600 hover:to-purple-700 transition duration-200 transform hover:scale-[1.02] shadow-lg inline-block"
+              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition duration-200 transform hover:scale-[1.02] shadow-lg inline-block"
             >
               Return to Home
             </Link>
@@ -277,7 +277,7 @@ function ContactForm() {
                 <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 250">
                   <defs>
                     <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" style={{stopColor:'#4f46e5', stopOpacity: 0.8}} />
+                      <stop offset="0%" style={{stopColor:'#3b82f6', stopOpacity: 0.8}} />
                       <stop offset="50%" style={{stopColor:'#3b82f6', stopOpacity: 1}} />
                       <stop offset="100%" style={{stopColor:'#8b5cf6', stopOpacity: 0.8}} />
                     </linearGradient>
@@ -295,15 +295,15 @@ function ContactForm() {
                 
                 {/* Floating feature icons */}
                 <div className="absolute top-8 left-8 icon-float">
-                  <div className="w-12 h-12 glass rounded-xl flex items-center justify-center border border-indigo-400/30 inner-glow">
-                    <svg className="w-6 h-6 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+                                      <div className="w-12 h-12 glass rounded-xl flex items-center justify-center border border-white/20">
+                                          <svg className="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                     </svg>
                   </div>
                 </div>
                 
                 <div className="absolute top-8 right-8 icon-float">
-                  <div className="w-12 h-12 glass rounded-xl flex items-center justify-center border border-purple-400/30 inner-glow">
+                                      <div className="w-12 h-12 glass rounded-xl flex items-center justify-center border border-white/20">
                     <svg className="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -311,7 +311,7 @@ function ContactForm() {
                 </div>
                 
                 <div className="absolute bottom-8 left-8 icon-float">
-                  <div className="w-12 h-12 glass rounded-xl flex items-center justify-center border border-orange-400/30 inner-glow">
+                                      <div className="w-12 h-12 glass rounded-xl flex items-center justify-center border border-white/20">
                     <svg className="w-6 h-6 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clipRule="evenodd" />
                     </svg>
@@ -319,7 +319,7 @@ function ContactForm() {
                 </div>
                 
                 <div className="absolute bottom-8 right-8 icon-float">
-                  <div className="w-12 h-12 glass rounded-xl flex items-center justify-center border border-blue-400/30 inner-glow">
+                                      <div className="w-12 h-12 glass rounded-xl flex items-center justify-center border border-white/20">
                     <svg className="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
                     </svg>
@@ -328,7 +328,7 @@ function ContactForm() {
                 
                 {/* Central logo/brand */}
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-schema-pulse">
-                  <div className="w-16 h-16 glass flex items-center justify-center inner-glow border-blue-400/50 border rounded-2xl">
+                  <div className="w-16 h-16 glass flex items-center justify-center border border-white/20 rounded-2xl">
                     <div className="text-2xl font-bold text-white">S</div>
                   </div>
                 </div>
@@ -350,7 +350,7 @@ function ContactForm() {
             {/* Right Side - Form */}
             <div className="w-full lg:w-1/2 p-8 flex flex-col justify-center">
               <div className="max-w-sm mx-auto w-full">
-                <span className="inline-block px-3 py-1 glass text-indigo-300 rounded-full text-xs font-medium mb-6 border border-indigo-400/30">
+                <span className="inline-block px-3 py-1 glass text-blue-300 rounded-full text-xs font-medium mb-6 border border-white/20">
                   {isAssessment ? 'Security Assessment' : 'Contact Us'}
                 </span>
                 
@@ -365,7 +365,7 @@ function ContactForm() {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 glass rounded-lg border border-white/20 text-white placeholder-white/50 focus:border-indigo-400 focus:outline-none transition" 
+                      className="w-full px-4 py-3 glass rounded-lg border border-white/20 text-white placeholder-white/50 focus:border-blue-400 focus:outline-none transition" 
                       placeholder="Enter your name"
                     />
                   </div>
@@ -381,7 +381,7 @@ function ContactForm() {
                       className={`w-full px-4 py-3 glass rounded-lg border text-white placeholder-white/50 focus:outline-none transition ${
                         validationErrors.email 
                           ? 'border-red-400 focus:border-red-400' 
-                          : 'border-white/20 focus:border-indigo-400'
+                          : 'border-white/20 focus:border-blue-400'
                       }`}
                       placeholder="you@example.com"
                     />
@@ -397,7 +397,7 @@ function ContactForm() {
                       name="company"
                       value={formData.company}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 glass rounded-lg border border-white/20 text-white placeholder-white/50 focus:border-indigo-400 focus:outline-none transition" 
+                      className="w-full px-4 py-3 glass rounded-lg border border-white/20 text-white placeholder-white/50 focus:border-blue-400 focus:outline-none transition" 
                       placeholder="Your company name"
                     />
                   </div>
@@ -417,7 +417,7 @@ function ContactForm() {
                         className={`w-full sm:flex-1 px-4 py-3 glass rounded-lg border text-white placeholder-white/50 focus:outline-none transition ${
                           validationErrors.phone 
                             ? 'border-red-400 focus:border-red-400' 
-                            : 'border-white/20 focus:border-indigo-400'
+                            : 'border-white/20 focus:border-blue-400'
                         }`}
                         placeholder="(555) 123-4567"
                       />
@@ -435,7 +435,7 @@ function ContactForm() {
                         required
                         value={formData.serviceType}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 glass border border-white/20 rounded-lg text-white focus:outline-none focus:border-indigo-400 transition"
+                        className="w-full px-4 py-3 glass border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400 transition"
                       >
                         <option value="" className="bg-black">Select a service</option>
                         <option value="red-teaming" className="bg-black">Red Team Assessment</option>
@@ -457,7 +457,7 @@ function ContactForm() {
                       rows={4}
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 glass rounded-lg border border-white/20 text-white placeholder-white/50 focus:border-indigo-400 focus:outline-none transition resize-none"
+                      className="w-full px-4 py-3 glass rounded-lg border border-white/20 text-white placeholder-white/50 focus:border-blue-400 focus:outline-none transition resize-none"
                       placeholder={isAssessment 
                         ? "Tell us about your current security setup and what you'd like to assess..."
                         : "How can we help you with your cybersecurity needs?"
@@ -468,7 +468,7 @@ function ContactForm() {
                   <button 
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full px-4 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg font-medium hover:from-indigo-600 hover:to-purple-700 transition duration-200 transform hover:scale-[1.02] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition duration-200 transform hover:scale-[1.02] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                   </button>
@@ -477,7 +477,7 @@ function ContactForm() {
                 <div className="mt-6 text-center">
                   <p className="text-white/60 text-sm">
                     Need immediate assistance? 
-                    <Link href="/" className="text-indigo-400 hover:text-indigo-300 transition ml-1">
+                    <Link href="/" className="text-blue-400 hover:text-blue-300 transition ml-1">
                       Call us
                     </Link>
                   </p>
@@ -558,9 +558,9 @@ function ContactFormWithCanvas() {
         }
         
         const intensity = Math.min(1, freq * 0.3)
-        const r = 79 + intensity * 100
-        const g = 70 + intensity * 130
-        const b = 229
+        const r = 59 + intensity * 100
+        const g = 130 + intensity * 126
+        const b = 246
         
         ctx.lineWidth = 1 + (i * 0.3)
         ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.6)`

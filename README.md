@@ -101,6 +101,26 @@ security-x/
 
 ## 📝 Changelog
 
+### Version 1.17.0
+- **Contact Page Color Theme Fix**: Updated contact page to match the website's main black/white/glass aesthetic
+  - **CSS Classes Updated**: Modified `.card-border`, `.gradient-border`, and `.inner-glow` classes in globals.css
+    - Replaced indigo-heavy theme with clean white/glass effects using `rgba(255, 255, 255, 0.05)` backgrounds
+    - Updated borders to use `rgba(255, 255, 255, 0.2)` instead of indigo colors  
+    - Simplified box-shadow effects with white glow instead of multi-color indigo/purple shadows
+  - **Component Color Updates**: Replaced all indigo color references with blue-400 accents
+    - Updated all form input focus states from `focus:border-indigo-400` to `focus:border-blue-400`
+    - Changed visual icon borders from colored borders to consistent `border-white/20`
+    - Updated badge styling from `text-indigo-300` and `border-indigo-400/30` to `text-blue-300` and `border-white/20`
+    - Modified CTA buttons from `from-indigo-500 to-purple-600` to `from-blue-500 to-purple-600`
+    - Updated "Call us" link from `text-indigo-400` to `text-blue-400`
+  - **Wave Visualizer Colors**: Updated canvas animation colors to match blue theme
+    - Changed wave base colors from indigo RGB(79,70,229) to blue RGB(59,130,246)
+    - Maintained smooth animations while using consistent color palette
+  - **Visual Consistency**: Contact page now seamlessly blends with the rest of the website
+    - Same black background with subtle glass effects as other pages
+    - Consistent blue accent color usage throughout the site
+    - Professional glassmorphism styling with white borders and transparent backgrounds
+
 ### Version 1.16.0
 - **Navigation UX Improvement**: Removed conditional button logic for consistent navigation experience.
   - **Eliminated Conditional Logic**: Removed the `isBlogPage` check that changed "Contact" to "Log In" on blog pages
