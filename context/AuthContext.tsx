@@ -72,15 +72,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { data } = await api.post('/auth/login', { email, password });
       
       // Store token in cookie (backend also sets httpOnly cookie)
-      if (data.data.token) {
-        Cookies.set('token', data.data.token, { 
+      if (data.token) {
+        Cookies.set('token', data.token, { 
           expires: 7,
           secure: process.env.NODE_ENV === 'production',
           sameSite: 'lax'
         });
       }
 
-      setUser(data.data.user);
+      setUser(data.user);
       toast.success('Login successful!');
       
       // Redirect based on role

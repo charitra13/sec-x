@@ -4,7 +4,17 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## 📋 Version History
 
-### v1.18.2 - TypeScript Build Fixes (Current)
+### v1.18.3 - API Response Structure Update (Current)
+- **Authentication API Response Fix**: Updated AuthContext to handle new API response structure
+  - **Data Structure Change**: Modified login function to use flattened response structure
+    - Changed `data.data.token` to `data.token` for token access
+    - Changed `data.data.user` to `data.user` for user data access
+    - Updated cookie storage logic to use direct token property
+  - **API Compatibility**: Ensured authentication flow works with updated backend response format
+  - **Maintained Functionality**: All login, logout, and user management features remain fully functional
+  - **Error Handling**: Preserved existing CORS and network error handling mechanisms
+
+### v1.18.2 - TypeScript Build Fixes
 - **TypeScript Error Resolution**: Fixed critical build errors preventing Vercel deployment
   - **IUser Interface Unification**: Resolved `Property '_id' does not exist on type 'IUser'` error
     - Updated AuthContext to use global IUser type from `@/types` instead of local interface
