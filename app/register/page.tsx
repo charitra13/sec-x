@@ -33,7 +33,21 @@ export default function RegisterPage() {
     try {
       await registerUser(data.name, data.email, data.password);
     } catch (error: any) {
-      // Error handling is already done in the AuthContext
+      // Only handle specific errors that aren't already handled in AuthContext
+      if (error.name === 'CORSError') {
+        // CORS errors are already handled in AuthContext
+        return;
+      }
+      
+      // Handle network errors specifically
+      if (!error.response && error.message === 'Network Error') {
+        // Network errors are already handled in API interceptor
+        return;
+      }
+      
+      // For other errors, let AuthContext handle them
+      // but prevent additional error propagation
+      console.error('Registration error:', error);
     }
   };
 

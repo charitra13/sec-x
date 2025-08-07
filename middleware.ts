@@ -41,12 +41,61 @@ export async function middleware(request: NextRequest) {
 
     try {
       const { payload } = await jwtVerify(token, secret) as any;
-      if (payload.role !== 'admin') {
-        // Redirect to a dedicated "unauthorized" page
+      
+      // DEBUG: Log JWT payload structure in development
+      if (process.env.NODE_ENV === 'development') {
+        console.log('🔐 Middleware JWT Payload:', {
+          hasRole: !!payload.role,
+          role: payload.role,
+          hasUserId: !!payload.id || !!payload.userId || !!payload.user_id,
+          userId: payload.id || payload.userId || payload.user_id,
+          exp: payload.exp,
+          iat: payload.iat,
+          fullPayload: payload
+        });
+      }
+      
+      // ROBUST: Check for role in different possible locations
+      let userRole;
+      if (payload.role) {
+        userRole = payload.role;
+      } else if (payload.user?.role) {
+        userRole = payload.user.role;
+      } else if (payload.data?.role) {
+        userRole = payload.data.role;
+      } else {
+        console.error('❌ No role found in JWT payload:', payload);
+        return NextResponse.redirect(new URL('/login', request.url));
+      }
+      
+      // Verify admin role
+      if (userRole !== 'admin') {
+        console.log('🚫 Non-admin user attempting to access admin route:', userRole);
         return NextResponse.redirect(new URL('/unauthorized', request.url));
       }
+      
+      console.log('✅ Admin access granted for role:', userRole);
     } catch (err) {
+      console.error('❌ JWT verification failed in middleware:', err);
       // Token is invalid or expired
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+  }
+
+  // Regular user dashboard protection
+  if (pathname.startsWith('/dashboard') && pathname !== '/dashboard') {
+    // For any nested dashboard routes, ensure user is authenticated
+    if (!token) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+
+    try {
+      const { payload } = await jwtVerify(token, secret) as any;
+      
+      // Just verify the token is valid, don't restrict by role for regular dashboard
+      console.log('✅ Authenticated user accessing dashboard:', payload.role || 'unknown role');
+    } catch (err) {
+      console.error('❌ JWT verification failed for dashboard access:', err);
       return NextResponse.redirect(new URL('/login', request.url));
     }
   }

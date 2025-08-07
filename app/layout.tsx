@@ -6,6 +6,7 @@ import ClientLayout from './components/ClientLayout';
 import Footer from './components/Footer';
 import { AuthProvider } from '@/context/AuthContext';
 import { Toaster } from 'react-hot-toast';
+import AuthTestingSuite from '@/components/AuthTestingSuite';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -58,6 +59,7 @@ export default function RootLayout({
               <Footer />
             </div>
             <Toaster position="bottom-right" />
+            <AuthTestingSuite />
           </ClientLayout>
         </AuthProvider>
       </body>

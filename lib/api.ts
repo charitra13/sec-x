@@ -2,6 +2,11 @@ import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'ax
 import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
 
+// Toast management to prevent duplicates
+let isShowingAuthToast = false;
+let isShowingCORSToast = false;
+let isShowingNetworkToast = false;
+
 // Custom error class for CORS issues
 export class CORSError extends Error {
   constructor(public origin: string, public allowedOrigins?: string[]) {
@@ -55,6 +60,11 @@ api.interceptors.request.use(
 // Response interceptor for error handling
 api.interceptors.response.use(
   (response) => {
+    // Reset toast flags on successful response
+    isShowingAuthToast = false;
+    isShowingCORSToast = false;
+    isShowingNetworkToast = false;
+    
     // Log successful responses in development
     if (process.env.NODE_ENV === 'development') {
       console.log(`[API] Response:`, response.status, response.data);
@@ -76,8 +86,13 @@ api.interceptors.response.use(
           errorData.error.allowedOrigins
         );
 
-        // Show user-friendly error message
-        toast.error('Connection blocked: This domain is not authorized to access the API');
+        // Show user-friendly error message only if not already showing CORS toast
+        if (!isShowingCORSToast) {
+          isShowingCORSToast = true;
+          toast.error('Connection blocked: This domain is not authorized to access the API');
+          // Reset flag after delay
+          setTimeout(() => { isShowingCORSToast = false; }, 3000);
+        }
         
         // Redirect to CORS error page if critical
         if (window.location.pathname !== '/cors-error') {
@@ -92,13 +107,21 @@ api.interceptors.response.use(
     if (!error.response && error.message === 'Network Error') {
       console.error('[Network Error] Possible CORS issue:', error);
       
-      // Check if it's likely a CORS issue
-      if (process.env.NODE_ENV === 'development') {
-        toast.error(
-          'Network Error: Check if backend is running and CORS is configured correctly'
-        );
-      } else {
-        toast.error('Unable to connect to the server. Please try again later.');
+      // Show network error toast only if not already showing one
+      if (!isShowingNetworkToast) {
+        isShowingNetworkToast = true;
+        
+        // Check if it's likely a CORS issue
+        if (process.env.NODE_ENV === 'development') {
+          toast.error(
+            'Network Error: Check if backend is running and CORS is configured correctly'
+          );
+        } else {
+          toast.error('Unable to connect to the server. Please try again later.');
+        }
+        
+        // Reset flag after delay
+        setTimeout(() => { isShowingNetworkToast = false; }, 3000);
       }
     }
 
@@ -109,8 +132,19 @@ api.interceptors.response.use(
       // Clear auth tokens
       Cookies.remove('token');
       
+      // Only show auth toast if not already showing and not on login/register pages
+      const currentPath = window.location.pathname;
+      const isAuthPage = currentPath === '/login' || currentPath === '/register';
+      
+      if (!isShowingAuthToast && !isAuthPage) {
+        isShowingAuthToast = true;
+        toast.error('Session expired. Please login again.');
+        // Reset flag after delay
+        setTimeout(() => { isShowingAuthToast = false; }, 2000);
+      }
+      
       // Redirect to login
-      if (window.location.pathname !== '/login') {
+      if (!isAuthPage) {
         window.location.href = '/login?session=expired';
       }
     }
