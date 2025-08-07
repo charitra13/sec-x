@@ -1,0 +1,397 @@
+{
+    "project_context": {
+      "name": "Security X Frontend",
+      "path": "/Users/charitra/Developer/Freelance Work/security-x",
+      "framework": "Next.js 15.1.7",
+      "ui_library": "Tailwind CSS with Radix UI",
+      "current_version": "1.17.0",
+      "objective": "Implement comprehensive skeleton loaders to enhance UX during data fetching and loading states"
+    },
+    
+    "implementation_requirements": {
+      "priority": "HIGH",
+      "scope": "Application-wide skeleton loader implementation",
+      "estimated_time": "4-6 hours",
+      "breaking_changes": false,
+      "backwards_compatible": true,
+      
+      "goals": [
+        "Eliminate layout shift during content loading",
+        "Provide immediate visual feedback to users",
+        "Maintain consistent loading states across all components",
+        "Improve perceived performance",
+        "Reduce user anxiety during data fetching",
+        "Ensure accessibility compliance"
+      ],
+      
+      "success_criteria": [
+        "All data-fetching components show skeleton loaders",
+        "No content jumping or layout shifts",
+        "Loading states match final content dimensions",
+        "Smooth transitions from skeleton to content",
+        "Consistent animation speed across all skeletons",
+        "Mobile responsive skeleton loaders"
+      ]
+    },
+    
+    "technical_specifications": {
+      "skeleton_library": {
+        "option_1": {
+          "name": "Custom Tailwind Implementation",
+          "approach": "Build custom skeleton components using Tailwind utilities",
+          "pros": ["Full control", "No additional dependencies", "Lightweight"],
+          "cons": ["More development time", "Need to maintain custom code"]
+        },
+        "option_2": {
+          "name": "react-loading-skeleton",
+          "install": "npm install react-loading-skeleton",
+          "pros": ["Battle-tested", "Easy to implement", "Good defaults"],
+          "cons": ["Additional dependency", "Less customization"]
+        },
+        "recommended": "Custom Tailwind Implementation for consistency with existing codebase"
+      },
+      
+      "animation_specs": {
+        "type": "shimmer",
+        "duration": "1.5s",
+        "easing": "ease-in-out",
+        "direction": "left-to-right",
+        "gradient": "from-transparent via-white/10 to-transparent",
+        "base_color": "bg-gray-800",
+        "highlight_color": "bg-gray-700"
+      }
+    },
+    
+    "implementation_tasks": {
+      "step_1_create_base_components": {
+        "description": "Create reusable skeleton components",
+        "location": "components/ui/skeleton",
+        "files_to_create": [
+          {
+            "path": "components/ui/skeleton/SkeletonBase.tsx",
+            "content_structure": {
+              "purpose": "Base skeleton component with shimmer animation",
+              "props": ["width", "height", "className", "rounded", "animate"],
+              "features": ["Configurable dimensions", "Custom className support", "Animation toggle"]
+            },
+            "code_template": "export const SkeletonBase = ({ width = 'w-full', height = 'h-4', className = '', rounded = 'rounded-md', animate = true }) => { return <div className={`${width} ${height} ${rounded} bg-gray-800 ${animate ? 'animate-pulse' : ''} ${className}`} />; }"
+          },
+          {
+            "path": "components/ui/skeleton/SkeletonText.tsx",
+            "content_structure": {
+              "purpose": "Text line skeleton with multiple lines support",
+              "props": ["lines", "width", "lastLineWidth", "spacing"],
+              "features": ["Multi-line support", "Variable last line width", "Configurable spacing"]
+            }
+          },
+          {
+            "path": "components/ui/skeleton/SkeletonCard.tsx",
+            "content_structure": {
+              "purpose": "Card skeleton for blog posts and content cards",
+              "props": ["showImage", "showTitle", "showDescription", "showMeta"],
+              "features": ["Flexible card layout", "Optional sections", "Responsive design"]
+            }
+          },
+          {
+            "path": "components/ui/skeleton/SkeletonTable.tsx",
+            "content_structure": {
+              "purpose": "Table skeleton for data tables",
+              "props": ["rows", "columns", "showHeader"],
+              "features": ["Configurable rows/columns", "Header option", "Responsive"]
+            }
+          },
+          {
+            "path": "components/ui/skeleton/SkeletonAvatar.tsx",
+            "content_structure": {
+              "purpose": "Avatar/profile picture skeleton",
+              "props": ["size", "shape"],
+              "features": ["Multiple sizes", "Circle or square shape"]
+            }
+          }
+        ]
+      },
+      
+      "step_2_add_shimmer_animation": {
+        "description": "Add custom shimmer animation to Tailwind config",
+        "file": "tailwind.config.ts",
+        "modifications": {
+          "extend_theme": {
+            "keyframes": {
+              "shimmer": {
+                "0%": { "transform": "translateX(-100%)" },
+                "100%": { "transform": "translateX(100%)" }
+              },
+              "pulse": {
+                "0%, 100%": { "opacity": "1" },
+                "50%": { "opacity": "0.5" }
+              }
+            },
+            "animation": {
+              "shimmer": "shimmer 1.5s ease-in-out infinite",
+              "pulse": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
+            }
+          }
+        }
+      },
+      
+      "step_3_implement_page_skeletons": {
+        "description": "Create skeleton loaders for each major page",
+        "pages_to_update": [
+          {
+            "path": "app/admin/dashboard/loading.tsx",
+            "description": "Dashboard skeleton with stats cards and table",
+            "components_needed": ["SkeletonCard", "SkeletonTable"],
+            "layout": "Grid with 3 stat cards on top, table below"
+          },
+          {
+            "path": "app/blog/loading.tsx",
+            "description": "Blog listing skeleton",
+            "components_needed": ["SkeletonCard"],
+            "layout": "Grid of 6-9 blog card skeletons"
+          },
+          {
+            "path": "app/blog/[slug]/loading.tsx",
+            "description": "Individual blog post skeleton",
+            "components_needed": ["SkeletonText", "SkeletonBase"],
+            "layout": "Hero image skeleton, title, meta info, content paragraphs"
+          },
+          {
+            "path": "app/admin/analytics/loading.tsx",
+            "description": "Analytics dashboard skeleton",
+            "components_needed": ["SkeletonCard", "Custom chart skeleton"],
+            "layout": "Stats cards and chart placeholders"
+          },
+          {
+            "path": "app/admin/users/loading.tsx",
+            "description": "User management table skeleton",
+            "components_needed": ["SkeletonTable"],
+            "layout": "Full-width table with 5 columns, 10 rows"
+          }
+        ]
+      },
+      
+      "step_4_update_existing_components": {
+        "description": "Add skeleton states to existing components",
+        "components_to_update": [
+          {
+            "path": "app/admin/dashboard/page.tsx",
+            "current_loading": "if (!data) return <div>Loading...</div>;",
+            "replace_with": "Custom DashboardSkeleton component",
+            "implementation": "Create separate loading state with proper skeleton layout"
+          },
+          {
+            "path": "components/BlogCard.tsx",
+            "add_skeleton_variant": true,
+            "skeleton_props": "isLoading prop to toggle skeleton state"
+          },
+          {
+            "path": "app/admin/analytics/page.tsx",
+            "current_loading": "if (loading) return <div>Loading analytics...</div>;",
+            "replace_with": "AnalyticsSkeleton component with chart placeholders"
+          },
+          {
+            "path": "app/admin/users/page.tsx",
+            "current_loading": "if (loading) return <div>Loading users...</div>;",
+            "replace_with": "UserTableSkeleton component"
+          }
+        ]
+      },
+      
+      "step_5_create_composite_skeletons": {
+        "description": "Build complex skeleton compositions for specific use cases",
+        "compositions": [
+          {
+            "name": "DashboardSkeleton",
+            "path": "components/skeletons/DashboardSkeleton.tsx",
+            "structure": {
+              "stats_section": "3 SkeletonCards in grid",
+              "table_section": "SkeletonTable with 5 columns, 8 rows",
+              "header": "SkeletonText for title and actions"
+            }
+          },
+          {
+            "name": "BlogGridSkeleton",
+            "path": "components/skeletons/BlogGridSkeleton.tsx",
+            "structure": {
+              "grid": "Responsive grid of 6-9 blog cards",
+              "pagination": "Skeleton buttons"
+            }
+          },
+          {
+            "name": "BlogPostSkeleton",
+            "path": "components/skeletons/BlogPostSkeleton.tsx",
+            "structure": {
+              "hero_image": "Full-width image skeleton",
+              "title": "H1 skeleton text",
+              "meta": "Author, date, reading time skeletons",
+              "content": "Multiple paragraph skeletons",
+              "sidebar": "Related posts skeleton"
+            }
+          },
+          {
+            "name": "UserTableSkeleton",
+            "path": "components/skeletons/UserTableSkeleton.tsx",
+            "structure": {
+              "header": "Table header with column names",
+              "rows": "10 skeleton rows",
+              "actions": "Skeleton buttons in each row"
+            }
+          }
+        ]
+      },
+      
+      "step_6_implement_suspense_boundaries": {
+        "description": "Add React Suspense boundaries for better loading states",
+        "implementation": {
+          "wrap_async_components": "Use Suspense with skeleton fallbacks",
+          "example_pattern": "import { Suspense } from 'react'; <Suspense fallback={<BlogGridSkeleton />}><BlogGrid /></Suspense>",
+          "locations": [
+            "app/blog/page.tsx",
+            "app/admin/dashboard/page.tsx",
+            "app/admin/analytics/page.tsx"
+          ]
+        }
+      },
+      
+      "step_7_add_intersection_observer": {
+        "description": "Implement lazy loading with skeleton placeholders",
+        "hook_to_create": "hooks/useIntersectionObserver.ts",
+        "usage": "Show skeletons for below-the-fold content until scrolled into view"
+      }
+    },
+    
+    "code_examples": {
+      "skeleton_base_component": {
+        "file": "components/ui/skeleton/index.tsx",
+        "code": "import { cn } from '@/lib/utils';\n\ninterface SkeletonProps {\n  className?: string;\n  variant?: 'text' | 'circular' | 'rectangular' | 'rounded';\n  width?: string | number;\n  height?: string | number;\n  animation?: 'pulse' | 'wave' | 'none';\n}\n\nexport function Skeleton({\n  className,\n  variant = 'rectangular',\n  width,\n  height,\n  animation = 'pulse',\n  ...props\n}: SkeletonProps) {\n  const variantClasses = {\n    text: 'rounded',\n    circular: 'rounded-full',\n    rectangular: 'rounded-none',\n    rounded: 'rounded-md'\n  };\n\n  const animationClasses = {\n    pulse: 'animate-pulse',\n    wave: 'animate-shimmer',\n    none: ''\n  };\n\n  return (\n    <div\n      className={cn(\n        'bg-gray-800',\n        variantClasses[variant],\n        animationClasses[animation],\n        className\n      )}\n      style={{\n        width: width || '100%',\n        height: height || '1rem'\n      }}\n      {...props}\n    />\n  );\n}"
+      },
+      
+      "blog_card_skeleton": {
+        "file": "components/skeletons/BlogCardSkeleton.tsx",
+        "code": "export function BlogCardSkeleton() {\n  return (\n    <div className=\"glass rounded-xl overflow-hidden\">\n      <Skeleton height={200} className=\"w-full\" />\n      <div className=\"p-6 space-y-4\">\n        <Skeleton height={28} width=\"80%\" />\n        <div className=\"space-y-2\">\n          <Skeleton height={16} />\n          <Skeleton height={16} />\n          <Skeleton height={16} width=\"70%\" />\n        </div>\n        <div className=\"flex items-center justify-between pt-4\">\n          <Skeleton height={20} width={100} />\n          <Skeleton height={20} width={80} />\n        </div>\n      </div>\n    </div>\n  );\n}"
+      },
+      
+      "table_skeleton": {
+        "file": "components/skeletons/TableSkeleton.tsx",
+        "code": "export function TableSkeleton({ rows = 5, columns = 4 }) {\n  return (\n    <div className=\"w-full\">\n      <div className=\"border border-gray-700 rounded-lg overflow-hidden\">\n        <div className=\"bg-gray-800 p-4\">\n          <div className=\"grid grid-cols-{columns} gap-4\">\n            {Array.from({ length: columns }).map((_, i) => (\n              <Skeleton key={i} height={20} width=\"60%\" />\n            ))}\n          </div>\n        </div>\n        <div className=\"divide-y divide-gray-700\">\n          {Array.from({ length: rows }).map((_, rowIndex) => (\n            <div key={rowIndex} className=\"p-4\">\n              <div className=\"grid grid-cols-{columns} gap-4\">\n                {Array.from({ length: columns }).map((_, colIndex) => (\n                  <Skeleton\n                    key={colIndex}\n                    height={16}\n                    width={colIndex === 0 ? '70%' : '50%'}\n                  />\n                ))}\n              </div>\n            </div>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}"
+      },
+      
+      "dashboard_skeleton": {
+        "file": "app/admin/dashboard/loading.tsx",
+        "code": "import { Skeleton } from '@/components/ui/skeleton';\nimport { Card } from '@/components/ui/card';\n\nexport default function DashboardLoading() {\n  return (\n    <div className=\"container mx-auto p-4 sm:p-8\">\n      <Card>\n        <div className=\"p-6\">\n          <div className=\"flex justify-between items-center mb-6\">\n            <Skeleton height={32} width={200} />\n            <Skeleton height={40} width={150} className=\"rounded-md\" />\n          </div>\n          \n          {/* Stats Cards */}\n          <div className=\"grid grid-cols-1 md:grid-cols-3 gap-4 mb-8\">\n            {[1, 2, 3].map((i) => (\n              <Card key={i} className=\"p-4\">\n                <Skeleton height={20} width=\"60%\" className=\"mb-2\" />\n                <Skeleton height={32} width=\"40%\" />\n              </Card>\n            ))}\n          </div>\n          \n          {/* Table Skeleton */}\n          <TableSkeleton rows={8} columns={5} />\n        </div>\n      </Card>\n    </div>\n  );\n}"
+      }
+    },
+    
+    "integration_patterns": {
+      "swr_integration": {
+        "description": "Integrate skeletons with SWR data fetching",
+        "pattern": "const { data, error, isLoading } = useSWR(key, fetcher);\nif (isLoading) return <ComponentSkeleton />;\nif (error) return <ErrorState />;\nreturn <Component data={data} />;"
+      },
+      
+      "react_query_integration": {
+        "description": "Integrate with React Query if migrating",
+        "pattern": "const { data, isLoading, isError } = useQuery(['key'], fetchFunction);\nif (isLoading) return <ComponentSkeleton />;"
+      },
+      
+      "progressive_enhancement": {
+        "description": "Show skeletons only for slow connections",
+        "implementation": "Use Network Information API to detect slow connections and show skeletons accordingly"
+      }
+    },
+    
+    "accessibility_requirements": {
+      "aria_labels": {
+        "loading_state": "aria-busy='true' aria-label='Loading content'",
+        "screen_reader": "Add sr-only text: 'Content is loading, please wait'"
+      },
+      "reduced_motion": {
+        "respect_preference": "Check prefers-reduced-motion and disable animations",
+        "implementation": "@media (prefers-reduced-motion: reduce) { .animate-pulse { animation: none; } }"
+      },
+      "focus_management": {
+        "maintain_focus": "Preserve focus position when transitioning from skeleton to content",
+        "announce_completion": "Use live regions to announce when content has loaded"
+      }
+    },
+    
+    "performance_optimization": {
+      "lazy_loading": {
+        "below_fold": "Only render skeletons for visible viewport",
+        "intersection_observer": "Use IntersectionObserver for efficient rendering"
+      },
+      "memoization": {
+        "static_skeletons": "Memoize skeleton components that don't change",
+        "use_memo": "Wrap complex skeleton structures in React.memo"
+      },
+      "css_optimization": {
+        "gpu_acceleration": "Use transform for animations instead of position",
+        "will_change": "Add will-change: transform for smooth animations"
+      }
+    },
+    
+    "testing_requirements": {
+      "unit_tests": {
+        "test_rendering": "Ensure skeletons render correctly",
+        "test_dimensions": "Verify width and height props work",
+        "test_animations": "Check animation classes are applied"
+      },
+      "integration_tests": {
+        "loading_states": "Test transition from skeleton to content",
+        "error_states": "Verify error handling doesn't show skeletons",
+        "data_fetching": "Mock API calls and test skeleton display"
+      },
+      "visual_regression": {
+        "screenshot_tests": "Capture skeletons in different states",
+        "responsive_tests": "Verify skeletons work on all screen sizes"
+      }
+    },
+    
+    "deployment_checklist": {
+      "pre_deployment": [
+        "Test all skeleton loaders on slow 3G connection",
+        "Verify no layout shift when content loads",
+        "Check skeleton colors match dark theme",
+        "Ensure animations are smooth on low-end devices",
+        "Test with screen readers"
+      ],
+      "monitoring": [
+        "Track skeleton display duration",
+        "Monitor user engagement during loading",
+        "A/B test skeleton vs spinner performance"
+      ]
+    },
+    
+    "expected_outcomes": {
+      "user_experience": [
+        "50% reduction in perceived loading time",
+        "Elimination of layout shift (CLS score improvement)",
+        "Reduced bounce rate during loading",
+        "Better user engagement metrics"
+      ],
+      "technical_benefits": [
+        "Consistent loading states across application",
+        "Maintainable and reusable skeleton components",
+        "Improved Core Web Vitals scores",
+        "Better accessibility compliance"
+      ]
+    },
+    
+    "additional_instructions": {
+      "naming_conventions": {
+        "components": "Use 'Skeleton' prefix for all skeleton components",
+        "files": "Use .skeleton.tsx extension for skeleton-specific files",
+        "css_classes": "Prefix skeleton-specific classes with 'sk-'"
+      },
+      "documentation": {
+        "storybook": "Create Storybook stories for each skeleton component",
+        "readme": "Update README with skeleton loader usage examples",
+        "comments": "Add JSDoc comments to all skeleton components"
+      },
+      "future_enhancements": [
+        "Add skeleton themes (light/dark/auto)",
+        "Create skeleton generator CLI tool",
+        "Add skeleton animation variations",
+        "Implement smart skeleton that learns from actual content"
+      ]
+    }
+  }

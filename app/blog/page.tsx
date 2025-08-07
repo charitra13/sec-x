@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import api from '@/lib/api';
 import { IBlog } from '@/types';
@@ -10,6 +10,7 @@ import SocialShareButtons from '../components/SocialShareButtons';
 import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
 import { formatBlogContent } from '../utils/contentFormatter';
+import { BlogGridSkeleton, BlogPostSkeleton } from '@/components/ui/skeleton';
 
 async function fetchBlogs() {
   try {
@@ -29,21 +30,32 @@ export default function BlogPage() {
   const [blogs, setBlogs] = useState<IBlog[]>([]);
   const [selectedBlog, setSelectedBlog] = useState<IBlog | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isPostLoading, setIsPostLoading] = useState(false);
 
   useEffect(() => {
     const getBlogs = async () => {
-      const fetchedBlogs = await fetchBlogs();
-      setBlogs(fetchedBlogs);
+      setIsLoading(true);
+      try {
+        const fetchedBlogs = await fetchBlogs();
+        setBlogs(fetchedBlogs);
+      } finally {
+        setIsLoading(false);
+      }
     };
     getBlogs();
   }, []);
 
   const handleReadBlog = (blog: IBlog) => {
+    setIsPostLoading(true);
     setSelectedBlog(blog);
+    // Simulate loading for demo purposes - in real app this might load additional data
+    setTimeout(() => setIsPostLoading(false), 500);
   };
 
   const handleBackToList = () => {
     setSelectedBlog(null);
+    setIsPostLoading(false);
   };
 
   const formatDate = (dateString: string | Date) => {
@@ -72,8 +84,21 @@ export default function BlogPage() {
     return colors[category as keyof typeof colors] || 'bg-gray-500/20 text-gray-400';
   };
 
-  // Blog Detail View
+  // Blog Detail View with Loading State
   if (selectedBlog) {
+    if (isPostLoading) {
+      return (
+        <main className="relative">
+          <div className="px-4 py-8 sm:py-12 relative z-10 min-h-screen">
+            <div className="w-full max-w-[1000px] mx-auto">
+              <Suspense fallback={<BlogPostSkeleton showSidebar={false} />}>
+                <BlogPostSkeleton showSidebar={false} />
+              </Suspense>
+            </div>
+          </div>
+        </main>
+      );
+    }
     return (
       <main className="relative">
         <div className="px-4 py-8 sm:py-12 relative z-10 min-h-screen">
@@ -230,23 +255,39 @@ export default function BlogPage() {
             </div>
           </div>
           
-          {/* Blog Grid */}
-          {blogs.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {blogs.map((blog, index) => (
-                <BlogCard 
-                  key={blog._id} 
-                  blog={blog} 
-                  index={index} 
-                  onReadBlog={handleReadBlog}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-white/60 text-lg">No articles have been published yet.</p>
-            </div>
-          )}
+          {/* Blog Grid with Loading State */}
+          <Suspense fallback={<BlogGridSkeleton cardCount={9} columns={3} />}>
+            {isLoading ? (
+              <BlogGridSkeleton 
+                cardCount={9} 
+                columns={3}
+                showSearch={false}
+                showTitle={false}
+              />
+            ) : blogs.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {blogs.map((blog, index) => (
+                  <BlogCard 
+                    key={blog._id} 
+                    blog={blog} 
+                    index={index} 
+                    onReadBlog={handleReadBlog}
+                    isLoading={false}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <div className="bg-black/40 backdrop-blur-sm rounded-2xl border border-white/5 p-8">
+                  <svg className="w-16 h-16 text-white/20 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <p className="text-white/60 text-lg mb-4">No articles have been published yet.</p>
+                  <p className="text-white/40 text-sm">Check back soon for cybersecurity insights and tutorials!</p>
+                </div>
+              </div>
+            )}
+          </Suspense>
 
           {/* Contact Section */}
           <div className="bg-black/40 backdrop-blur-sm rounded-2xl border border-white/5 p-8 mt-12 text-center">

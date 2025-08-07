@@ -1,14 +1,29 @@
 'use client'
 
 import { IBlog } from '@/types'
+import { SkeletonCard } from '@/components/ui/skeleton/SkeletonCard'
 
 interface BlogCardProps {
-  blog: IBlog
+  blog?: IBlog
   index: number
   onReadBlog: (blog: IBlog) => void
+  isLoading?: boolean
 }
 
-export default function BlogCard({ blog, index, onReadBlog }: BlogCardProps) {
+export default function BlogCard({ blog, index, onReadBlog, isLoading = false }: BlogCardProps) {
+  // Show skeleton if loading or no blog data
+  if (isLoading || !blog) {
+    return (
+      <SkeletonCard
+        showImage={true}
+        showTitle={true}
+        showDescription={true}
+        showMeta={true}
+        imageHeight={192}
+        className="min-h-[500px] bg-black/40 backdrop-blur-sm border border-white/5"
+      />
+    )
+  }
   const getCategoryColor = (category: string) => {
     const colors = {
       'Technology': 'bg-blue-500/20 text-blue-400',
