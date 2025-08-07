@@ -22,7 +22,7 @@ export default function AuthTestingSuite() {
     name: 'Test User'
   });
 
-  const addTestResult = (test: string, status: 'success' | 'error', message: string, data?: any) => {
+  const addTestResult = (test: string, status: 'pending' | 'success' | 'error', message: string, data?: any) => {
     setTestResults(prev => [
       ...prev.filter(r => r.test !== test),
       { test, status, message, data }
