@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { FiAlertCircle, FiRefreshCw, FiExternalLink, FiCheckCircle, FiWifi, FiServer, FiSettings } from 'react-icons/fi';
 import Link from 'next/link';
 import { testCORS } from '@/lib/api';
@@ -55,16 +55,7 @@ export default function CORSErrorPage() {
     testCORSConnection();
   }, []);
 
-  // Auto-retry mechanism
-  useEffect(() => {
-    if (autoRetryEnabled && retryCount < 5) {
-      const timer = setTimeout(() => {
-        runDiagnostics();
-      }, 10000); // Retry every 10 seconds
-      
-      return () => clearTimeout(timer);
-    }
-  }, [autoRetryEnabled, retryCount, runDiagnostics]);
+  
 
   // Individual troubleshooting functions
   async function testNetworkConnectivity(): Promise<void> {
@@ -175,6 +166,16 @@ export default function CORSErrorPage() {
 
     setIsRetrying(false);
   }, [troubleshootingSteps]);
+
+  // Auto-retry mechanism (placed after runDiagnostics to avoid TDZ error)
+  useEffect(() => {
+    if (autoRetryEnabled && retryCount < 5) {
+      const timer = setTimeout(() => {
+        runDiagnostics();
+      }, 10000); // Retry every 10 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [autoRetryEnabled, retryCount, runDiagnostics]);
 
   const testCORSConnection = async () => {
     setIsRetrying(true);
