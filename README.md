@@ -4,6 +4,11 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
+### v1.24.1 - Server Warming Endpoint Path Fix (Current) PATCH
+- Updated server and blog warming health checks to use `/health` instead of `/api/health` to avoid Vercel proxy double `/api` causing 404s when targeting Render backend.
+- Updated blog warming blogs request to use `/blogs` instead of `/api/blogs` for consistency with proxy behavior.
+- Changed files: `lib/serverWarming.ts`, `lib/blogWarming.ts`.
+
 ### v1.24.0 - Frontend Cold Start Warming Services (Current) MAJOR
 - Implemented frontend-based server warming to prevent Render cold starts.
 - Added blog prefetching with localStorage cache and periodic warming.

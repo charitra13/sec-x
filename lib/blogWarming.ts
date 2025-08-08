@@ -97,14 +97,15 @@ export class BlogWarmingService {
       const startTime = Date.now();
 
       // Parallel requests to warm multiple endpoints
+      // Parallel requests to warm multiple endpoints
       const [blogsResponse, healthResponse] = await Promise.allSettled([
-        fetch(`${this.apiBase}/api/blogs?limit=${this.config.blogLimit}&sort=popular`, {
+        fetch(`${this.apiBase}/blogs?limit=${this.config.blogLimit}&sort=popular`, {
           headers: {
             'X-Warming-Request': 'true',
             'X-Warming-Source': 'blog-prefetch',
           },
         }),
-        fetch(`${this.apiBase}/api/health`, {
+        fetch(`${this.apiBase}/health`, { // CHANGED from `${this.apiBase}/api/health`
           headers: {
             'X-Warming-Request': 'true',
             'X-Warming-Source': 'blog-prefetch',
