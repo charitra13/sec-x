@@ -23,9 +23,10 @@ export class BlogWarmingService {
   private cache: CachedBlogData | null = null;
   private warmingTimer: ReturnType<typeof setInterval> | null = null;
   private isWarming = false;
+  private apiBase: string;
 
   constructor(config?: Partial<BlogWarmingConfig>) {
-    const apiBase =
+    this.apiBase =
       process.env.NEXT_PUBLIC_API_URL ||
       (typeof window !== 'undefined' ? window.location.origin : '');
 
@@ -97,13 +98,13 @@ export class BlogWarmingService {
 
       // Parallel requests to warm multiple endpoints
       const [blogsResponse, healthResponse] = await Promise.allSettled([
-        fetch(`${apiBase}/api/blogs?limit=${this.config.blogLimit}&sort=popular`, {
+        fetch(`${this.apiBase}/api/blogs?limit=${this.config.blogLimit}&sort=popular`, {
           headers: {
             'X-Warming-Request': 'true',
             'X-Warming-Source': 'blog-prefetch',
           },
         }),
-        fetch(`${apiBase}/api/health`, {
+        fetch(`${this.apiBase}/api/health`, {
           headers: {
             'X-Warming-Request': 'true',
             'X-Warming-Source': 'blog-prefetch',
