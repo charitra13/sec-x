@@ -2,7 +2,27 @@
 
 Comprehensive security solutions designed to protect, detect, and respond to cyber threats. Enhanced security posture, compliance, and resilience for modern businesses.
 
-## 📋 Version History
+## Version History
+
+### v1.24.0 - Frontend Cold Start Warming Services (Current) MAJOR
+- Implemented frontend-based server warming to prevent Render cold starts.
+- Added blog prefetching with localStorage cache and periodic warming.
+- Introduced warming manager to orchestrate services with visibility handling.
+- Created React hook `useServerWarming` for status and manual trigger.
+- Added `WarmingProvider` and integrated it into `app/layout.tsx`.
+- Optional dev-only `WarmingStatus` component for live monitoring.
+- Configuration via environment:
+  - `NEXT_PUBLIC_ENABLE_WARMING=true`
+  - `NEXT_PUBLIC_API_URL=https://your-backend-app.onrender.com`
+
+Changed files:
+- `lib/serverWarming.ts`
+- `lib/blogWarming.ts`
+- `lib/warmingManager.ts`
+- `hooks/useServerWarming.ts`
+- `app/providers/WarmingProvider.tsx`
+- `app/layout.tsx`
+- `app/components/WarmingStatus.tsx` (optional dev tool)
 
 ### v1.23.0 - User Authentication Navigation Integration (Current) ⭐ MAJOR
 - **UserMenu Component**: Created new `UserMenu.tsx` component with dropdown functionality for authenticated users.
