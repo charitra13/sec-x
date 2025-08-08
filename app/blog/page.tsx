@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import api from '@/lib/api';
 import { IBlog } from '@/types';
 import BlogCard from '../components/BlogCard';
@@ -134,9 +135,11 @@ export default function BlogPage() {
               {/* Author Info */}
               <div className="flex items-center gap-4 mb-6">
                 {selectedBlog.author.avatar ? (
-                  <img 
+                  <Image 
                     src={selectedBlog.author.avatar} 
                     alt={selectedBlog.author.name} 
+                    width={48}
+                    height={48}
                     className="w-12 h-12 rounded-full object-cover"
                   />
                 ) : (
@@ -175,9 +178,11 @@ export default function BlogPage() {
 
             {/* Cover Image */}
             <div className="bg-black/40 backdrop-blur-sm rounded-2xl border border-white/5 p-4 mb-8">
-              <img 
+              <Image 
                 src={selectedBlog.coverImage} 
                 alt={selectedBlog.title} 
+                width={1000}
+                height={562}
                 className="w-full rounded-lg object-cover aspect-video"
               />
             </div>

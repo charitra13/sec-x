@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
 export default function Home() {
   const [currentCard, setCurrentCard] = useState(1)
@@ -24,7 +24,7 @@ export default function Home() {
     })
   }
 
-  const setActiveCard = (cardNumber: number) => {
+  const setActiveCard = useCallback((cardNumber: number) => {
     if (isAnimating || cardNumber === currentCard) return
     
     setIsAnimating(true)
@@ -41,7 +41,7 @@ export default function Home() {
       setIsAnimating(false)
       isAnimatingRef.current = false
     }, 500)
-  }
+  }, [isAnimating, currentCard])
 
   // Manual navigation functions
   const goToPreviousCard = () => {
@@ -59,11 +59,11 @@ export default function Home() {
   }
 
   // Utility to create a fresh auto-rotation interval
-  const createAutoRotation = () => setInterval(() => {
+  const createAutoRotation = useCallback(() => setInterval(() => {
     if (isAnimatingRef.current) return
     const nextCard = currentCardRef.current === 4 ? 1 : currentCardRef.current + 1
     setActiveCard(nextCard)
-  }, 5000)
+  }, 5000), [setActiveCard])
 
   // Reset auto-rotation timer
   const resetAutoRotation = () => {
@@ -86,7 +86,7 @@ export default function Home() {
         clearInterval(intervalRef.current)
       }
     }
-  }, [])
+  }, [createAutoRotation])
 
   return (
     <main className="relative min-h-screen pt-16">

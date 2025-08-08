@@ -64,7 +64,7 @@ export default function CORSErrorPage() {
       
       return () => clearTimeout(timer);
     }
-  }, [autoRetryEnabled, retryCount]);
+  }, [autoRetryEnabled, retryCount, runDiagnostics]);
 
   // Individual troubleshooting functions
   async function testNetworkConnectivity(): Promise<void> {
@@ -138,7 +138,7 @@ export default function CORSErrorPage() {
     );
   };
 
-  const runDiagnostics = async () => {
+  const runDiagnostics = useCallback(async () => {
     setIsRetrying(true);
     setRetryCount(prev => prev + 1);
     
@@ -174,7 +174,7 @@ export default function CORSErrorPage() {
     }
 
     setIsRetrying(false);
-  };
+  }, [troubleshootingSteps]);
 
   const testCORSConnection = async () => {
     setIsRetrying(true);

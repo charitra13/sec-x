@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image';
 import { IBlog } from '@/types'
 import { SkeletonCard } from '@/components/ui/skeleton/SkeletonCard'
 
@@ -58,9 +59,11 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
     >
       {/* Cover Image */}
       <div className="w-full h-48 mb-4 rounded-lg overflow-hidden">
-        <img 
+        <Image 
           src={blog.coverImage} 
           alt={blog.title}
+          width={400}
+          height={192}
           className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
         />
       </div>
@@ -86,9 +89,11 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
       {/* Author Info */}
       <div className="flex items-center gap-3 mb-4">
         {blog.author.avatar ? (
-          <img 
+          <Image 
             src={blog.author.avatar} 
             alt={blog.author.name} 
+            width={32}
+            height={32}
             className="w-8 h-8 rounded-full object-cover"
           />
         ) : (

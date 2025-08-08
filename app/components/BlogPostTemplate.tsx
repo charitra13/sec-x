@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image';
 import { IBlog } from '@/types'
 import SocialShareButtons from './SocialShareButtons';
 import CommentList from './CommentList';
@@ -59,7 +60,7 @@ export default function BlogPostTemplate({ post }: BlogPostTemplateProps) {
             <div className="flex items-center gap-4 mb-6">
               <div className="flex items-center gap-3">
                 {post.author.avatar ? (
-                  <img src={post.author.avatar} alt={post.author.name} className="w-12 h-12 rounded-full object-cover" />
+                  <Image src={post.author.avatar} alt={post.author.name} width={48} height={48} className="w-12 h-12 rounded-full object-cover" />
                 ) : (
                   <div className="w-12 h-12 bg-gradient-to-r from-red-400 to-orange-400 rounded-full flex items-center justify-center">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -87,7 +88,7 @@ export default function BlogPostTemplate({ post }: BlogPostTemplateProps) {
           </header>
 
           <figure className="mb-12">
-            <img src={post.coverImage} alt={post.title} className="w-full rounded-2xl object-cover aspect-video" />
+            <Image src={post.coverImage} alt={post.title} width={896} height={504} className="w-full rounded-2xl object-cover aspect-video" />
           </figure>
 
           <article className={`glass rounded-2xl p-8 lg:p-12 mb-12`}>

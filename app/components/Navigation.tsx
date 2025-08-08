@@ -4,10 +4,13 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { useAuth } from '@/context/AuthContext'
+import UserMenu from './UserMenu'
 
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const pathname = usePathname()
+  const { user, isAuthenticated, logout, loading } = useAuth()
 
   // Add escape key functionality for mobile menu
   useEffect(() => {
@@ -72,20 +75,26 @@ export default function Navigation() {
             <Link href="/publications" className="text-white/60 hover:text-white transition-colors">
               Publications
             </Link>
-            <div className="flex items-center space-x-4">
-              <Link 
-                href="/contact"
-                className="glass-button px-4 py-2 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
-              >
-                Contact
-              </Link>
-              <Link 
-                href="/login"
-                className="glass-button px-4 py-2 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
-              >
-                Log In
-              </Link>
-            </div>
+            {!loading && (
+              <div className="flex items-center space-x-4">
+                <Link 
+                  href="/contact"
+                  className="glass-button px-4 py-2 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
+                >
+                  Contact
+                </Link>
+                {isAuthenticated && user ? (
+                  <UserMenu user={user} onLogout={logout} />
+                ) : (
+                  <Link 
+                    href="/login"
+                    className="glass-button px-4 py-2 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
+                  >
+                    Log In
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -142,13 +151,21 @@ export default function Navigation() {
           >
             Contact
           </Link>
-          <Link
-            href="/login"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="glass-button px-6 py-3 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
-          >
-            Log In
-          </Link>
+          {!loading && (
+            <>
+              {isAuthenticated && user ? (
+                <UserMenu user={user} onLogout={logout} isMobile={true} />
+              ) : (
+                <Link
+                  href="/login"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="glass-button px-6 py-3 rounded-lg text-white font-medium hover:bg-white/10 transition-all duration-300"
+                >
+                  Log In
+                </Link>
+              )}
+            </>
+          )}
         </div>
       </div>
     </nav>
