@@ -6,6 +6,7 @@ import ClientLayout from './components/ClientLayout';
 import Footer from './components/Footer';
 import { AuthProvider } from '@/context/AuthContext';
 import { Toaster } from 'react-hot-toast';
+import { WarmingProvider } from './providers/WarmingProvider';
 import AuthTestingSuite from '@/components/AuthTestingSuite';
 
 const inter = Inter({
@@ -45,6 +46,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} h-full bg-black text-white font-[Inter] selection:bg-white/10 overflow-x-hidden antialiased`} suppressHydrationWarning>
         <AuthProvider>
+          <WarmingProvider>
           <ClientLayout>
             <div className="relative z-10 flex min-h-screen flex-col">
               {/* Navigation */}
@@ -61,6 +63,7 @@ export default function RootLayout({
             <Toaster position="bottom-right" />
             <AuthTestingSuite />
           </ClientLayout>
+          </WarmingProvider>
         </AuthProvider>
       </body>
     </html>
