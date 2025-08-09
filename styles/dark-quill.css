@@ -1,0 +1,94 @@
+/* Dark theme for ReactQuill editor */
+.dark-quill .ql-toolbar {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: none;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.dark-quill .ql-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: none;
+  border-radius: 0 0 0.75rem 0.75rem;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.dark-quill .ql-editor {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 200px;
+}
+
+.dark-quill .ql-editor.ql-blank::before {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: normal;
+}
+
+.dark-quill .ql-toolbar .ql-stroke {
+  stroke: rgba(255, 255, 255, 0.7);
+}
+
+.dark-quill .ql-toolbar .ql-fill {
+  fill: rgba(255, 255, 255, 0.7);
+}
+
+.dark-quill .ql-toolbar button:hover,
+.dark-quill .ql-toolbar button:focus {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.dark-quill .ql-toolbar button.ql-active {
+  background: rgba(59, 130, 246, 0.2);
+  border-radius: 4px;
+}
+
+.dark-quill .ql-toolbar .ql-picker-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.dark-quill .ql-toolbar .ql-picker-options {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+}
+
+.dark-quill .ql-toolbar .ql-picker-item {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.dark-quill .ql-toolbar .ql-picker-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Selection styles */
+.dark-quill .ql-editor ::selection {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+/* Link styles */
+.dark-quill .ql-editor a {
+  color: #60a5fa;
+}
+
+/* Code block styles */
+.dark-quill .ql-editor pre.ql-syntax {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Blockquote styles */
+.dark-quill .ql-editor blockquote {
+  border-left: 4px solid rgba(59, 130, 246, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.8);
+}
+

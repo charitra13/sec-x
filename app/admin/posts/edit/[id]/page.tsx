@@ -3,6 +3,7 @@
 import { useForm, Controller } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import 'react-quill-new/dist/quill.snow.css';
+import '../../../../styles/dark-quill.css';
 import { useState, useEffect } from 'react';
 import api from '@/lib/api';
 import toast from 'react-hot-toast';
@@ -10,7 +11,8 @@ import { useRouter, useParams } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AdminGlassCard } from '@/components/admin/AdminComponents';
+import { BlogContainer } from '@/components/blog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -95,13 +97,9 @@ export default function EditPostPage() {
   if (!postData) return <div>Loading...</div>;
 
   return (
-    <div className="container mx-auto p-4 sm:p-8">
-      <Card>
-        <CardHeader>
-          <CardTitle>Edit Post</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <BlogContainer>
+      <AdminGlassCard title="Edit Post">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
              <div>
               <Label>Cover Image</Label>
               <Input type="file" onChange={handleImageUpload} className="mt-2" />
@@ -122,13 +120,33 @@ export default function EditPostPage() {
             </div>
 
             <div>
-              <Label>Content</Label>
+              <Label className="text-white">Content</Label>
               <Controller
                 name="content"
                 control={control}
-                render={({ field }) => <ReactQuill theme="snow" value={field.value} onChange={field.onChange} className="mt-2 bg-white text-black" />}
+                render={({ field }) => (
+                  <div className="mt-2">
+                    <ReactQuill 
+                      theme="snow" 
+                      value={field.value} 
+                      onChange={field.onChange} 
+                      className="dark-quill"
+                      modules={{
+                        toolbar: [
+                          [{ header: [1, 2, 3, false] }],
+                          ['bold', 'italic', 'underline', 'strike'],
+                          [{ list: 'ordered'}, { list: 'bullet' }],
+                          ['blockquote', 'code-block'],
+                          ['link', 'image'],
+                          ['clean']
+                        ]
+                      }}
+                      placeholder="Write your blog content here..."
+                    />
+                  </div>
+                )}
               />
-              {errors.content && <p className="text-red-500 text-xs mt-1">{errors.content.message}</p>}
+              {errors.content && <p className="text-red-400 text-xs mt-1">{errors.content.message}</p>}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -183,8 +201,7 @@ export default function EditPostPage() {
               </Button>
             </div>
           </form>
-        </CardContent>
-      </Card>
-    </div>
+      </AdminGlassCard>
+    </BlogContainer>
   );
 } 

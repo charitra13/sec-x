@@ -4,6 +4,7 @@
 
 /* Import Instrument Serif font */
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&display=swap');
+@import '../styles/dark-quill.css';
 
 :root {
   --foreground: 255, 255, 255;
