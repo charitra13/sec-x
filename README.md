@@ -4,7 +4,13 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
-### v1.24.2 - Admin Layout Cleanup (Current) PATCH
+### v1.24.3 - Remove MeshBackground Usage (Current) PATCH
+- Removed all imports/usages of `MeshBackground` to standardize on the global black background.
+- Updated user dashboard to rely on default layout background; no visual mesh overlays.
+- Preparing to delete `app/components/MeshBackground.tsx` in a later cleanup once confirmed unused.
+- Changed files: `app/dashboard/page.tsx`.
+
+### v1.24.2 - Admin Layout Cleanup PATCH
 - Removed `MeshBackground` and duplicate `Footer` from admin layout to prevent animated background and double footer on admin pages (e.g., `/admin/dashboard`).
 - Admin pages now rely on the global footer from `app/layout.tsx` and present a clean, focused dashboard experience.
 - Changed files: `app/admin/layout.tsx`.

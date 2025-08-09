@@ -8,7 +8,6 @@ import api from '@/lib/api';
 import { IBlog } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import MeshBackground from '@/app/components/MeshBackground';
 import Footer from '@/app/components/Footer';
 
 const fetcher = (url: string) => api.get(url).then(res => res.data);
@@ -36,7 +35,6 @@ export default function UserDashboard() {
   if (loading) {
     return (
       <div className="relative flex min-h-screen flex-col">
-        <MeshBackground />
         <div className="flex h-screen items-center justify-center relative z-10">
           <div className="text-xl font-semibold text-white">Loading your dashboard...</div>
         </div>
@@ -75,7 +73,6 @@ export default function UserDashboard() {
 
   return (
     <div className="relative flex min-h-screen flex-col">
-      <MeshBackground />
       
       <main className="flex-1 relative z-10">
         <div className="container mx-auto p-4 sm:p-8">
