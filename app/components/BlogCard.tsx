@@ -53,9 +53,10 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
 
   return (
     <div 
-      className="bg-black/40 backdrop-blur-sm rounded-2xl border border-white/5 p-6 hover:bg-black/50 transition-all duration-300 hover:scale-105 min-h-[500px] flex flex-col cursor-pointer"
+      className="bg-black/40 backdrop-blur-sm rounded-2xl border border-white/5 p-6 hover:bg-black/50 transition-all duration-300 hover:scale-105 min-h-[500px] flex flex-col"
       style={{ animationDelay: `${index * 0.1}s` }}
-      onClick={() => onReadBlog(blog)}
+      role="article"
+      aria-labelledby={`blog-title-${blog._id}`}
     >
       {/* Cover Image */}
       <div className="w-full h-48 mb-4 rounded-lg overflow-hidden">
@@ -77,7 +78,7 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
       </div>
       
       {/* Title */}
-      <h3 className="text-xl font-medium text-white mb-3 leading-tight">
+      <h3 id={`blog-title-${blog._id}`} className="text-xl font-medium text-white mb-3 leading-tight">
         {blog.title}
       </h3>
       
@@ -142,6 +143,7 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
             e.stopPropagation()
             onReadBlog(blog)
           }}
+          aria-label={`Read full article: ${blog.title}`}
         >
           Read Article
         </button>

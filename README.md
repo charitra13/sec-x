@@ -4,6 +4,13 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
+### v1.25.0 - Blog Architecture Fixes (Phase 1) MAJOR
+- Refactored `/app/blog/page.tsx` to remove in-page blog detail anti-pattern.
+- Implemented proper navigation using Next.js router to `/blog/[slug]`.
+- Simplified state: removed `selectedBlog`, `isPostLoading`, and back-to-list logic; page now renders listing only.
+- Updated `app/components/BlogCard.tsx` to remove root `onClick`, move navigation to the "Read Article" button, and add basic accessibility attributes.
+- Result: Correct browser history behavior, cleaner separation of list/detail, reduced state complexity.
+
 ### v1.24.4 - Remove MeshBackground and Legacy Files (Current) PATCH
 - Deleted `app/components/MeshBackground.tsx` after migrating all pages to the standard black background.
 - Removed obsolete project documents/files: `REMAINING_AUTH_TASKS.md`, `auth-state.md`, `cold-start.md`, `cors frontend.md`, `skeleton-implmentation.json`.
