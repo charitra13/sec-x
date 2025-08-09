@@ -27,10 +27,13 @@ export class ServerWarmingService {
     const apiBase =
       process.env.NEXT_PUBLIC_API_URL ||
       (typeof window !== 'undefined' ? window.location.origin : '');
-
+  
+    // Ensure we don't have double /api paths
+    const cleanApiBase = apiBase.endsWith('/api') ? apiBase.slice(0, -4) : apiBase;
+  
     this.config = {
       interval: 14 * 60 * 1000, // 14 minutes (Render sleeps after 15)
-      healthEndpoint: `${apiBase}/api/health`,
+      healthEndpoint: `${cleanApiBase}/health`, // Use clean base URL
       enabled: process.env.NODE_ENV === 'production' || process.env.NEXT_PUBLIC_ENABLE_WARMING === 'true',
       maxRetries: 3,
       retryDelay: 30000, // 30 seconds

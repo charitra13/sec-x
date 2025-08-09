@@ -26,9 +26,12 @@ export class BlogWarmingService {
   private apiBase: string;
 
   constructor(config?: Partial<BlogWarmingConfig>) {
-    this.apiBase =
+    const rawApiBase =
       process.env.NEXT_PUBLIC_API_URL ||
       (typeof window !== 'undefined' ? window.location.origin : '');
+
+    // Ensure we don't have double /api paths
+    this.apiBase = rawApiBase.endsWith('/api') ? rawApiBase.slice(0, -4) : rawApiBase;
 
     this.config = {
       enabled: true,
