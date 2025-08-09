@@ -11,6 +11,12 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 - Updated `app/components/BlogCard.tsx` to remove root `onClick`, move navigation to the "Read Article" button, and add basic accessibility attributes.
 - Result: Correct browser history behavior, cleaner separation of list/detail, reduced state complexity.
 
+### v1.26.0 - Design System Standardization (Phase 2) MINOR
+- Added unified blog design components: `BlogGlassCard`, `BlogContainer`, `BlogTypography`, `ContentFormatter` under `components/blog` with central exports from `components/blog/index.ts`.
+- Updated `/app/blog/page.tsx` to use the new glassmorphism components for layout and empty states.
+- Updated `app/components/BlogCard.tsx` to adopt glass theme and typography, keeping navigation on the action button.
+- Result: Consistent styling across blog listing, improved readability and maintainability.
+
 ### v1.24.4 - Remove MeshBackground and Legacy Files (Current) PATCH
 - Deleted `app/components/MeshBackground.tsx` after migrating all pages to the standard black background.
 - Removed obsolete project documents/files: `REMAINING_AUTH_TASKS.md`, `auth-state.md`, `cold-start.md`, `cors frontend.md`, `skeleton-implmentation.json`.

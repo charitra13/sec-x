@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { IBlog } from '@/types'
+import { BlogGlassCard, BlogTypography } from '@/components/blog';
 import { SkeletonCard } from '@/components/ui/skeleton/SkeletonCard'
 
 interface BlogCardProps {
@@ -52,17 +53,16 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
   }
 
   return (
-    <div 
-      className="bg-black/40 backdrop-blur-sm rounded-2xl border border-white/5 p-6 hover:bg-black/50 transition-all duration-300 hover:scale-105 min-h-[500px] flex flex-col"
+    <BlogGlassCard 
+      variant="interactive"
+      className="rounded-2xl p-6 min-h-[500px] flex flex-col"
       style={{ animationDelay: `${index * 0.1}s` }}
-      role="article"
-      aria-labelledby={`blog-title-${blog._id}`}
     >
       {/* Cover Image */}
       <div className="w-full h-48 mb-4 rounded-lg overflow-hidden">
         <Image 
           src={blog.coverImage} 
-          alt={blog.title}
+          alt={`Cover image for ${blog.title}`}
           width={400}
           height={192}
           className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
@@ -74,18 +74,18 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
         <span className={`px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(blog.category)}`}>
           {blog.category}
         </span>
-        <span className="text-xs text-white/60">Blog Post</span>
+        <BlogTypography variant="meta">Blog Post</BlogTypography>
       </div>
       
       {/* Title */}
-      <h3 id={`blog-title-${blog._id}`} className="text-xl font-medium text-white mb-3 leading-tight">
+      <BlogTypography variant="h3" id={`blog-title-${blog._id}`} className="mb-3">
         {blog.title}
-      </h3>
+      </BlogTypography>
       
       {/* Excerpt */}
-      <p className="text-white/70 text-sm mb-4 leading-relaxed flex-grow">
+      <BlogTypography variant="caption" className="mb-4 flex-grow">
         {blog.excerpt}
-      </p>
+      </BlogTypography>
       
       {/* Author Info */}
       <div className="flex items-center gap-3 mb-4">
@@ -105,8 +105,12 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
           </div>
         )}
         <div>
-          <p className="text-white/90 text-sm font-medium">{blog.author.name}</p>
-          <p className="text-white/60 text-xs">{formatDate(blog.publishedAt || blog.createdAt!)}</p>
+          <BlogTypography variant="caption" className="font-medium mb-0">
+            {blog.author.name}
+          </BlogTypography>
+          <BlogTypography variant="meta" className="mb-0">
+            {formatDate(blog.publishedAt || blog.createdAt!)}
+          </BlogTypography>
         </div>
       </div>
 
@@ -148,6 +152,6 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
           Read Article
         </button>
       </div>
-    </div>
+    </BlogGlassCard>
   )
 } 
