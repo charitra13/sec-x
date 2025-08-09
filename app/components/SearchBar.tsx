@@ -61,7 +61,7 @@ const SearchBar = () => {
           <div className="absolute top-full left-0 right-0 mt-2 z-50">
             <BlogGlassCard variant="default" className="rounded-lg p-4">
               <div className="text-white/60 text-sm">
-                Press Enter to search for "{query}"
+                Press Enter to search for &quot;{query}&quot;
               </div>
             </BlogGlassCard>
           </div>

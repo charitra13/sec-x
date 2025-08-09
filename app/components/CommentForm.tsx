@@ -54,6 +54,11 @@ const CommentForm = ({ blogId, onCommentPosted }: CommentFormProps) => {
     );
   }
 
+  // Guard against null user when authenticated state is still hydrating
+  if (!user) {
+    return null;
+  }
+
   return (
     <BlogGlassCard variant="default" className="rounded-xl p-6">
       <div className="flex items-center gap-3 mb-4">

@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import 'react-quill-new/dist/quill.snow.css';
-import '../../../styles/dark-quill.css';
+import '@/styles/dark-quill.css';
 import { useState } from 'react';
 import api from '@/lib/api';
 import toast from 'react-hot-toast';
