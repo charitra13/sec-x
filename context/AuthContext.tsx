@@ -278,7 +278,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       console.log('📝 Starting registration attempt...');
 
-      const { data } = await api.post('/auth/register', { name, email, password });
+      const { data } = await api.post('/auth/register', { username: name, email, password });
       
       // Debug logging in development
       debugLoginResponse(data);

@@ -4,6 +4,12 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
+### v1.30.0 - Registration API Payload Fix PATCH
+- Fixed registration API payload mapping to resolve "username is required" error.
+- Updated `context/AuthContext.tsx` to map `name` field to `username` in the registration request.
+- Changed payload from `{ name, email, password }` to `{ username: name, email, password }`.
+- Resolves backend validation error while maintaining frontend form field as "name" for better UX.
+
 ### v1.25.0 - Blog Architecture Fixes (Phase 1) MAJOR
 - Refactored `/app/blog/page.tsx` to remove in-page blog detail anti-pattern.
 - Implemented proper navigation using Next.js router to `/blog/[slug]`.
