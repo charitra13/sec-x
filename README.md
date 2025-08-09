@@ -4,7 +4,12 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
-### v1.24.1 - Server Warming Endpoint Path Fix (Current) PATCH
+### v1.24.2 - Admin Layout Cleanup (Current) PATCH
+- Removed `MeshBackground` and duplicate `Footer` from admin layout to prevent animated background and double footer on admin pages (e.g., `/admin/dashboard`).
+- Admin pages now rely on the global footer from `app/layout.tsx` and present a clean, focused dashboard experience.
+- Changed files: `app/admin/layout.tsx`.
+
+### v1.24.1 - Server Warming Endpoint Path Fix PATCH
 - Updated server and blog warming health checks to use `/health` instead of `/api/health` to avoid Vercel proxy double `/api` causing 404s when targeting Render backend.
 - Updated blog warming blogs request to use `/blogs` instead of `/api/blogs` for consistency with proxy behavior.
 - Changed files: `lib/serverWarming.ts`, `lib/blogWarming.ts`.
