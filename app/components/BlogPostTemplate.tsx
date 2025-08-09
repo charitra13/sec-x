@@ -7,6 +7,8 @@ import { IBlog } from '@/types'
 import SocialShareButtons from './SocialShareButtons';
 import CommentList from './CommentList';
 import CommentForm from './CommentForm';
+import { BlogGlassCard, BlogTypography } from '@/components/blog';
+import { formatBlogContent } from '@/app/utils/contentFormatter';
 
 interface BlogPostTemplateProps {
   post: IBlog
@@ -91,36 +93,46 @@ export default function BlogPostTemplate({ post }: BlogPostTemplateProps) {
             <Image src={post.coverImage} alt={post.title} width={896} height={504} className="w-full rounded-2xl object-cover aspect-video" />
           </figure>
 
-          <article className={`glass rounded-2xl p-8 lg:p-12 mb-12`}>
-            <div 
-              className="prose prose-lg max-w-none prose-invert"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
-          </article>
+          {/* Blog Content - Replace existing content div */}
+          <BlogGlassCard variant="default" className="rounded-2xl p-8 lg:p-12 mb-12">
+            <div className="prose prose-lg max-w-none">
+              <div className="blog-content space-y-6">
+                {formatBlogContent(post.content)}
+              </div>
+            </div>
+          </BlogGlassCard>
 
           {/* Article Footer */}
           <footer className={`transition-all duration-700 delay-400 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
             {/* Share Section */}
-            <div className="glass rounded-2xl p-6 mb-8">
-              <h3 className="text-xl text-white/90 font-medium mb-4">Share this article</h3>
-              <SocialShareButtons url={typeof window !== 'undefined' ? window.location.href : ''} title={post.title} />
-            </div>
+            <BlogGlassCard variant="default" className="rounded-2xl p-6 mb-8">
+              <BlogTypography variant="h3" className="mb-4">
+                Share this article
+              </BlogTypography>
+              <SocialShareButtons 
+                url={typeof window !== 'undefined' ? window.location.href : ''} 
+                title={post.title} 
+              />
+            </BlogGlassCard>
 
             {/* Related Articles */}
-            <div className="glass rounded-2xl p-6">
-              <h3 className="text-xl text-white/90 font-medium mb-4">Related Articles</h3>
-              <div className="text-white/70">
-                <p>Discover more insights on {post.category.toLowerCase()} and cybersecurity best practices.</p>
-                <Link 
-                  href="/blog" 
-                  className="inline-flex items-center mt-4 text-blue-400 hover:text-blue-300 transition-colors"
-                >
-                  View all articles
-                </Link>
-              </div>
-            </div>
+            <BlogGlassCard variant="default" className="rounded-2xl p-6 mb-8">
+              <BlogTypography variant="h3" className="mb-4">
+                Related Articles
+              </BlogTypography>
+              <BlogTypography variant="body" className="mb-4">
+                Discover more insights on {post.category.toLowerCase()} and cybersecurity best practices.
+              </BlogTypography>
+              <Link 
+                href="/blog" 
+                className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                View all articles
+              </Link>
+            </BlogGlassCard>
           </footer>
 
+          {/* Comments Section - Update styling */}
           <div className="mt-12 space-y-8">
             <CommentForm blogId={post._id} onCommentPosted={() => setRefreshKey(prev => prev + 1)} />
             <CommentList blogId={post._id} refreshKey={refreshKey} />

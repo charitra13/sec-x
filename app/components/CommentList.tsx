@@ -3,10 +3,9 @@
 import { useState, useEffect } from 'react';
 import api from '@/lib/api';
 import { IComment } from '@/types';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
+import { BlogGlassCard, BlogTypography } from '@/components/blog';
 
 interface CommentListProps {
   blogId: string;
@@ -45,42 +44,93 @@ const CommentList = ({ blogId, refreshKey }: CommentListProps) => {
     }
   }
 
-  if (loading) return <p>Loading comments...</p>;
+  if (loading) {
+    return (
+      <BlogGlassCard variant="default" className="rounded-xl p-6">
+        <div className="flex items-center justify-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+          <BlogTypography variant="body" className="ml-3 mb-0">
+            Loading comments...
+          </BlogTypography>
+        </div>
+      </BlogGlassCard>
+    );
+  }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{comments.length} Comments</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
+    <BlogGlassCard variant="default" className="rounded-xl p-6">
+      <div className="flex items-center gap-2 mb-6">
+        <svg className="w-5 h-5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+        <BlogTypography variant="h3" className="mb-0">
+          {comments.length} Comment{comments.length !== 1 ? 's' : ''}
+        </BlogTypography>
+      </div>
+
+      <div className="space-y-6">
         {comments.length > 0 ? (
           comments.map((comment) => (
-            <div key={comment._id} className="flex gap-4">
-              <Avatar>
-                <AvatarImage src={comment.author.avatar} alt={comment.author.name} />
-                <AvatarFallback>{comment.author.name.charAt(0)}</AvatarFallback>
-              </Avatar>
+            <div key={comment._id} className="flex gap-4 p-4 bg-white/5 rounded-lg border border-white/10">
+              {comment.author.avatar ? (
+                <img 
+                  src={comment.author.avatar} 
+                  alt={comment.author.name} 
+                  className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                />
+              ) : (
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-sm font-medium text-white">
+                    {comment.author.name.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+              )}
+              
               <div className="flex-grow">
-                <div className="flex justify-between items-center">
+                <div className="flex items-center justify-between mb-2">
                   <div>
-                    <p className="font-semibold">{comment.author.name}</p>
-                    <p className="text-sm text-gray-500">
-                      {new Date(comment.createdAt!).toLocaleDateString()}
-                    </p>
+                    <BlogTypography variant="caption" className="font-medium mb-0">
+                      {comment.author.name}
+                    </BlogTypography>
+                    <BlogTypography variant="meta" className="mb-0">
+                      {new Date(comment.createdAt!).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </BlogTypography>
                   </div>
                   {user?._id === comment.author._id && (
-                    <Button variant="ghost" size="sm" onClick={() => handleDelete(comment._id)}>Delete</Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => handleDelete(comment._id)}
+                      className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                    >
+                      Delete
+                    </Button>
                   )}
                 </div>
-                <p className="mt-2">{comment.text}</p>
+                <BlogTypography variant="body" className="mb-0 leading-relaxed">
+                  {comment.text}
+                </BlogTypography>
               </div>
             </div>
           ))
         ) : (
-          <p>Be the first to leave a comment!</p>
+          <div className="text-center py-12">
+            <svg className="w-16 h-16 text-white/20 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <BlogTypography variant="body" className="text-white/60 mb-0">
+              No comments yet. Be the first to share your thoughts!
+            </BlogTypography>
+          </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </BlogGlassCard>
   );
 };
 

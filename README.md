@@ -24,6 +24,12 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 - Updated `admin/posts/new` and `admin/posts/edit/[id]` forms to use `AdminGlassCard`, `BlogContainer`, and the `dark-quill` class with enhanced toolbar.
 - Result: Unified admin styling consistent with blog theme and improved editor UX.
 
+### v1.28.0 - Enhanced UX (Phase 4) MINOR
+- Redesigned comments: `CommentForm` now uses textarea with character count, glass styling, and improved unauthenticated state; `CommentList` displays comments in glass cards with avatars and better metadata.
+- Enhanced search: `SearchBar` updated to glassmorphism styling with icon, disabled state, and future suggestions scaffold.
+- Content formatting: `formatBlogContent` now uses `BlogTypography`, improved bullets, quotes, and code block styling.
+- `BlogPostTemplate` content, share, related, and comments sections updated to use glass components and typography.
+
 ### v1.24.4 - Remove MeshBackground and Legacy Files (Current) PATCH
 - Deleted `app/components/MeshBackground.tsx` after migrating all pages to the standard black background.
 - Removed obsolete project documents/files: `REMAINING_AUTH_TASKS.md`, `auth-state.md`, `cold-start.md`, `cors frontend.md`, `skeleton-implmentation.json`.

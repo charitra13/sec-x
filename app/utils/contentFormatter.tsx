@@ -1,4 +1,5 @@
 import React from 'react';
+import { BlogTypography } from '@/components/blog';
 
 export const formatBlogContent = (content: string) => {
   // Split content into sections by double line breaks
@@ -11,21 +12,21 @@ export const formatBlogContent = (content: string) => {
     // Handle headings
     if (trimmedSection.startsWith('###')) {
       return (
-        <h4 key={index} className="text-lg text-white mb-2 font-medium">
+        <BlogTypography key={index} variant="h4">
           {trimmedSection.replace(/^###\s*/, '')}
-        </h4>
+        </BlogTypography>
       );
     } else if (trimmedSection.startsWith('##')) {
       return (
-        <h3 key={index} className="text-xl text-white mb-3 font-medium">
+        <BlogTypography key={index} variant="h3">
           {trimmedSection.replace(/^##\s*/, '')}
-        </h3>
+        </BlogTypography>
       );
     } else if (trimmedSection.startsWith('#')) {
       return (
-        <h2 key={index} className="text-2xl text-white mb-4 font-medium">
+        <BlogTypography key={index} variant="h2">
           {trimmedSection.replace(/^#\s*/, '')}
-        </h2>
+        </BlogTypography>
       );
     }
     
@@ -41,14 +42,16 @@ export const formatBlogContent = (content: string) => {
     if (bulletLines.length > 0 && bulletLines.length === lines.length) {
       // All lines are bullet points
       return (
-        <ul key={index} className="space-y-3 ml-4">
-          {bulletLines.map((bullet, bulletIndex) => (
-            <li key={bulletIndex} className="flex items-start text-white/80 leading-relaxed">
-              <svg className="w-2 h-2 rounded-full bg-white/40 mt-2 mr-3 flex-shrink-0" />
-              {bullet.replace(/^[•*-]\s*/, '').replace(/^\d+\.\s*/, '')}
-            </li>
-          ))}
-        </ul>
+        <div key={index} className="bg-white/5 rounded-lg p-4 border border-white/10">
+          <ul className="space-y-3">
+            {bulletLines.map((bullet, bulletIndex) => (
+              <li key={bulletIndex} className="flex items-start text-white/85 leading-relaxed">
+                <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 mr-3 flex-shrink-0" />
+                <span>{bullet.replace(/^[•*-]\s*/, '').replace(/^\d+\.\s*/, '')}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       );
     }
     
@@ -83,11 +86,21 @@ export const formatBlogContent = (content: string) => {
     if (trimmedSection.startsWith('```')) {
       const codeContent = trimmedSection.replace(/^```[\w]*\n?/, '').replace(/\n?```$/, '');
       return (
-        <pre key={index} className="bg-black/60 text-white/90 p-4 rounded-lg overflow-x-auto">
-          <code className="text-sm font-mono">
-            {codeContent}
-          </code>
-        </pre>
+        <div key={index} className="bg-black/60 rounded-lg border border-white/20 overflow-hidden">
+          <div className="bg-white/5 px-4 py-2 border-b border-white/10">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-red-400/50"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-400/50"></div>
+              <div className="w-3 h-3 rounded-full bg-green-400/50"></div>
+              <span className="text-white/60 text-xs font-mono ml-auto">CODE</span>
+            </div>
+          </div>
+          <pre className="p-4 overflow-x-auto">
+            <code className="text-sm font-mono text-white/90">
+              {codeContent}
+            </code>
+          </pre>
+        </div>
       );
     }
     
@@ -95,19 +108,22 @@ export const formatBlogContent = (content: string) => {
     if (trimmedSection.startsWith('>')) {
       const quoteContent = trimmedSection.replace(/^>\s*/, '');
       return (
-        <blockquote key={index} className="border-l-4 border-white/20 pl-6 py-2 bg-white/5 rounded-r-lg">
-          <p className="text-white/80 italic leading-relaxed text-lg">
+        <div key={index} className="bg-blue-500/10 border-l-4 border-blue-400 rounded-r-lg p-4">
+          <svg className="w-6 h-6 text-blue-400 mb-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 1.414L9.414 5H11a3 3 0 013 3v4a3 3 0 01-3 3H8a3 3 0 01-3-3V8a3 3 0 013-3h1.586l-1.293-1.293z" clipRule="evenodd" />
+          </svg>
+          <BlogTypography variant="body" className="italic mb-0">
             {quoteContent}
-          </p>
-        </blockquote>
+          </BlogTypography>
+        </div>
       );
     }
     
     // Regular paragraph
     return (
-      <p key={index} className="text-white/80 leading-relaxed text-lg">
+      <BlogTypography key={index} variant="body">
         {trimmedSection}
-      </p>
+      </BlogTypography>
     );
   });
 };
