@@ -4,6 +4,11 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
+### v1.24.4 - Remove MeshBackground and Legacy Files (Current) PATCH
+- Deleted `app/components/MeshBackground.tsx` after migrating all pages to the standard black background.
+- Removed obsolete project documents/files: `REMAINING_AUTH_TASKS.md`, `auth-state.md`, `cold-start.md`, `cors frontend.md`, `skeleton-implmentation.json`.
+- No runtime impact expected; visual consistency improved and repository tidied.
+
 ### v1.24.3 - Remove MeshBackground Usage (Current) PATCH
 - Removed all imports/usages of `MeshBackground` to standardize on the global black background.
 - Updated user dashboard to rely on default layout background; no visual mesh overlays.
