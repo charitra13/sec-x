@@ -55,26 +55,34 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
   return (
     <BlogGlassCard 
       variant="interactive"
-      className="rounded-2xl p-6 min-h-[500px] flex flex-col"
+      className="rounded-2xl p-6 min-h-[500px] flex flex-col focus-within:ring-2 focus-within:ring-blue-400 focus-within:ring-offset-2 focus-within:ring-offset-black"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
       {/* Cover Image */}
       <div className="w-full h-48 mb-4 rounded-lg overflow-hidden">
         <Image 
           src={blog.coverImage} 
-          alt={`Cover image for ${blog.title}`}
+          alt={`Cover image for "${blog.title}" - ${blog.excerpt.substring(0, 100)}...`}
           width={400}
           height={192}
           className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+          loading="lazy"
         />
       </div>
 
       {/* Header with Category and Type */}
       <div className="flex items-center justify-between mb-4">
-        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(blog.category)}`}>
+        <span 
+          className={`px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(blog.category)}`}
+          role="badge"
+          aria-label={`Category: ${blog.category}`}
+        >
           {blog.category}
         </span>
-        <BlogTypography variant="meta">Blog Post</BlogTypography>
+        <BlogTypography variant="meta">
+          <span className="sr-only">Content type: </span>
+          Blog Post
+        </BlogTypography>
       </div>
       
       {/* Title */}
@@ -92,24 +100,33 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
         {blog.author.avatar ? (
           <Image 
             src={blog.author.avatar} 
-            alt={blog.author.name} 
+            alt={`${blog.author.name}'s profile picture`} 
             width={32}
             height={32}
             className="w-8 h-8 rounded-full object-cover"
           />
         ) : (
-          <div className="w-8 h-8 bg-gradient-to-r from-red-400 to-orange-400 rounded-full flex items-center justify-center">
-            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
+          <div 
+            className="w-8 h-8 bg-gradient-to-r from-red-400 to-orange-400 rounded-full flex items-center justify-center"
+            aria-label={`${blog.author.name}'s avatar`}
+          >
+            <span aria-hidden="true" className="w-4 h-4 text-white">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </span>
           </div>
         )}
         <div>
           <BlogTypography variant="caption" className="font-medium mb-0">
+            <span className="sr-only">Author: </span>
             {blog.author.name}
           </BlogTypography>
           <BlogTypography variant="meta" className="mb-0">
-            {formatDate(blog.publishedAt || blog.createdAt!)}
+            <time dateTime={new Date(blog.publishedAt || blog.createdAt!).toISOString()}>
+              <span className="sr-only">Published on </span>
+              {formatDate(blog.publishedAt || blog.createdAt!)}
+            </time>
           </BlogTypography>
         </div>
       </div>
@@ -134,10 +151,19 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
       {/* Footer */}
       <div className="mt-auto">
         <div className="flex items-center justify-between text-xs text-white/60 mb-4">
-          <span>{blog.readingTime} min read</span>
+          <span>
+            <span className="sr-only">Reading time: </span>
+            {blog.readingTime} min read
+          </span>
           <div className="flex items-center gap-4">
-            <span>{blog.views} views</span>
-            <span>{blog.commentsCount || 0} comments</span>
+            <span>
+              <span className="sr-only">View count: </span>
+              {blog.views} views
+            </span>
+            <span>
+              <span className="sr-only">Comment count: </span>
+              {blog.commentsCount || 0} comments
+            </span>
           </div>
         </div>
         

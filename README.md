@@ -30,6 +30,12 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 - Content formatting: `formatBlogContent` now uses `BlogTypography`, improved bullets, quotes, and code block styling.
 - `BlogPostTemplate` content, share, related, and comments sections updated to use glass components and typography.
 
+### v1.29.0 - Performance & Accessibility (Phase 5) MINOR
+- Implemented blog pagination: added `components/blog/BlogPagination.tsx` and integrated into `/app/blog/page.tsx` with URL param support.
+- Enhanced accessibility in `BlogCard` (descriptive alt text, ARIA, lazy-loaded images, focus states).
+- Added `lib/performance.ts` with helpers (`getOptimizedImageUrl`, `lazyWithPreload`, `useDebounce`).
+- Improved admin editor performance: lazy loading `ReactQuill` with styled loading fallbacks.
+
 ### v1.24.4 - Remove MeshBackground and Legacy Files (Current) PATCH
 - Deleted `app/components/MeshBackground.tsx` after migrating all pages to the standard black background.
 - Removed obsolete project documents/files: `REMAINING_AUTH_TASKS.md`, `auth-state.md`, `cold-start.md`, `cors frontend.md`, `skeleton-implmentation.json`.

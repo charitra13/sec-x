@@ -1,49 +1,95 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import api from '@/lib/api';
 import { IBlog } from '@/types';
 import BlogCard from '../components/BlogCard';
 import SearchBar from '../components/SearchBar';
 import { BlogContainer, BlogGlassCard, BlogTypography } from '@/components/blog';
+import { BlogPagination } from '@/components/blog/BlogPagination';
 import { BlogGridSkeleton } from '@/components/ui/skeleton';
 
-async function fetchBlogs() {
+interface BlogResponse {
+  blogs: IBlog[];
+  totalBlogs: number;
+  totalPages: number;
+  currentPage: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}
+
+async function fetchBlogs(page: number = 1, limit: number = 9): Promise<BlogResponse> {
   try {
-    const { data } = await api.get('/blogs');
-    // API response structure: { success: boolean, data: { blogs: IBlog[] } }
-    if (data?.data?.blogs) {
-      return data.data.blogs as IBlog[];
+    const { data } = await api.get(`/blogs?page=${page}&limit=${limit}`);
+    if (data?.data) {
+      return {
+        blogs: data.data.blogs || [],
+        totalBlogs: data.data.totalBlogs || 0,
+        totalPages: data.data.totalPages || 1,
+        currentPage: data.data.currentPage || 1,
+        hasNextPage: data.data.hasNextPage || false,
+        hasPrevPage: data.data.hasPrevPage || false
+      };
     }
-    return [];
+    return {
+      blogs: [],
+      totalBlogs: 0,
+      totalPages: 1,
+      currentPage: 1,
+      hasNextPage: false,
+      hasPrevPage: false
+    };
   } catch (error) {
     console.error('Failed to fetch blogs:', error);
-    return [];
+    return {
+      blogs: [],
+      totalBlogs: 0,
+      totalPages: 1,
+      currentPage: 1,
+      hasNextPage: false,
+      hasPrevPage: false
+    };
   }
 }
 
 export default function BlogPage() {
   const router = useRouter();
-  const [blogs, setBlogs] = useState<IBlog[]>([]);
+  const searchParams = useSearchParams();
+  const [blogData, setBlogData] = useState<BlogResponse>({
+    blogs: [],
+    totalBlogs: 0,
+    totalPages: 1,
+    currentPage: 1,
+    hasNextPage: false,
+    hasPrevPage: false
+  });
   const [isLoading, setIsLoading] = useState(true);
+  const currentPage = parseInt(searchParams.get('page') || '1');
+  const postsPerPage = 9;
 
   useEffect(() => {
     const getBlogs = async () => {
       setIsLoading(true);
       try {
-        const fetchedBlogs = await fetchBlogs();
-        setBlogs(fetchedBlogs);
+        const data = await fetchBlogs(currentPage, postsPerPage);
+        setBlogData(data);
       } finally {
         setIsLoading(false);
       }
     };
     getBlogs();
-  }, []);
+  }, [currentPage]);
 
   const handleReadBlog = (blog: IBlog) => {
     router.push(`/blog/${blog.slug}`);
+  };
+  
+  const handlePageChange = (page: number) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('page', page.toString());
+    router.push(url.pathname + url.search);
   };
   // Detail view anti-pattern removed; listing page only.
 
@@ -73,9 +119,9 @@ export default function BlogPage() {
               showSearch={false}
               showTitle={false}
             />
-          ) : blogs.length > 0 ? (
+          ) : blogData.blogs.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {blogs.map((blog, index) => (
+              {blogData.blogs.map((blog, index) => (
                 <BlogCard 
                   key={blog._id} 
                   blog={blog} 
@@ -99,6 +145,19 @@ export default function BlogPage() {
             </BlogGlassCard>
           )}
         </Suspense>
+
+        {!isLoading && blogData.totalPages > 1 && (
+          <div className="mt-12">
+            <BlogPagination
+              currentPage={blogData.currentPage}
+              totalPages={blogData.totalPages}
+              totalPosts={blogData.totalBlogs}
+              postsPerPage={postsPerPage}
+              onPageChange={handlePageChange}
+              isLoading={isLoading}
+            />
+          </div>
+        )}
 
         {/* Contact Section */}
         <BlogGlassCard variant="featured" className="rounded-2xl p-8 mt-12 text-center">

@@ -2,6 +2,7 @@
 
 import { useForm, Controller } from 'react-hook-form';
 import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 import 'react-quill-new/dist/quill.snow.css';
 import '../../../styles/dark-quill.css';
 import { useState } from 'react';
@@ -17,8 +18,18 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-// Dynamically import ReactQuill to avoid SSR issues
-const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
+// Dynamically import ReactQuill to avoid SSR issues with loading state
+const ReactQuill = dynamic(() => import('react-quill-new'), { 
+  ssr: false,
+  loading: () => (
+    <div className="h-64 bg-white/5 border border-white/20 rounded-lg flex items-center justify-center">
+      <div className="flex items-center gap-2 text-white/60">
+        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+        Loading editor...
+      </div>
+    </div>
+  )
+});
 
 const categories = ['AI Security', 'Red Teaming', 'Penetration Testing', 'Security Architecture', 'Cybersecurity'] as const;
 const statuses = ['draft', 'published'] as const;
@@ -109,23 +120,25 @@ export default function NewPostPage() {
                 control={control}
                 render={({ field }) => (
                   <div className="mt-2">
-                    <ReactQuill 
-                      theme="snow" 
-                      value={field.value} 
-                      onChange={field.onChange} 
-                      className="dark-quill"
-                      modules={{
-                        toolbar: [
-                          [{ header: [1, 2, 3, false] }],
-                          ['bold', 'italic', 'underline', 'strike'],
-                          [{ list: 'ordered'}, { list: 'bullet' }],
-                          ['blockquote', 'code-block'],
-                          ['link', 'image'],
-                          ['clean']
-                        ]
-                      }}
-                      placeholder="Write your blog content here..."
-                    />
+                    <Suspense fallback={<div>Loading editor...</div>}>
+                      <ReactQuill 
+                        theme="snow" 
+                        value={field.value} 
+                        onChange={field.onChange} 
+                        className="dark-quill"
+                        modules={{
+                          toolbar: [
+                            [{ header: [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ list: 'ordered'}, { list: 'bullet' }],
+                            ['blockquote', 'code-block'],
+                            ['link', 'image'],
+                            ['clean']
+                          ]
+                        }}
+                        placeholder="Write your blog content here..."
+                      />
+                    </Suspense>
                   </div>
                 )}
               />
