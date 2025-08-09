@@ -4,12 +4,6 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
-### v1.24.2 - Server Warming URL Path Fix (Current) PATCH
-- Fixed double `/api/api/` path issue in server and blog warming services.
-- Added URL cleaning logic to prevent malformed endpoints when NEXT_PUBLIC_API_URL includes `/api` suffix.
-- Updated both `lib/serverWarming.ts` and `lib/blogWarming.ts` to handle environment variable inconsistencies.
-- This resolves 404 errors when warming services try to call backend endpoints.
-
 ### v1.24.1 - Server Warming Endpoint Path Fix (Current) PATCH
 - Updated server and blog warming health checks to use `/health` instead of `/api/health` to avoid Vercel proxy double `/api` causing 404s when targeting Render backend.
 - Updated blog warming blogs request to use `/blogs` instead of `/api/blogs` for consistency with proxy behavior.
