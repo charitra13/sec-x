@@ -15,17 +15,31 @@ import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
 import Link from 'next/link';
 
-const registerSchema = z.object({
-  name: z.string().min(1, 'Name is required').max(50, 'Name cannot exceed 50 characters'),
-  username: z
-    .string()
-    .min(3, 'Username must be at least 3 characters')
-    .max(30, 'Username cannot exceed 30 characters')
-    .regex(/^[a-z0-9._]+$/, 'Username can only contain letters, numbers, dots, and underscores')
-    .transform((val) => val.toLowerCase()),
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-});
+const registerSchema = z
+  .object({
+    name: z
+      .string()
+      .min(1, 'Name is required')
+      .max(50, 'Name cannot exceed 50 characters'),
+    username: z
+      .string()
+      .min(3, 'Username must be at least 3 characters')
+      .max(30, 'Username cannot exceed 30 characters')
+      .regex(
+        /^[a-z0-9._]+$/,
+        'Username can only contain letters, numbers, dots, and underscores'
+      )
+      .transform((val) => val.toLowerCase()),
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(8, 'Password must be at least 8 characters'),
+    confirmPassword: z
+      .string()
+      .min(8, 'Confirm password must be at least 8 characters'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: 'Passwords do not match',
+  });
 
 type RegisterValues = z.infer<typeof registerSchema>;
 
@@ -134,6 +148,13 @@ export default function RegisterPage() {
               <Label htmlFor="password" className="text-white">Password</Label>
               <PasswordInput id="password" className="text-white placeholder-white/60" {...register('password')} />
               {errors.password && <p className="text-red-500 text-xs">{errors.password.message}</p>}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword" className="text-white">Confirm Password</Label>
+              <PasswordInput id="confirmPassword" className="text-white placeholder-white/60" {...register('confirmPassword')} />
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-xs">{errors.confirmPassword.message}</p>
+              )}
             </div>
             <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? 'Registering...' : 'Register'}
