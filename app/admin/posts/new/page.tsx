@@ -2,7 +2,7 @@
 
 import { useForm, Controller, useWatch } from 'react-hook-form';
 import dynamic from 'next/dynamic';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import 'react-quill-new/dist/quill.snow.css';
 import '@/styles/dark-quill.css';
 import api from '@/lib/api';
@@ -61,6 +61,51 @@ export default function NewPostPage() {
     control,
     name: 'coverImage'
   });
+
+  // Ref to scope tooltip enhancements to this editor instance
+  const quillContainerRef = useRef<HTMLDivElement | null>(null);
+
+  // Add simple native title-based tooltips to Quill toolbar controls
+  useEffect(() => {
+    if (!quillContainerRef.current) return;
+    const container = quillContainerRef.current;
+
+    const setTitles = () => {
+      const toolbar = container.querySelector('.ql-toolbar');
+      if (!toolbar) return;
+
+      const entries: Array<[string, string]> = [
+        ['button.ql-bold', 'Bold (Ctrl+B)'],
+        ['button.ql-italic', 'Italic (Ctrl+I)'],
+        ['button.ql-underline', 'Underline (Ctrl+U)'],
+        ['button.ql-strike', 'Strikethrough'],
+        ['span.ql-picker.ql-header .ql-picker-label', 'Text type'],
+        ['button.ql-list[value="ordered"]', 'Numbered list'],
+        ['button.ql-list[value="bullet"]', 'Bulleted list'],
+        ['button.ql-blockquote', 'Blockquote'],
+        ['button.ql-code-block', 'Code block'],
+        ['button.ql-link', 'Insert link'],
+        ['button.ql-image', 'Insert image'],
+        ['button.ql-clean', 'Clear formatting']
+      ];
+
+      entries.forEach(([selector, title]) => {
+        toolbar.querySelectorAll(selector).forEach((el) => {
+          (el as HTMLElement).setAttribute('title', title);
+          (el as HTMLElement).setAttribute('aria-label', title);
+        });
+      });
+    };
+
+    setTitles();
+    const timeoutId = window.setTimeout(setTitles, 500);
+    const observer = new MutationObserver(setTitles);
+    observer.observe(container, { childList: true, subtree: true });
+    return () => {
+      window.clearTimeout(timeoutId);
+      observer.disconnect();
+    };
+  }, []);
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -257,7 +302,7 @@ export default function NewPostPage() {
                 name="content"
                 control={control}
                 render={({ field }) => (
-                  <div className="mt-2">
+                  <div className="mt-2" ref={quillContainerRef}>
                     <Suspense fallback={<div>Loading editor...</div>}>
                       <ReactQuill 
                         theme="snow" 
