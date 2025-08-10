@@ -4,6 +4,12 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
+### v1.34.0 - Dashboard Navigation Enhancement MINOR
+- Added dashboard button to user profile menu in navigation bar for quick access
+- Implemented role-based dashboard routing: admins go to /admin/dashboard, readers go to /dashboard
+- Enhanced both desktop dropdown and mobile menu with dashboard navigation
+- Improved user experience with instant access to personalized dashboard based on user role
+
 ### v1.33.0 - Image Position Adjustment Feature MINOR
 - Added image position controls to blog post creation and editing interfaces with 9-point grid positioning system
 - Users can now select focal points for cover images (top/center/bottom + left/center/right combinations)

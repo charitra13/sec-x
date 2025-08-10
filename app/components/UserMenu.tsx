@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import Link from 'next/link'
 import { IUser } from '@/types'
 
 interface UserMenuProps {
@@ -12,6 +13,11 @@ interface UserMenuProps {
 export default function UserMenu({ user, onLogout, isMobile = false }: UserMenuProps) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+
+    // Get dashboard URL based on user role
+    const getDashboardUrl = () => {
+        return user.role === 'admin' ? '/admin/dashboard' : '/dashboard';
+    };
 
     const handleToggleDropdown = () => {
         setDropdownOpen(prev => !prev);
@@ -51,6 +57,12 @@ export default function UserMenu({ user, onLogout, isMobile = false }: UserMenuP
                     </div>
                 </div>
                 <div className="border-t border-white/10 my-2"></div>
+                <Link
+                    href={getDashboardUrl()}
+                    className="w-full text-left px-4 py-3 text-white hover:bg-white/10 flex items-center space-x-3"
+                >
+                    <span>Dashboard</span>
+                </Link>
                 <button
                     onClick={handleLogout}
                     className="w-full text-left px-4 py-3 text-red-400 hover:bg-red-500/10 flex items-center space-x-3"
@@ -83,6 +95,13 @@ export default function UserMenu({ user, onLogout, isMobile = false }: UserMenuP
                             <p className="text-sm text-white/60 truncate">{user.email}</p>
                         </div>
                         <div className="border-t border-white/10 my-1"></div>
+                        <Link
+                            href={getDashboardUrl()}
+                            className="w-full text-left px-3 py-2 text-white hover:bg-white/10 rounded-md flex items-center space-x-2 transition-colors duration-200"
+                            onClick={() => setDropdownOpen(false)}
+                        >
+                            <span>Dashboard</span>
+                        </Link>
                         <button
                             onClick={handleLogout}
                             className="w-full text-left px-3 py-2 text-red-400 hover:bg-red-500/10 rounded-md flex items-center space-x-2 transition-colors duration-200"
