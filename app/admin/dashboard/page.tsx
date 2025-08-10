@@ -104,7 +104,7 @@ export default function AdminDashboard() {
                     <Link href={`/blog/${post.slug}`}>
                       <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10">View</Button>
                     </Link>
-                    <Link href={`/admin/posts/edit/${post._id}`}>
+                    <Link href={`/admin/posts/edit/${post.slug}`}>
                       <Button variant="outline" size="sm" className="border-blue-400/50 text-blue-400 hover:bg-blue-500/10">Edit</Button>
                     </Link>
                     <Button variant="outline" size="sm" className="border-red-400/50 text-red-400 hover:bg-red-500/10" onClick={() => handleDelete(post._id)}>

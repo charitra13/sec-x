@@ -19,7 +19,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import useSWR from 'swr';
 
-const ReactQuill = dynamic(() => import('react-quill-new'), { 
+const ReactQuill = dynamic(() => import('react-quill-new'), {
   ssr: false,
   loading: () => (
     <div className="h-64 bg-white/5 border border-white/20 rounded-lg flex items-center justify-center">
@@ -51,15 +51,19 @@ const fetcher = (url: string) => api.get(url).then(res => res.data);
 export default function EditPostPage() {
   const router = useRouter();
   const params = useParams();
-  const { id } = params;
+  const { id: slug } = params; // Note: Despite the name 'id', this is now the slug
 
-  const { data: postData, error: postError } = useSWR(id ? `/blogs/id/${id}` : null, fetcher);
+  // ✅ CHANGED: Use slug-based API endpoint instead of ID
+  const { data: postData, error: postError, isLoading } = useSWR(
+    slug ? `/blogs/slug/${slug}` : null,
+    fetcher
+  );
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { register, handleSubmit, control, setValue, reset, formState: { errors } } = useForm<EditPostValues>({
     resolver: zodResolver(editPostSchema),
   });
-  
+
   useEffect(() => {
     if (postData) {
       const post = postData.data;
@@ -89,12 +93,18 @@ export default function EditPostPage() {
   };
 
   const onSubmit = async (data: EditPostValues) => {
+    if (!postData?.data?._id) {
+      toast.error('Blog data not loaded yet. Please wait.');
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const tagsArray = data.tags.split(',').map(tag => tag.trim());
       const payload = { ...data, tags: tagsArray };
 
-      await api.put(`/blogs/${id}`, payload);
+      // ✅ CHANGED: Use the blog ID from fetched data for the PUT request
+      await api.put(`/blogs/${postData.data._id}`, payload);
       toast.success('Blog post updated successfully!');
       router.push('/admin/dashboard');
     } catch (err: any) {
@@ -103,118 +113,162 @@ export default function EditPostPage() {
       setIsSubmitting(false);
     }
   };
-  
-  if (postError) return <div>Failed to load post</div>;
-  if (!postData) return <div>Loading...</div>;
+
+  // Enhanced error handling
+  if (postError) {
+    return (
+      <BlogContainer>
+        <AdminGlassCard title="Error">
+          <div className="text-center py-8">
+            <div className="text-red-400 mb-4">
+              ❌ Failed to load blog post
+            </div>
+            <p className="text-white/60 mb-4">
+              {postError.response?.status === 404
+                ? 'Blog post not found. It may have been deleted or the URL is incorrect.'
+                : 'An error occurred while loading the blog post.'
+              }
+            </p>
+            <Button
+              onClick={() => router.push('/admin/dashboard')}
+              variant="outline"
+            >
+              Back to Dashboard
+            </Button>
+          </div>
+        </AdminGlassCard>
+      </BlogContainer>
+    );
+  }
+
+  if (isLoading || !postData) {
+    return (
+      <BlogContainer>
+        <AdminGlassCard title="Loading">
+          <div className="flex items-center justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+            <span className="ml-3 text-white/60">Loading blog post...</span>
+          </div>
+        </AdminGlassCard>
+      </BlogContainer>
+    );
+  }
 
   return (
     <BlogContainer>
-      <AdminGlassCard title="Edit Post">
+      <AdminGlassCard title={`Edit: ${postData.data.title}`}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-             <div>
-              <Label>Cover Image</Label>
-              <Input type="file" onChange={handleImageUpload} className="mt-2" />
-              {errors.coverImage && <p className="text-red-500 text-xs mt-1">{errors.coverImage.message}</p>}
-              <Input {...register('coverImage')} readOnly placeholder="Image URL will appear here" className="mt-2" />
-            </div>
-            
-            <div>
-              <Label htmlFor="title">Title</Label>
-              <Input id="title" {...register('title')} className="mt-2" />
-              {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
-            </div>
+          <div>
+            <Label>Cover Image</Label>
+            <Input type="file" onChange={handleImageUpload} className="mt-2" />
+            {errors.coverImage && <p className="text-red-500 text-xs mt-1">{errors.coverImage.message}</p>}
+            <Input {...register('coverImage')} readOnly placeholder="Image URL will appear here" className="mt-2" />
+          </div>
 
-            <div>
-              <Label htmlFor="excerpt">Excerpt</Label>
-              <Input id="excerpt" {...register('excerpt')} className="mt-2" />
-              {errors.excerpt && <p className="text-red-500 text-xs mt-1">{errors.excerpt.message}</p>}
-            </div>
+          <div>
+            <Label htmlFor="title">Title</Label>
+            <Input id="title" {...register('title')} className="mt-2" />
+            {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
+          </div>
 
+          <div>
+            <Label htmlFor="excerpt">Excerpt</Label>
+            <Input id="excerpt" {...register('excerpt')} className="mt-2" />
+            {errors.excerpt && <p className="text-red-500 text-xs mt-1">{errors.excerpt.message}</p>}
+          </div>
+
+          <div>
+            <Label className="text-white">Content</Label>
+            <Controller
+              name="content"
+              control={control}
+              render={({ field }) => (
+                <div className="mt-2">
+                  <Suspense fallback={<div>Loading editor...</div>}>
+                    <ReactQuill
+                      theme="snow"
+                      value={field.value}
+                      onChange={field.onChange}
+                      className="dark-quill"
+                      modules={{
+                        toolbar: [
+                          [{ header: [1, 2, 3, false] }],
+                          ['bold', 'italic', 'underline', 'strike'],
+                          [{ list: 'ordered' }, { list: 'bullet' }],
+                          ['blockquote', 'code-block'],
+                          ['link', 'image'],
+                          ['clean']
+                        ]
+                      }}
+                      placeholder="Write your blog content here..."
+                    />
+                  </Suspense>
+                </div>
+              )}
+            />
+            {errors.content && <p className="text-red-400 text-xs mt-1">{errors.content.message}</p>}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <Label className="text-white">Content</Label>
+              <Label>Category</Label>
               <Controller
-                name="content"
+                name="category"
                 control={control}
                 render={({ field }) => (
-                  <div className="mt-2">
-                    <Suspense fallback={<div>Loading editor...</div>}>
-                      <ReactQuill 
-                        theme="snow" 
-                        value={field.value} 
-                        onChange={field.onChange} 
-                        className="dark-quill"
-                        modules={{
-                          toolbar: [
-                            [{ header: [1, 2, 3, false] }],
-                            ['bold', 'italic', 'underline', 'strike'],
-                            [{ list: 'ordered'}, { list: 'bullet' }],
-                            ['blockquote', 'code-block'],
-                            ['link', 'image'],
-                            ['clean']
-                          ]
-                        }}
-                        placeholder="Write your blog content here..."
-                      />
-                    </Suspense>
-                  </div>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="mt-2">
+                      <SelectValue placeholder="Select a category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
                 )}
               />
-              {errors.content && <p className="text-red-400 text-xs mt-1">{errors.content.message}</p>}
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label>Category</Label>
-                <Controller
-                  name="category"
-                  control={control}
-                  render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger className="mt-2">
-                        <SelectValue placeholder="Select a category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {categories.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
-                {errors.category && <p className="text-red-500 text-xs mt-1">{errors.category.message}</p>}
-              </div>
-
-              <div>
-                <Label>Status</Label>
-                <Controller
-                  name="status"
-                  control={control}
-                  render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger className="mt-2">
-                        <SelectValue placeholder="Select a status" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {statuses.map(stat => <SelectItem key={stat} value={stat}>{stat}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
-                {errors.status && <p className="text-red-500 text-xs mt-1">{errors.status.message}</p>}
-              </div>
+              {errors.category && <p className="text-red-500 text-xs mt-1">{errors.category.message}</p>}
             </div>
 
             <div>
-              <Label htmlFor="tags">Tags (comma-separated)</Label>
-              <Input id="tags" {...register('tags')} className="mt-2" />
-              {errors.tags && <p className="text-red-500 text-xs mt-1">{errors.tags.message}</p>}
+              <Label>Status</Label>
+              <Controller
+                name="status"
+                control={control}
+                render={({ field }) => (
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="mt-2">
+                      <SelectValue placeholder="Select a status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {statuses.map(stat => <SelectItem key={stat} value={stat}>{stat}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              {errors.status && <p className="text-red-500 text-xs mt-1">{errors.status.message}</p>}
             </div>
+          </div>
 
-            <div className="flex justify-end">
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? 'Updating...' : 'Update Post'}
-              </Button>
-            </div>
-          </form>
+          <div>
+            <Label htmlFor="tags">Tags (comma-separated)</Label>
+            <Input id="tags" {...register('tags')} className="mt-2" />
+            {errors.tags && <p className="text-red-500 text-xs mt-1">{errors.tags.message}</p>}
+          </div>
+
+          <div className="flex justify-between">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => router.push('/admin/dashboard')}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Updating...' : 'Update Post'}
+            </Button>
+          </div>
+        </form>
       </AdminGlassCard>
     </BlogContainer>
   );
-} 
+}
