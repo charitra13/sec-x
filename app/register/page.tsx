@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -20,7 +21,7 @@ const registerSchema = z.object({
     .string()
     .min(3, 'Username must be at least 3 characters')
     .max(30, 'Username cannot exceed 30 characters')
-    .regex(/^[a-z0-9_]+$/, 'Username can only contain lowercase letters, numbers, and underscores')
+    .regex(/^[a-z0-9._]+$/, 'Username can only contain letters, numbers, dots, and underscores')
     .transform((val) => val.toLowerCase()),
   email: z.string().email('Invalid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
@@ -31,9 +32,44 @@ type RegisterValues = z.infer<typeof registerSchema>;
 export default function RegisterPage() {
   const { register: registerUser } = useAuth();
   const router = useRouter();
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<RegisterValues>({
+  const { register, handleSubmit, formState: { errors, isSubmitting }, watch } = useForm<RegisterValues>({
     resolver: zodResolver(registerSchema)
   });
+
+  const [isUsernameAvailable, setIsUsernameAvailable] = useState<boolean | null>(null);
+
+  const usernameValue = watch('username');
+
+  useEffect(() => {
+    let active = true;
+    const controller = new AbortController();
+
+    const debounce = setTimeout(async () => {
+      const value = (usernameValue || '').toLowerCase();
+      if (!value || value.length < 3) {
+        if (active) setIsUsernameAvailable(null);
+        return;
+      }
+      // quick client regex validation to avoid unnecessary requests
+      const formatOk = /^[a-z0-9._]+$/.test(value);
+      if (!formatOk) {
+        if (active) setIsUsernameAvailable(null);
+        return;
+      }
+      try {
+        const response = await api.get(`/auth/check-username/${value}`, { signal: controller.signal as any });
+        if (active) setIsUsernameAvailable(!!response.data?.available);
+      } catch (_e) {
+        if (active) setIsUsernameAvailable(null);
+      }
+    }, 300);
+
+    return () => {
+      active = false;
+      controller.abort();
+      clearTimeout(debounce);
+    };
+  }, [usernameValue]);
 
   const onSubmit = async (data: RegisterValues) => {
     try {
@@ -81,7 +117,13 @@ export default function RegisterPage() {
                 className="lowercase"
               />
               {errors.username && <p className="text-red-500 text-xs">{errors.username.message}</p>}
-              <p className="text-xs text-gray-500">Only lowercase letters, numbers, and underscores allowed</p>
+              <p className="text-xs text-gray-500">Only lowercase letters, numbers, dots, and underscores allowed</p>
+              {isUsernameAvailable === false && (
+                <p className="text-red-500 text-xs">Username already taken</p>
+              )}
+              {isUsernameAvailable === true && (
+                <p className="text-green-500 text-xs">Username available</p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
