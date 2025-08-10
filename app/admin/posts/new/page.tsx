@@ -1,11 +1,10 @@
 "use client";
 
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import dynamic from 'next/dynamic';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import 'react-quill-new/dist/quill.snow.css';
 import '@/styles/dark-quill.css';
-import { useState } from 'react';
 import api from '@/lib/api';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
@@ -49,6 +48,7 @@ type CreatePostValues = z.infer<typeof createPostSchema>;
 export default function NewPostPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadMode, setUploadMode] = useState<'url' | 'upload'>('url');
   const { register, handleSubmit, control, setValue, formState: { errors } } = useForm<CreatePostValues>({
     resolver: zodResolver(createPostSchema),
     defaultValues: {
@@ -56,21 +56,68 @@ export default function NewPostPage() {
     }
   });
 
+  // Watch coverImage for preview
+  const watchCoverImage = useWatch({
+    control,
+    name: 'coverImage'
+  });
+
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file.');
+      return;
+    }
+
+    // Validate file size (5MB limit)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image size must be less than 5MB.');
+      return;
+    }
 
     const formData = new FormData();
     formData.append('image', file);
 
     try {
+      toast.loading('Uploading image...', { id: 'upload' });
+
       const { data } = await api.post('/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
+
       setValue('coverImage', data.data.url, { shouldValidate: true });
-      toast.success('Image uploaded!');
-    } catch (err) {
-      toast.error('Image upload failed.');
+      toast.success('Image uploaded successfully!', { id: 'upload' });
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || 'Image upload failed.', { id: 'upload' });
+    }
+  };
+
+  const validateImageUrl = (url: string): boolean => {
+    try {
+      const urlObj = new URL(url);
+      const validExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+      const pathname = urlObj.pathname.toLowerCase();
+      return (
+        validExtensions.some(ext => pathname.endsWith(ext)) ||
+        pathname.includes('/image/') ||
+        urlObj.hostname.includes('cloudinary.com') ||
+        urlObj.hostname.includes('imgur.com') ||
+        urlObj.hostname.includes('unsplash.com')
+      );
+    } catch {
+      return false;
+    }
+  };
+
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const url = e.target.value;
+    setValue('coverImage', url, { shouldValidate: true });
+
+    if (url && !validateImageUrl(url)) {
+      toast('Please ensure the URL points to a valid image.', { icon: '⚠️' });
     }
   };
 
@@ -96,9 +143,100 @@ export default function NewPostPage() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
               <Label>Cover Image</Label>
-              <Input type="file" onChange={handleImageUpload} className="mt-2" />
-              {errors.coverImage && <p className="text-red-500 text-xs mt-1">{errors.coverImage.message}</p>}
-              <Input {...register('coverImage')} readOnly placeholder="Image URL will appear here" className="mt-2" />
+
+              {/* Upload Mode Toggle */}
+              <div className="flex gap-2 mt-2 mb-3">
+                <Button
+                  type="button"
+                  variant={uploadMode === 'url' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => { setUploadMode('url'); setValue('coverImage', '', { shouldValidate: true }); }}
+                  className="flex-1"
+                >
+                  📎 Paste URL
+                </Button>
+                <Button
+                  type="button"
+                  variant={uploadMode === 'upload' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => { setUploadMode('upload'); setValue('coverImage', '', { shouldValidate: true }); }}
+                  className="flex-1"
+                >
+                  📁 Upload File
+                </Button>
+              </div>
+
+              {/* Conditional Input Based on Mode */}
+              {uploadMode === 'url' ? (
+                <div>
+                  <Input
+                    {...register('coverImage')}
+                    placeholder="https://example.com/image.jpg"
+                    onChange={handleUrlChange}
+                    className="mb-2"
+                  />
+                  <p className="text-xs text-gray-500">
+                    Paste a direct link to an image (JPG, PNG, GIF, WebP)
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <Input
+                    type="file"
+                    onChange={handleImageUpload}
+                    accept="image/*"
+                    className="mb-2"
+                  />
+                  <p className="text-xs text-gray-500">
+                    Upload an image file (Max 5MB, JPG/PNG/GIF/WebP)
+                  </p>
+                </div>
+              )}
+
+              {/* Error Display */}
+              {errors.coverImage && (
+                <p className="text-red-500 text-xs mt-1">{errors.coverImage.message}</p>
+              )}
+
+              {/* Image Preview */}
+              {watchCoverImage && (
+                <div className="mt-3">
+                  <Label className="text-sm text-gray-400">Preview:</Label>
+                  <div className="mt-1 relative">
+                    <img
+                      src={watchCoverImage}
+                      alt="Cover preview"
+                      className="w-full max-w-md h-32 object-cover rounded-lg border border-white/20"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        toast.error('Failed to load image preview. Please check the URL.');
+                      }}
+                      onLoad={(e) => {
+                        e.currentTarget.style.display = 'block';
+                      }}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setValue('coverImage', '', { shouldValidate: true })}
+                      className="absolute top-2 right-2 bg-black/50 hover:bg-black/70"
+                    >
+                      ✕
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Current URL Display (for reference) */}
+              {watchCoverImage && (
+                <div className="mt-2">
+                  <Label className="text-xs text-gray-500">Image URL:</Label>
+                  <div className="text-xs text-gray-400 break-all bg-white/5 p-2 rounded border">
+                    {watchCoverImage}
+                  </div>
+                </div>
+              )}
             </div>
             
             <div>
