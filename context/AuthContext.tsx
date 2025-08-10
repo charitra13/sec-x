@@ -5,6 +5,7 @@ import api, { isNetworkError, isCORSError, getAuthErrorType } from '../lib/api';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { IUser } from '@/types';
+import Cookies from 'js-cookie';
 
 interface AuthContextType {
   user: IUser | null;
@@ -147,9 +148,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { data } = await api.post('/auth/login', { emailOrUsername, password });
       
       const userData = (data as any).data?.user || (data as any).user || data;
+      const token = (data as any).data?.token || (data as any).token;
       
       if (!userData || !(userData as any).id) {
         throw new Error('Invalid login response from server');
+      }
+
+      // Store token in cookie for Authorization headers (cross-origin compatible)
+      if (token) {
+        Cookies.set('token', token, { 
+          expires: 7,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax'
+        });
+        console.log('✅ Token stored in cookie for Authorization headers');
+      } else {
+        console.warn('⚠️ No token received in login response');
       }
       
       setUser(userData as IUser);
@@ -206,9 +220,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { data } = await api.post('/auth/register', { name, username, email, password });
       
       const userData = (data as any).data?.user || (data as any).user || data;
+      const token = (data as any).data?.token || (data as any).token;
       
       if (!userData || !(userData as any).id) {
         throw new Error('Invalid registration response from server');
+      }
+
+      // Store token in cookie for Authorization headers (cross-origin compatible)
+      if (token) {
+        Cookies.set('token', token, { 
+          expires: 7,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax'
+        });
+        console.log('✅ Token stored in cookie for Authorization headers');
+      } else {
+        console.warn('⚠️ No token received in registration response');
       }
       
       setUser(userData as IUser);
@@ -269,6 +296,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         toast.error('Logout warning: Session may not be fully cleared');
       }
     } finally {
+      // Clear token cookie
+      Cookies.remove('token');
+      console.log('🧹 Token removed from cookie');
+      
       setUser(null);
       setSessionPersistent(false);
       setLoadingState(false);

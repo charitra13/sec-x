@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 // Toast management to prevent duplicates
 let isShowingAuthToast = false;
@@ -25,13 +26,23 @@ const api: AxiosInstance = axios.create({
   },
 });
 
-// Simplified request interceptor - no manual token handling
+// Enhanced request interceptor with Authorization header support
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // Remove manual Authorization header - cookies handle auth now
-    // The backend will read httpOnly cookies automatically
+    // CRITICAL: Read token from cookie and send as Authorization header
+    // This works cross-origin, unlike httpOnly cookies
+    const token = Cookies.get('token');
+    
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`;
+      if (process.env.NODE_ENV === 'development') {
+        console.log('✅ Added Authorization header from cookie');
+      }
+    } else if (process.env.NODE_ENV === 'development') {
+      console.log('❌ No token found in cookies');
+    }
 
-    // Add CSRF token if available (for additional security)
+    // Keep CSRF support
     try {
       const csrfToken = typeof document !== 'undefined'
         ? document.cookie
@@ -47,10 +58,12 @@ api.interceptors.request.use(
       // ignore if document is not available
     }
 
-    // Development logging
+    // Enhanced development logging
     if (process.env.NODE_ENV === 'development') {
       console.log(`[API] ${config.method?.toUpperCase()} ${config.url}`, {
+        hasAuthToken: !!token,
         withCredentials: config.withCredentials,
+        tokenPreview: token ? `${token.substring(0, 20)}...` : 'none'
       });
     }
 
