@@ -1,10 +1,15 @@
 /* Dark theme for ReactQuill editor */
+.dark-quill {
+  position: relative; /* ensure a stacking context for toolbar */
+}
 .dark-quill .ql-toolbar {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: none;
   border-radius: 0.75rem 0.75rem 0 0;
+  position: relative;
+  z-index: 50; /* keep toolbar and its dropdowns above editor */
 }
 
 .dark-quill .ql-container {
@@ -15,6 +20,8 @@
   border-radius: 0 0 0.75rem 0.75rem;
   color: white;
   font-family: 'Inter', sans-serif;
+  position: relative;
+  z-index: 10;
 }
 
 .dark-quill .ql-editor {
@@ -57,6 +64,7 @@
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 0.5rem;
+  z-index: 60; /* ensure dropdown overlaps the editor */
 }
 
 .dark-quill .ql-toolbar .ql-picker-item {
