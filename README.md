@@ -4,6 +4,12 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
+### v1.30.1 - Blog Administration & Security Enhancement PATCH
+- Fixed admin dashboard loading issue where manually inserted MongoDB blogs weren't appearing due to incorrect `status=all` query handling in `getAllBlogs` controller.
+- Updated admin edit URLs from ID-based (`/admin/posts/edit/${post._id}`) to slug-based (`/admin/posts/edit/${post.slug}`) to eliminate MongoDB ObjectId exposure.
+- Modified edit page API calls from `/blogs/id/${id}` to `/blogs/slug/${slug}` while maintaining PUT requests using internal IDs from fetched data.
+- Enhanced edit page error handling with 404-specific messages, loading states, and data validation checks to prevent form submission when blog data isn't loaded.
+
 ### v1.30.0 - Registration API Payload Fix PATCH
 - Fixed registration API payload mapping to resolve "username is required" error.
 - Updated `context/AuthContext.tsx` to map `name` field to `username` in the registration request.
