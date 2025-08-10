@@ -15,7 +15,13 @@ import { PasswordInput } from "@/components/ui/password-input";
 import Link from 'next/link';
 
 const registerSchema = z.object({
-  name: z.string().min(3, 'Name must be at least 3 characters'),
+  name: z.string().min(1, 'Name is required').max(50, 'Name cannot exceed 50 characters'),
+  username: z
+    .string()
+    .min(3, 'Username must be at least 3 characters')
+    .max(30, 'Username cannot exceed 30 characters')
+    .regex(/^[a-z0-9_]+$/, 'Username can only contain lowercase letters, numbers, and underscores')
+    .transform((val) => val.toLowerCase()),
   email: z.string().email('Invalid email address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
 });
@@ -31,7 +37,7 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterValues) => {
     try {
-      await registerUser(data.name, data.email, data.password);
+      await registerUser(data.name, data.username, data.email, data.password);
     } catch (error: any) {
       // Only handle specific errors that aren't already handled in AuthContext
       if (error.name === 'CORSError') {
@@ -61,9 +67,21 @@ export default function RegisterPage() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="name">Full Name</Label>
               <Input id="name" type="text" placeholder="John Doe" {...register('name')} />
               {errors.name && <p className="text-red-500 text-xs">{errors.name.message}</p>}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="username">Username</Label>
+              <Input
+                id="username"
+                type="text"
+                placeholder="johndoe"
+                {...register('username')}
+                className="lowercase"
+              />
+              {errors.username && <p className="text-red-500 text-xs">{errors.username.message}</p>}
+              <p className="text-xs text-gray-500">Only lowercase letters, numbers, and underscores allowed</p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>

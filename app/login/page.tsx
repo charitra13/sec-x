@@ -15,7 +15,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import Link from 'next/link';
 
 const loginSchema = z.object({
-  email: z.string().email('Invalid email address'),
+  emailOrUsername: z.string().min(1, 'Email or username is required'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
@@ -30,7 +30,7 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginValues) => {
     try {
-      await login(data.email, data.password);
+      await login(data.emailOrUsername, data.password);
     } catch (error: any) {
       // Only handle specific errors that aren't already handled in AuthContext
       if (error.name === 'CORSError') {
@@ -55,14 +55,14 @@ export default function LoginPage() {
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>Enter your email below to login to your account.</CardDescription>
+          <CardDescription>Enter your email or username below to login to your account.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="m@example.com" {...register('email')} />
-              {errors.email && <p className="text-red-500 text-xs">{errors.email.message}</p>}
+              <Label htmlFor="emailOrUsername">Email or Username</Label>
+              <Input id="emailOrUsername" type="text" placeholder="john@example.com or johndoe" {...register('emailOrUsername')} />
+              {errors.emailOrUsername && <p className="text-red-500 text-xs">{errors.emailOrUsername.message}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>

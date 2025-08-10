@@ -14,8 +14,8 @@ interface AuthContextType {
   loadingMessage: string | null;
   error: Error | null;
   sessionPersistent: boolean | null;
-  login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  login: (emailOrUsername: string, password: string) => Promise<void>;
+  register: (name: string, username: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   refetchUser: () => Promise<void>;
   clearError: () => void;
@@ -164,7 +164,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [setLoadingState]);
 
   // Login with enhanced error state management
-  const login = async (email: string, password: string) => {
+  const login = async (emailOrUsername: string, password: string) => {
     try {
       // ENHANCED: Clear all error states at the start of new login attempt
       resetAuthState();
@@ -172,7 +172,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       console.log('🔐 Starting login attempt...');
 
-      const { data } = await api.post('/auth/login', { email, password });
+      const { data } = await api.post('/auth/login', { emailOrUsername, password });
       
       // Debug logging in development
       debugLoginResponse(data);
@@ -254,7 +254,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setError(new Error('Unable to connect to authentication server'));
           toast.error('Connection blocked by security policy');
         } else if (err.response?.status === 401) {
-          setError(new Error('Invalid email or password'));
+          setError(new Error('Invalid email/username or password'));
           toast.error('Invalid credentials');
         } else {
           setError(err);
@@ -270,7 +270,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Register with enhanced error state management
-  const register = async (name: string, email: string, password: string) => {
+  const register = async (name: string, username: string, email: string, password: string) => {
     try {
       // ENHANCED: Clear all error states at the start of new registration attempt
       resetAuthState();
@@ -278,7 +278,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       console.log('📝 Starting registration attempt...');
 
-      const { data } = await api.post('/auth/register', { username: name, email, password });
+      const { data } = await api.post('/auth/register', { name, username, email, password });
       
       // Debug logging in development
       debugLoginResponse(data);
