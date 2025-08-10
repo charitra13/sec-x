@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
 
 // Toast management to prevent duplicates
@@ -15,7 +14,7 @@ export class CORSError extends Error {
   }
 }
 
-// Create axios instance with comprehensive configuration
+// Create axios instance with enhanced cookie support
 const api: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api',
   timeout: 30000, // 30 seconds
@@ -26,25 +25,31 @@ const api: AxiosInstance = axios.create({
   },
 });
 
-// Request interceptor for auth and logging
+// Simplified request interceptor - no manual token handling
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // Add auth token from cookie
-    const token = Cookies.get('token');
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    // Remove manual Authorization header - cookies handle auth now
+    // The backend will read httpOnly cookies automatically
 
-    // Add CSRF token if available
-    const csrfToken = Cookies.get('csrf-token');
-    if (csrfToken && config.headers) {
-      config.headers['X-CSRF-Token'] = csrfToken;
+    // Add CSRF token if available (for additional security)
+    try {
+      const csrfToken = typeof document !== 'undefined'
+        ? document.cookie
+            .split('; ')
+            .find(row => row.startsWith('csrf-token='))
+            ?.split('=')[1]
+        : undefined;
+
+      if (csrfToken && config.headers) {
+        config.headers['X-CSRF-Token'] = csrfToken;
+      }
+    } catch (e) {
+      // ignore if document is not available
     }
 
     // Development logging
     if (process.env.NODE_ENV === 'development') {
       console.log(`[API] ${config.method?.toUpperCase()} ${config.url}`, {
-        headers: config.headers,
         withCredentials: config.withCredentials,
       });
     }
@@ -57,7 +62,7 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor for error handling
+// Enhanced response interceptor with better error categorization
 api.interceptors.response.use(
   (response) => {
     // Reset toast flags on successful response
@@ -103,7 +108,7 @@ api.interceptors.response.use(
       }
     }
 
-    // Handle network errors (possible CORS issues)
+    // Handle network errors (possible CORS issues) - DON'T auto-redirect on network errors
     if (!error.response && error.message === 'Network Error') {
       console.error('[Network Error] Possible CORS issue:', error);
       
@@ -123,27 +128,36 @@ api.interceptors.response.use(
         // Reset flag after delay
         setTimeout(() => { isShowingNetworkToast = false; }, 3000);
       }
+
+      // DON'T redirect on network errors - let the app handle it gracefully
+      return Promise.reject(error);
     }
 
-    // Handle 401 Unauthorized
+    // Enhanced 401 handling - distinguish between different auth failures
     if (error.response?.status === 401 && originalRequest && !(originalRequest as any)._retry) {
       (originalRequest as any)._retry = true;
       
-      // Clear auth tokens
-      Cookies.remove('token');
-      
-      // Only show auth toast if not already showing and not on login/register pages
       const currentPath = window.location.pathname;
       const isAuthPage = currentPath === '/login' || currentPath === '/register';
+      const errorMessage = (error.response?.data as any)?.message || '';
       
-      if (!isShowingAuthToast && !isAuthPage) {
-        isShowingAuthToast = true;
-        toast.error('Session expired. Please login again.');
-        // Reset flag after delay
-        setTimeout(() => { isShowingAuthToast = false; }, 2000);
+      // Different handling based on error type
+      if (errorMessage.includes('Session has been terminated') || 
+          errorMessage.includes('Token has been invalidated')) {
+        if (!isShowingAuthToast && !isAuthPage) {
+          isShowingAuthToast = true;
+          toast.error('Your session has ended. Please login again.');
+          setTimeout(() => { isShowingAuthToast = false; }, 2000);
+        }
+      } else if (errorMessage.includes('expired') || errorMessage.includes('invalid')) {
+        if (!isShowingAuthToast && !isAuthPage) {
+          isShowingAuthToast = true;
+          toast.error('Session expired. Please login again.');
+          setTimeout(() => { isShowingAuthToast = false; }, 2000);
+        }
       }
       
-      // Redirect to login
+      // Only redirect if we're not already on an auth page
       if (!isAuthPage) {
         window.location.href = '/login?session=expired';
       }
@@ -179,7 +193,28 @@ export const testCORS = async () => {
 export const isCORSError = (error: any): error is CORSError => {
   return error instanceof CORSError || 
          (error.response?.status === 403 && 
-          error.response?.data?.error?.code === 'CORS_POLICY_VIOLATION');
+          (error.response?.data as any)?.error?.code === 'CORS_POLICY_VIOLATION');
+};
+
+// Helper function to check if error is a network error
+export const isNetworkError = (error: any): boolean => {
+  return !error.response && error.message === 'Network Error';
+};
+
+// Helper function to categorize authentication errors
+export const getAuthErrorType = (
+  error: any
+): 'network' | 'cors' | 'expired' | 'invalid' | 'server' => {
+  if (isNetworkError(error)) return 'network';
+  if (isCORSError(error)) return 'cors';
+  
+  if (error.response?.status === 401) {
+    const message: string = (error.response?.data as any)?.message || '';
+    if (message.includes('expired')) return 'expired';
+    if (message.includes('invalid') || message.includes('terminated')) return 'invalid';
+  }
+  
+  return 'server';
 };
 
 export default api; 

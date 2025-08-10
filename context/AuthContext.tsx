@@ -1,8 +1,7 @@
 "use client";
 
 import { createContext, useState, useEffect, useContext, ReactNode, useCallback } from 'react';
-import Cookies from 'js-cookie';
-import api, { isCORSError } from '../lib/api';
+import api, { isNetworkError, isCORSError, getAuthErrorType } from '../lib/api';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { IUser } from '@/types';
@@ -34,66 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isShowingToast, setIsShowingToast] = useState(false);
   const router = useRouter();
 
-  // Enhanced debugging utility for API response structure verification
-  const debugLoginResponse = (data: any) => {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('🔍 Login Response Debug:', {
-        hasData: !!data,
-        hasDataData: !!data.data,
-        hasUser: !!data.data?.user,
-        hasToken: !!data.data?.token,
-        userRole: data.data?.user?.role,
-        fullResponse: data
-      });
-      
-      // CRITICAL: Test different possible response structures
-      console.log('🧪 Response Structure Analysis:', {
-        // Direct access patterns
-        directUser: data.user,
-        directToken: data.token,
-        directRole: data.user?.role,
-        
-        // Nested data.data access patterns
-        nestedUser: data.data?.user,
-        nestedToken: data.data?.token,
-        nestedRole: data.data?.user?.role,
-        
-        // Alternative patterns
-        payloadUser: data.payload?.user,
-        payloadToken: data.payload?.token,
-        
-        // Response metadata
-        responseKeys: Object.keys(data || {}),
-        dataKeys: data.data ? Object.keys(data.data) : null,
-        userKeys: data.data?.user ? Object.keys(data.data.user) : null
-      });
-      
-      // Test middleware compatibility
-      if (data.data?.token) {
-        console.log('🔐 Testing JWT token structure for middleware compatibility...');
-        try {
-          // Parse JWT payload (without verification for debugging)
-          const tokenParts = data.data.token.split('.');
-          if (tokenParts.length === 3) {
-            const payload = JSON.parse(atob(tokenParts[1]));
-            console.log('🔍 JWT Payload Structure:', {
-              hasRole: !!payload.role,
-              role: payload.role,
-              hasUserId: !!payload.id || !!payload.userId,
-              userId: payload.id || payload.userId,
-              exp: payload.exp,
-              iat: payload.iat,
-              fullPayload: payload
-            });
-          }
-        } catch (e) {
-          console.error('❌ Failed to parse JWT:', e);
-        }
-      }
-    }
-  };
-
-  // Enhanced loading state management with specific messages
+  // Enhanced loading state management
   const setLoadingState = useCallback((loading: boolean, message?: string) => {
     setLoading(loading);
     setLoadingMessage(loading ? message || null : null);
@@ -102,57 +42,90 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  // Fetch user profile with CORS error handling
-  const fetchUser = useCallback(async () => {
+  // Robust error handling that doesn't immediately logout
+  const handleApiError = useCallback((err: any, context: string) => {
+    const errorType = getAuthErrorType(err);
+    
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`🔍 ${context} error type:`, errorType, err);
+    }
+
+    switch (errorType) {
+      case 'network':
+        setError(new Error('Network connection issue. Please check your internet connection.'));
+        break;
+      case 'cors':
+        setError(new Error('Security policy blocks this connection'));
+        break;
+      case 'expired':
+      case 'invalid':
+        setUser(null);
+        setError(new Error('Session expired. Please login again.'));
+        break;
+      default:
+        setError(err);
+        break;
+    }
+  }, []);
+
+  // Simplified user fetching with robust error handling
+  const fetchUser = useCallback(async (showToast: boolean = false) => {
     try {
       setLoadingState(true, 'Loading user profile...');
       setError(null);
       
       const { data } = await api.get('/users/profile');
       
-      // ADAPTIVE: Handle different possible API response structures for profile
-      let user;
-      if (data.data?.user) {
-        user = data.data.user;
-        console.log('✅ Profile using nested data.data structure');
-      } else if (data.user) {
-        user = data.user;
-        console.log('✅ Profile using direct structure');
-      } else if (data.payload?.user) {
-        user = data.payload.user;
-        console.log('✅ Profile using payload structure');
-      } else {
-        console.error('❌ No valid profile response structure found:', data);
-        throw new Error('Invalid profile response structure from server');
+      const userData = (data as any).data || (data as any).user || data;
+      
+      if (!userData || !(userData as any).id) {
+        throw new Error('Invalid user data received from server');
       }
       
-      setUser(user);
-    } catch (err: any) {
-      if (isCORSError(err)) {
-        console.error('CORS Error in fetchUser:', err);
-        setError(new Error('Unable to connect due to security restrictions'));
-      } else if (err.response?.status === 401) {
-        // Not authenticated, clear user
-        setUser(null);
-        Cookies.remove('token');
-      } else {
-        console.error('Error fetching user:', err);
-        setError(err);
+      setUser(userData as IUser);
+      setSessionPersistent(true);
+      
+      if (showToast && !isShowingToast) {
+        setIsShowingToast(true);
+        toast.success('Session restored successfully');
+        setTimeout(() => setIsShowingToast(false), 1000);
       }
-      setUser(null);
+      
+    } catch (err: any) {
+      handleApiError(err, 'fetchUser');
+      
+      const errorType = getAuthErrorType(err);
+      if (errorType === 'expired' || errorType === 'invalid') {
+        setSessionPersistent(false);
+        setUser(null);
+      } else {
+        setSessionPersistent(null);
+      }
     } finally {
       setLoadingState(false);
     }
-  }, [setLoadingState]);
+  }, [setLoadingState, handleApiError, isShowingToast]);
 
-  // Initial load
+  // Initial load with retry mechanism
   useEffect(() => {
-    const token = Cookies.get('token');
-    if (token) {
-      fetchUser();
-    } else {
-      setLoadingState(false);
-    }
+    let retryCount = 0;
+    const maxRetries = 2;
+    
+    const tryFetchUser = async () => {
+      try {
+        await fetchUser();
+      } catch (err) {
+        if (retryCount < maxRetries && isNetworkError(err)) {
+          retryCount++;
+          console.log(`Retrying user fetch (${retryCount}/${maxRetries})...`);
+          setTimeout(tryFetchUser, 1000 * retryCount);
+        } else {
+          setLoadingState(false);
+        }
+      }
+    };
+    
+    tryFetchUser();
   }, [fetchUser, setLoadingState]);
 
   // Enhanced error state management
@@ -163,10 +136,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     console.log('🔄 Auth state reset');
   }, [setLoadingState]);
 
-  // Login with enhanced error state management
+  // Simplified login with better error handling
   const login = async (emailOrUsername: string, password: string) => {
     try {
-      // ENHANCED: Clear all error states at the start of new login attempt
       resetAuthState();
       setLoadingState(true, 'Authenticating...');
       
@@ -174,105 +146,58 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       const { data } = await api.post('/auth/login', { emailOrUsername, password });
       
-      // Debug logging in development
-      debugLoginResponse(data);
+      const userData = (data as any).data?.user || (data as any).user || data;
       
-      // ADAPTIVE: Handle different possible API response structures
-      let user, token;
-      
-      // Try different response structure patterns
-      if (data.data?.user && data.data?.token) {
-        // Pattern 1: { data: { user: {...}, token: "..." } }
-        user = data.data.user;
-        token = data.data.token;
-        console.log('✅ Using nested data.data structure');
-      } else if (data.user && data.token) {
-        // Pattern 2: { user: {...}, token: "..." }
-        user = data.user;
-        token = data.token;
-        console.log('✅ Using direct structure');
-      } else if (data.payload?.user && data.payload?.token) {
-        // Pattern 3: { payload: { user: {...}, token: "..." } }
-        user = data.payload.user;
-        token = data.payload.token;
-        console.log('✅ Using payload structure');
-      } else {
-        console.error('❌ No valid response structure found:', data);
-        console.error('Available keys:', Object.keys(data || {}));
-        throw new Error('Invalid response structure from server - no user or token found');
+      if (!userData || !(userData as any).id) {
+        throw new Error('Invalid login response from server');
       }
       
-      // Validate we have both user and token
-      if (!user) {
-        console.error('❌ No user data in response:', data);
-        throw new Error('No user data received from server');
-      }
+      setUser(userData as IUser);
+      setSessionPersistent(true);
       
-      if (!token) {
-        console.error('❌ No token in response:', data);
-        throw new Error('No authentication token received');
-      }
-      
-      // Store token in cookie (backend also sets httpOnly cookie)
-      Cookies.set('token', token, { 
-        expires: 7,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax'
-      });
-
-      setLoadingState(true, 'Setting up user session...');
-      setUser(user);
-      
-      // Only show success toast if not already showing one
       if (!isShowingToast) {
         setIsShowingToast(true);
         toast.success('Login successful!');
+        setTimeout(() => setIsShowingToast(false), 1000);
       }
       
-      // Validate user role before redirect
-      const userRole = user.role;
-      if (!userRole) {
-        console.error('❌ No user role found:', user);
-        throw new Error('User role not found in response');
-      }
-      
-      setLoadingState(true, 'Redirecting to dashboard...');
-      console.log('✅ Redirecting user with role:', userRole);
-      
-      // Redirect based on role - FIXED: Use consistent data structure
+      const userRole = (userData as any).role;
       if (userRole === 'admin') {
         router.push('/admin/dashboard');
       } else {
         router.push('/dashboard');
       }
+      
     } catch (err: any) {
-      // Only show error toast if not already showing one
       if (!isShowingToast) {
         setIsShowingToast(true);
         
-        if (isCORSError(err)) {
-          setError(new Error('Unable to connect to authentication server'));
-          toast.error('Connection blocked by security policy');
-        } else if (err.response?.status === 401) {
-          setError(new Error('Invalid email/username or password'));
-          toast.error('Invalid credentials');
-        } else {
-          setError(err);
-          toast.error(err.response?.data?.message || 'Login failed');
+        const errorType = getAuthErrorType(err);
+        switch (errorType) {
+          case 'network':
+            toast.error('Connection failed. Please check your internet.');
+            break;
+          case 'cors':
+            toast.error('Connection blocked by security policy');
+            break;
+          default:
+            toast.error((err.response?.data as any)?.message || 'Login failed');
+            break;
         }
+        
+        setTimeout(() => setIsShowingToast(false), 2000);
       }
+      
+      handleApiError(err, 'login');
       throw err;
     } finally {
       setLoadingState(false);
-      // Reset toast flag after a delay
-      setTimeout(() => setIsShowingToast(false), 1000);
     }
   };
 
-  // Register with enhanced error state management
+  // Simplified register with better error handling
   const register = async (name: string, username: string, email: string, password: string) => {
     try {
-      // ENHANCED: Clear all error states at the start of new registration attempt
       resetAuthState();
       setLoadingState(true, 'Creating your account...');
       
@@ -280,206 +205,132 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       const { data } = await api.post('/auth/register', { name, username, email, password });
       
-      // Debug logging in development
-      debugLoginResponse(data);
+      const userData = (data as any).data?.user || (data as any).user || data;
       
-      // ADAPTIVE: Handle different possible API response structures
-      let user, token;
-      
-      // Try different response structure patterns
-      if (data.data?.user && data.data?.token) {
-        // Pattern 1: { data: { user: {...}, token: "..." } }
-        user = data.data.user;
-        token = data.data.token;
-        console.log('✅ Registration using nested data.data structure');
-      } else if (data.user && data.token) {
-        // Pattern 2: { user: {...}, token: "..." }
-        user = data.user;
-        token = data.token;
-        console.log('✅ Registration using direct structure');
-      } else if (data.payload?.user && data.payload?.token) {
-        // Pattern 3: { payload: { user: {...}, token: "..." } }
-        user = data.payload.user;
-        token = data.payload.token;
-        console.log('✅ Registration using payload structure');
-      } else {
-        console.error('❌ No valid registration response structure found:', data);
-        console.error('Available keys:', Object.keys(data || {}));
-        throw new Error('Invalid response structure from server - no user or token found');
+      if (!userData || !(userData as any).id) {
+        throw new Error('Invalid registration response from server');
       }
       
-      // Validate we have both user and token
-      if (!user) {
-        console.error('❌ No user data in registration response:', data);
-        throw new Error('No user data received from server');
-      }
+      setUser(userData as IUser);
+      setSessionPersistent(true);
       
-      if (!token) {
-        console.error('❌ No token in registration response:', data);
-        throw new Error('No authentication token received');
-      }
-      
-      // Store token
-      Cookies.set('token', token, { 
-        expires: 7,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax'
-      });
-
-      setLoadingState(true, 'Setting up your account...');
-      setUser(user);
-      
-      // Only show success toast if not already showing one
       if (!isShowingToast) {
         setIsShowingToast(true);
         toast.success('Registration successful!');
+        setTimeout(() => setIsShowingToast(false), 1000);
       }
       
-      // Validate user role before redirect
-      const userRole = user.role;
-      if (!userRole) {
-        console.error('❌ No user role found in registration:', user);
-        throw new Error('User role not found in response');
-      }
-      
-      setLoadingState(true, 'Redirecting to your dashboard...');
-      console.log('✅ Redirecting registered user with role:', userRole);
-      
-      // Always redirect regular users to dashboard (admins are rarely registered, but handle anyway)
+      const userRole = (userData as any).role;
       if (userRole === 'admin') {
         router.push('/admin/dashboard');
       } else {
         router.push('/dashboard');
       }
+      
     } catch (err: any) {
-      // Only show error toast if not already showing one
       if (!isShowingToast) {
         setIsShowingToast(true);
         
-        if (isCORSError(err)) {
-          setError(new Error('Unable to connect to registration server'));
-          toast.error('Connection blocked by security policy');
-        } else {
-          setError(err);
-          toast.error(err.response?.data?.message || 'Registration failed');
+        const errorType = getAuthErrorType(err);
+        switch (errorType) {
+          case 'network':
+            toast.error('Connection failed. Please check your internet.');
+            break;
+          case 'cors':
+            toast.error('Connection blocked by security policy');
+            break;
+          default:
+            toast.error((err.response?.data as any)?.message || 'Registration failed');
+            break;
         }
+        
+        setTimeout(() => setIsShowingToast(false), 2000);
       }
+      
+      handleApiError(err, 'register');
       throw err;
     } finally {
       setLoadingState(false);
-      // Reset toast flag after a delay
-      setTimeout(() => setIsShowingToast(false), 1000);
     }
   };
 
-  // Logout
+  // Enhanced logout with proper backend call
   const logout = async () => {
     try {
+      setLoadingState(true, 'Logging out...');
+      
       await api.post('/auth/logout');
-    } catch (err) {
-      // Even if logout fails, clear local state
-      console.error('Logout error:', err);
+      
+      console.log('✅ Backend logout successful');
+    } catch (err: any) {
+      console.error('Backend logout error (proceeding anyway):', err);
+      
+      if ((err.response as any)?.status !== 401) {
+        toast.error('Logout warning: Session may not be fully cleared');
+      }
     } finally {
-      Cookies.remove('token');
       setUser(null);
+      setSessionPersistent(false);
+      setLoadingState(false);
+      
       router.push('/');
       toast.success('Logged out successfully');
     }
   };
 
-  // Enhanced error clearing with state management
+  // Enhanced error clearing
   const clearError = useCallback(() => {
     setError(null);
     console.log('🧹 Error state cleared');
   }, []);
 
-  // Session persistence validation
+  // Improved session persistence validation
   const validateSessionPersistence = useCallback(async (): Promise<boolean> => {
     try {
-      setLoadingState(true, 'Validating session persistence...');
+      setLoadingState(true, 'Validating session...');
       
-      // Check if token exists in cookie
-      const token = Cookies.get('token');
-      if (!token) {
-        console.log('❌ No token found in cookies');
+      await api.get('/users/profile');
+      
+      setSessionPersistent(true);
+      console.log('✅ Session persistence validated');
+      
+      if (!isShowingToast) {
+        setIsShowingToast(true);
+        toast.success('Session validated successfully');
+        setTimeout(() => setIsShowingToast(false), 1000);
+      }
+      
+      return true;
+    } catch (err: any) {
+      const errorType = getAuthErrorType(err);
+      
+      if (errorType === 'expired' || errorType === 'invalid') {
         setSessionPersistent(false);
+        setUser(null);
+        
+        if (!isShowingToast) {
+          setIsShowingToast(true);
+          toast.error('Session validation failed - please login again');
+          setTimeout(() => setIsShowingToast(false), 1000);
+        }
+        
+        return false;
+      } else {
+        console.log('⚠️ Session validation inconclusive due to:', errorType);
+        setSessionPersistent(null);
+        
+        if (!isShowingToast) {
+          setIsShowingToast(true);
+          toast('Unable to validate session - network issue');
+          setTimeout(() => setIsShowingToast(false), 1000);
+        }
+        
         return false;
       }
-
-      // Test if we can access localStorage/sessionStorage
-      const storageTest = {
-        localStorage: false,
-        sessionStorage: false,
-        cookieStorage: !!token
-      };
-
-      try {
-        localStorage.setItem('auth_test', 'test');
-        storageTest.localStorage = localStorage.getItem('auth_test') === 'test';
-        localStorage.removeItem('auth_test');
-      } catch (e) {
-        console.log('⚠️ localStorage not available:', e);
-      }
-
-      try {
-        sessionStorage.setItem('auth_test', 'test');
-        storageTest.sessionStorage = sessionStorage.getItem('auth_test') === 'test';
-        sessionStorage.removeItem('auth_test');
-      } catch (e) {
-        console.log('⚠️ sessionStorage not available:', e);
-      }
-
-      // Test token validity with backend
-      let tokenValid = false;
-      try {
-        await api.get('/users/profile');
-        tokenValid = true;
-        console.log('✅ Token is valid with backend');
-      } catch (err: any) {
-        if (err.response?.status === 401) {
-          console.log('❌ Token is invalid or expired');
-          tokenValid = false;
-        } else {
-          console.log('⚠️ Unable to validate token due to network/server error');
-          // Assume token is valid if we can't verify due to network issues
-          tokenValid = true;
-        }
-      }
-
-      // Test cookie persistence settings
-      const cookiePersistent = token.length > 0; // Basic check
-
-      const sessionValid = tokenValid && cookiePersistent;
-      setSessionPersistent(sessionValid);
-
-      if (process.env.NODE_ENV === 'development') {
-        console.log('🔍 Session Persistence Validation:', {
-          tokenExists: !!token,
-          tokenValid,
-          cookiePersistent,
-          storageAvailability: storageTest,
-          sessionValid,
-          cookieContent: token ? `${token.substring(0, 20)}...` : 'none'
-        });
-      }
-
-      if (sessionValid) {
-        console.log('✅ Session persistence validated successfully');
-        toast.success('Session validated successfully');
-      } else {
-        console.log('❌ Session persistence validation failed');
-        toast.error('Session validation failed - please login again');
-      }
-
-      return sessionValid;
-    } catch (err: any) {
-      console.error('❌ Session validation error:', err);
-      setSessionPersistent(false);
-      return false;
     } finally {
       setLoadingState(false);
     }
-  }, [setLoadingState]);
+  }, [setLoadingState, isShowingToast]);
 
   return (
     <AuthContext.Provider 
@@ -493,7 +344,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         login, 
         register,
         logout, 
-        refetchUser: fetchUser,
+        refetchUser: () => fetchUser(true),
         clearError,
         resetAuthState,
         validateSessionPersistence
