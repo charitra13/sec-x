@@ -1,8 +1,52 @@
 import React from 'react';
 import { BlogTypography } from '@/components/blog';
 
+// Function to detect if content is HTML
+const isHTMLContent = (content: string): boolean => {
+  return /<[^>]+>/.test(content);
+};
+
+// Function to sanitize and style HTML content
+const sanitizeAndStyleHTML = (html: string): string => {
+  return html
+    // Add classes to HTML elements for styling
+    .replace(/<p>/g, '<p class="text-white/80 leading-relaxed text-lg mb-4">')
+    .replace(/<h1>/g, '<h1 class="text-3xl font-bold text-white mb-6">')
+    .replace(/<h2>/g, '<h2 class="text-2xl font-bold text-white mb-5">')
+    .replace(/<h3>/g, '<h3 class="text-xl font-bold text-white mb-4">')
+    .replace(/<h4>/g, '<h4 class="text-lg font-bold text-white mb-3">')
+    .replace(/<h5>/g, '<h5 class="text-base font-bold text-white mb-2">')
+    .replace(/<h6>/g, '<h6 class="text-sm font-bold text-white mb-2">')
+    .replace(/<strong>/g, '<strong class="text-white font-semibold">')
+    .replace(/<em>/g, '<em class="text-blue-300 italic">')
+    .replace(/<ul>/g, '<ul class="space-y-2 mb-4">')
+    .replace(/<ol>/g, '<ol class="space-y-2 mb-4 list-decimal list-inside">')
+    .replace(/<li>/g, '<li class="text-white/80 leading-relaxed flex items-start"><span class="w-2 h-2 rounded-full bg-blue-400 mt-2 mr-3 flex-shrink-0"></span><span>')
+    .replace(/<\/li>/g, '</span></li>')
+    .replace(/<blockquote>/g, '<blockquote class="bg-blue-500/10 border-l-4 border-blue-400 rounded-r-lg p-4 mb-4 italic text-white/80">')
+    .replace(/<a /g, '<a class="text-blue-400 hover:text-blue-300 underline transition-colors" ')
+    .replace(/<code>/g, '<code class="bg-black/40 text-blue-300 px-2 py-1 rounded text-sm font-mono">')
+    .replace(/<pre>/g, '<pre class="bg-black/60 rounded-lg p-4 overflow-x-auto mb-4">')
+    .replace(/<pre([^>]*)><code>/g, '<pre$1><code class="text-sm font-mono text-white/90">')
+    // Handle line breaks
+    .replace(/<br\s*\/?>/g, '<br />')
+    // Clean up empty paragraphs
+    .replace(/<p[^>]*>[\s]*<\/p>/g, '<div class="mb-2"></div>');
+};
+
 export const formatBlogContent = (content: string) => {
-  // Split content into sections by double line breaks
+  // Check if content is HTML from rich text editor
+  if (isHTMLContent(content)) {
+    const styledHTML = sanitizeAndStyleHTML(content);
+    return (
+      <div 
+        className="blog-content prose-invert max-w-none"
+        dangerouslySetInnerHTML={{ __html: styledHTML }}
+      />
+    );
+  }
+
+  // Handle markdown-style content (existing logic)
   const sections = content.split(/\n\s*\n/).filter(section => section.trim());
   
   return sections.map((section, index) => {
