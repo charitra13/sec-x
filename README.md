@@ -4,6 +4,13 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
+### v1.33.0 - Image Position Adjustment Feature MINOR
+- Added image position controls to blog post creation and editing interfaces with 9-point grid positioning system
+- Users can now select focal points for cover images (top/center/bottom + left/center/right combinations)
+- Enhanced image preview with real-time position adjustment feedback in admin panels
+- Updated BlogCard and BlogPostTemplate components to respect image positioning for better thumbnail control
+- Improved visual control over how cover images are displayed across the platform
+
 ### v1.32.0 - Blog Post Image URL Editing Feature MINOR
 - Enhanced blog post edit page to support both file upload and manual URL entry for cover images
 - Added toggle buttons to switch between "Upload File" and "Enter URL" modes in the admin edit interface

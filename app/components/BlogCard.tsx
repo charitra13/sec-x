@@ -75,6 +75,9 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
             width={400}
             height={192}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            style={{ 
+              objectPosition: blog.imagePosition || 'center'
+            }}
             loading="lazy"
           />
         </div>

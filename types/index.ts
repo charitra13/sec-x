@@ -21,6 +21,7 @@ export interface IBlog {
   excerpt: string;
   content: string;
   coverImage: string;
+  imagePosition?: string; // CSS object-position value (e.g., "center", "top", "bottom left")
   author: IUser; // This will be populated
   category: string;
   tags: string[];

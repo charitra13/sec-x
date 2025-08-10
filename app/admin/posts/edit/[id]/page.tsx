@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import 'react-quill-new/dist/quill.snow.css';
@@ -39,6 +39,7 @@ const editPostSchema = z.object({
   excerpt: z.string().min(10, 'Excerpt must be at least 10 characters'),
   content: z.string().min(50, 'Content must be at least 50 characters'),
   coverImage: z.string().url('Cover image must be a valid URL'),
+  imagePosition: z.string().optional(),
   category: z.enum(categories),
   tags: z.string().min(1, 'At least one tag is required'),
   status: z.enum(statuses),
@@ -65,12 +66,23 @@ export default function EditPostPage() {
     resolver: zodResolver(editPostSchema),
   });
 
+  // Watch coverImage and imagePosition for preview
+  const watchCoverImage = useWatch({
+    control,
+    name: 'coverImage'
+  });
+  const watchImagePosition = useWatch({
+    control,
+    name: 'imagePosition'
+  });
+
   useEffect(() => {
     if (postData) {
       const post = postData.data;
       reset({
         ...post,
         tags: post.tags.join(', '),
+        imagePosition: post.imagePosition || 'center',
       });
     }
   }, [postData, reset]);
@@ -199,6 +211,52 @@ export default function EditPostPage() {
             )}
             
             {errors.coverImage && <p className="text-red-500 text-xs mt-1">{errors.coverImage.message}</p>}
+
+            {/* Image Position Controls */}
+            {watchCoverImage && (
+              <div className="mt-4 p-4 bg-white/5 rounded-lg border border-white/20">
+                <Label className="text-sm text-white mb-2 block">Image Position</Label>
+                <div className="grid grid-cols-3 gap-2 mb-3">
+                  {[
+                    { value: 'top left', label: 'Top Left' },
+                    { value: 'top center', label: 'Top Center' },
+                    { value: 'top right', label: 'Top Right' },
+                    { value: 'center left', label: 'Center Left' },
+                    { value: 'center', label: 'Center' },
+                    { value: 'center right', label: 'Center Right' },
+                    { value: 'bottom left', label: 'Bottom Left' },
+                    { value: 'bottom center', label: 'Bottom Center' },
+                    { value: 'bottom right', label: 'Bottom Right' },
+                  ].map((position) => (
+                    <Button
+                      key={position.value}
+                      type="button"
+                      variant={watchImagePosition === position.value ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setValue('imagePosition', position.value)}
+                      className="text-xs p-2 h-auto"
+                    >
+                      {position.label}
+                    </Button>
+                  ))}
+                </div>
+                
+                {/* Live Preview */}
+                <div className="mt-3">
+                  <Label className="text-xs text-gray-400 mb-1 block">Preview:</Label>
+                  <div className="w-full h-24 rounded border border-white/20 overflow-hidden">
+                    <img
+                      src={watchCoverImage}
+                      alt="Position preview"
+                      className="w-full h-full object-cover"
+                      style={{ 
+                        objectPosition: watchImagePosition || 'center'
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div>

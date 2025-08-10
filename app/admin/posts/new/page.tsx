@@ -38,6 +38,7 @@ const createPostSchema = z.object({
   excerpt: z.string().min(10, 'Excerpt must be at least 10 characters'),
   content: z.string().min(50, 'Content must be at least 50 characters'),
   coverImage: z.string().url('Cover image must be a valid URL'),
+  imagePosition: z.string().optional(),
   category: z.enum(categories),
   tags: z.string().min(1, 'At least one tag is required'),
   status: z.enum(statuses),
@@ -52,14 +53,19 @@ export default function NewPostPage() {
   const { register, handleSubmit, control, setValue, formState: { errors } } = useForm<CreatePostValues>({
     resolver: zodResolver(createPostSchema),
     defaultValues: {
-      status: 'draft'
+      status: 'draft',
+      imagePosition: 'center'
     }
   });
 
-  // Watch coverImage for preview
+  // Watch coverImage and imagePosition for preview
   const watchCoverImage = useWatch({
     control,
     name: 'coverImage'
+  });
+  const watchImagePosition = useWatch({
+    control,
+    name: 'imagePosition'
   });
 
   // Ref to scope tooltip enhancements to this editor instance
@@ -279,6 +285,52 @@ export default function NewPostPage() {
                   <Label className="text-xs text-gray-500">Image URL:</Label>
                   <div className="text-xs text-gray-400 break-all bg-white/5 p-2 rounded border">
                     {watchCoverImage}
+                  </div>
+                </div>
+              )}
+
+              {/* Image Position Controls */}
+              {watchCoverImage && (
+                <div className="mt-4 p-4 bg-white/5 rounded-lg border border-white/20">
+                  <Label className="text-sm text-white mb-2 block">Image Position</Label>
+                  <div className="grid grid-cols-3 gap-2 mb-3">
+                    {[
+                      { value: 'top left', label: 'Top Left' },
+                      { value: 'top center', label: 'Top Center' },
+                      { value: 'top right', label: 'Top Right' },
+                      { value: 'center left', label: 'Center Left' },
+                      { value: 'center', label: 'Center' },
+                      { value: 'center right', label: 'Center Right' },
+                      { value: 'bottom left', label: 'Bottom Left' },
+                      { value: 'bottom center', label: 'Bottom Center' },
+                      { value: 'bottom right', label: 'Bottom Right' },
+                    ].map((position) => (
+                      <Button
+                        key={position.value}
+                        type="button"
+                        variant={watchImagePosition === position.value ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setValue('imagePosition', position.value)}
+                        className="text-xs p-2 h-auto"
+                      >
+                        {position.label}
+                      </Button>
+                    ))}
+                  </div>
+                  
+                  {/* Live Preview */}
+                  <div className="mt-3">
+                    <Label className="text-xs text-gray-400 mb-1 block">Preview:</Label>
+                    <div className="w-full h-24 rounded border border-white/20 overflow-hidden">
+                      <img
+                        src={watchCoverImage}
+                        alt="Position preview"
+                        className="w-full h-full object-cover"
+                        style={{ 
+                          objectPosition: watchImagePosition || 'center'
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               )}

@@ -90,7 +90,16 @@ export default function BlogPostTemplate({ post }: BlogPostTemplateProps) {
           </header>
 
           <figure className="mb-12">
-            <Image src={post.coverImage} alt={post.title} width={896} height={504} className="w-full rounded-2xl object-cover aspect-video" />
+            <Image 
+              src={post.coverImage} 
+              alt={post.title} 
+              width={896} 
+              height={504} 
+              className="w-full rounded-2xl object-cover aspect-video"
+              style={{ 
+                objectPosition: post.imagePosition || 'center'
+              }}
+            />
           </figure>
 
           {/* Blog Content - Replace existing content div */}
