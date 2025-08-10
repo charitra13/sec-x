@@ -59,19 +59,43 @@ const SocialShareButtons = ({ url, title, description }: SocialShareButtonsProps
     <div className="space-y-4">
       {/* Social platforms */}
       <div className="flex flex-wrap items-center gap-3">
-        <TwitterShareButton url={url} title={title} className="transition-transform hover:scale-110">
+        <TwitterShareButton 
+          url={url} 
+          title={title} 
+          className="transition-transform hover:scale-110"
+          windowWidth={0}
+          windowHeight={0}
+        >
           <TwitterIcon size={40} round />
         </TwitterShareButton>
 
-        <FacebookShareButton url={url} title={title} className="transition-transform hover:scale-110">
+        <FacebookShareButton 
+          url={url} 
+          title={title} 
+          className="transition-transform hover:scale-110"
+          windowWidth={0}
+          windowHeight={0}
+        >
           <FacebookIcon size={40} round />
         </FacebookShareButton>
 
-        <LinkedinShareButton url={url} title={title} className="transition-transform hover:scale-110">
+        <LinkedinShareButton 
+          url={url} 
+          title={title} 
+          className="transition-transform hover:scale-110"
+          windowWidth={0}
+          windowHeight={0}
+        >
           <LinkedinIcon size={40} round />
         </LinkedinShareButton>
 
-        <WhatsappShareButton url={url} title={title} className="transition-transform hover:scale-110">
+        <WhatsappShareButton 
+          url={url} 
+          title={title} 
+          className="transition-transform hover:scale-110"
+          windowWidth={0}
+          windowHeight={0}
+        >
           <WhatsappIcon size={40} round />
         </WhatsappShareButton>
 
@@ -80,6 +104,8 @@ const SocialShareButtons = ({ url, title, description }: SocialShareButtonsProps
           subject={title}
           body={description}
           className="transition-transform hover:scale-110"
+          windowWidth={0}
+          windowHeight={0}
         >
           <EmailIcon size={40} round />
         </EmailShareButton>
