@@ -8,7 +8,7 @@ import api from '@/lib/api';
 import { IBlog } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import Footer from '@/app/components/Footer';
+// Removed duplicate Footer import; global footer is rendered via app/layout.tsx
 
 const fetcher = (url: string) => api.get(url).then(res => res.data);
 
@@ -309,7 +309,7 @@ export default function UserDashboard() {
         </div>
       </main>
 
-      <Footer />
+      {/* Footer is provided by the root layout */}
     </div>
   );
 }

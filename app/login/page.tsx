@@ -52,21 +52,21 @@ export default function LoginPage() {
 
   return (
     <div className="container mx-auto flex h-screen items-center justify-center">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md card-border bg-black/30">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>Enter your email or username below to login to your account.</CardDescription>
+          <CardTitle className="text-2xl text-white">Login</CardTitle>
+          <CardDescription className="text-white/70">Enter your email or username below to login to your account.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="emailOrUsername">Email or Username</Label>
-              <Input id="emailOrUsername" type="text" placeholder="john@example.com or johndoe" {...register('emailOrUsername')} />
+              <Label htmlFor="emailOrUsername" className="text-white">Email or Username</Label>
+              <Input id="emailOrUsername" type="text" placeholder="john@example.com or johndoe" className="text-white placeholder-white/60" {...register('emailOrUsername')} />
               {errors.emailOrUsername && <p className="text-red-500 text-xs">{errors.emailOrUsername.message}</p>}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <PasswordInput id="password" {...register('password')} />
+              <Label htmlFor="password" className="text-white">Password</Label>
+              <PasswordInput id="password" className="text-white placeholder-white/60" {...register('password')} />
               {errors.password && <p className="text-red-500 text-xs">{errors.password.message}</p>}
             </div>
             <Button type="submit" className="w-full" disabled={isSubmitting}>

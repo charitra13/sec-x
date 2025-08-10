@@ -95,26 +95,26 @@ export default function RegisterPage() {
 
   return (
     <div className="container mx-auto flex h-screen items-center justify-center">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md card-border bg-black/30">
         <CardHeader>
-          <CardTitle className="text-2xl">Register</CardTitle>
-          <CardDescription>Create a new account.</CardDescription>
+          <CardTitle className="text-2xl text-white">Register</CardTitle>
+          <CardDescription className="text-white/70">Create a new account.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
-              <Input id="name" type="text" placeholder="John Doe" {...register('name')} />
+              <Label htmlFor="name" className="text-white">Full Name</Label>
+              <Input id="name" type="text" placeholder="John Doe" className="text-white placeholder-white/60" {...register('name')} />
               {errors.name && <p className="text-red-500 text-xs">{errors.name.message}</p>}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username" className="text-white">Username</Label>
               <Input
                 id="username"
                 type="text"
                 placeholder="johndoe"
                 {...register('username')}
-                className="lowercase"
+                className="lowercase text-white placeholder-white/60"
               />
               {errors.username && <p className="text-red-500 text-xs">{errors.username.message}</p>}
               <p className="text-xs text-gray-500">Only lowercase letters, numbers, dots, and underscores allowed</p>
@@ -126,13 +126,13 @@ export default function RegisterPage() {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="m@example.com" {...register('email')} />
+              <Label htmlFor="email" className="text-white">Email</Label>
+              <Input id="email" type="email" placeholder="m@example.com" className="text-white placeholder-white/60" {...register('email')} />
               {errors.email && <p className="text-red-500 text-xs">{errors.email.message}</p>}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <PasswordInput id="password" {...register('password')} />
+              <Label htmlFor="password" className="text-white">Password</Label>
+              <PasswordInput id="password" className="text-white placeholder-white/60" {...register('password')} />
               {errors.password && <p className="text-red-500 text-xs">{errors.password.message}</p>}
             </div>
             <Button type="submit" className="w-full" disabled={isSubmitting}>

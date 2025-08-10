@@ -123,7 +123,7 @@ function ContactForm() {
     email: '',
     company: '',
     phone: '',
-    countryCode: '+1',
+    countryCode: '+91',
     serviceType: '',
     message: ''
   })
@@ -135,6 +135,13 @@ function ContactForm() {
   })
 
   const isAssessment = formType === 'assessment'
+
+  // Formats a 10-digit Indian mobile number as "XXXXX XXXXX"
+  const formatIndianPhoneNumber = (raw: string) => {
+    const digitsOnly = raw.replace(/\D/g, '').slice(0, 10)
+    if (digitsOnly.length <= 5) return digitsOnly
+    return `${digitsOnly.slice(0, 5)} ${digitsOnly.slice(5)}`
+  }
 
   // Email validation function
   const validateEmail = (email: string) => {
@@ -154,7 +161,14 @@ function ContactForm() {
     
     // Handle phone input
     if (name === 'phone') {
-      const phoneValue = value.replace(/[^0-9\s\-\(\)\+]/g, '')
+      let phoneValue = value
+      if (formData.countryCode === '+91') {
+        // Allow optional leading +91 or 0, but format the visible value consistently
+        const stripped = value.replace(/^\+?91|^0/, '')
+        phoneValue = formatIndianPhoneNumber(stripped)
+      } else {
+        phoneValue = value.replace(/[^0-9\s\-\(\)\+]/g, '')
+      }
       setFormData({
         ...formData,
         [name]: phoneValue
@@ -410,7 +424,7 @@ function ContactForm() {
                             ? 'border-red-400 focus:border-red-400' 
                             : 'border-white/20 focus:border-blue-400'
                         }`}
-                        placeholder="(555) 123-4567"
+                        placeholder="99XXX 43XXX"
                       />
                     </div>
                     {validationErrors.phone && (
