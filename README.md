@@ -4,6 +4,13 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
+### v1.31.0 - Blog Card Clickable Overlay Fix MINOR
+- Fixed blog card clickable overlay issue where focus outline artifacts appeared on cards of varying sizes
+- Replaced button wrapper with semantic anchor tag for better accessibility and SEO
+- Improved focus styles using focus-visible for keyboard navigation without mouse click artifacts
+- Enhanced clickable area to always match card boundaries perfectly across all screen sizes
+- Added comprehensive test plan for e2e and visual regression testing
+
 ### v1.30.1 - Blog Administration & Security Enhancement PATCH
 - Fixed admin dashboard loading issue where manually inserted MongoDB blogs weren't appearing due to incorrect `status=all` query handling in `getAllBlogs` controller.
 - Updated admin edit URLs from ID-based (`/admin/posts/edit/${post._id}`) to slug-based (`/admin/posts/edit/${post.slug}`) to eliminate MongoDB ObjectId exposure.

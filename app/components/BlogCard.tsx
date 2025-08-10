@@ -53,9 +53,13 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
   }
 
   return (
-    <button
-      className="w-full text-left group focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black rounded-2xl"
-      onClick={() => onReadBlog(blog)}
+    <a
+      href={`/blog/${blog.slug}`}
+      className="block w-full text-left group focus:outline-none focus-visible:outline-2 focus-visible:outline-blue-400 focus-visible:outline-offset-2 rounded-2xl"
+      onClick={(e) => {
+        e.preventDefault();
+        onReadBlog(blog);
+      }}
       aria-label={`Read full article: ${blog.title} by ${blog.author.name}`}
       style={{ animationDelay: `${index * 0.1}s` }}
     >
@@ -181,6 +185,6 @@ export default function BlogCard({ blog, index, onReadBlog, isLoading = false }:
           </div>
         </div>
       </BlogGlassCard>
-    </button>
+    </a>
   )
 } 

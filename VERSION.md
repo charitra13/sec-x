@@ -4,6 +4,12 @@ This document consolidates all release notes from the project's inception throug
 
 ## Version History (Latest to Oldest)
 
+### v1.31.0 - Blog Card Clickable Overlay Fix MINOR
+- Fixed blog card clickable overlay issue where focus outline artifacts appeared on cards of varying sizes
+- Replaced button wrapper with semantic anchor tag for better accessibility and SEO
+- Improved focus styles using focus-visible for keyboard navigation without mouse click artifacts
+- Enhanced clickable area to always match card boundaries perfectly across all screen sizes
+- Added comprehensive test plan for e2e and visual regression testing
 
 ### v1.30.1 - Blog Administration & Security Enhancement PATCH
 - Fixed admin dashboard loading issue where manually inserted MongoDB blogs weren't appearing due to incorrect `status=all` query handling in `getAllBlogs` controller.
