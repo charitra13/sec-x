@@ -4,6 +4,12 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
+### v1.32.0 - Blog Post Image URL Editing Feature MINOR
+- Enhanced blog post edit page to support both file upload and manual URL entry for cover images
+- Added toggle buttons to switch between "Upload File" and "Enter URL" modes in the admin edit interface
+- Improved user flexibility by allowing direct image URL editing alongside existing file upload functionality
+- Maintained existing validation and error handling for both input methods
+
 ### v1.31.0 - Blog Card Clickable Overlay Fix MINOR
 - Fixed blog card clickable overlay issue where focus outline artifacts appeared on cards of varying sizes
 - Replaced button wrapper with semantic anchor tag for better accessibility and SEO

@@ -60,6 +60,7 @@ export default function EditPostPage() {
   );
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imageInputMode, setImageInputMode] = useState<'upload' | 'url'>('upload');
   const { register, handleSubmit, control, setValue, reset, formState: { errors } } = useForm<EditPostValues>({
     resolver: zodResolver(editPostSchema),
   });
@@ -160,9 +161,44 @@ export default function EditPostPage() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
             <Label>Cover Image</Label>
-            <Input type="file" onChange={handleImageUpload} className="mt-2" />
+            
+            {/* Toggle buttons for input mode */}
+            <div className="flex gap-2 mt-2 mb-3">
+              <Button
+                type="button"
+                variant={imageInputMode === 'upload' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setImageInputMode('upload')}
+                className="px-4 py-2"
+              >
+                Upload File
+              </Button>
+              <Button
+                type="button"
+                variant={imageInputMode === 'url' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setImageInputMode('url')}
+                className="px-4 py-2"
+              >
+                Enter URL
+              </Button>
+            </div>
+
+            {/* Conditional input based on mode */}
+            {imageInputMode === 'upload' ? (
+              <>
+                <Input type="file" onChange={handleImageUpload} className="mb-2" />
+                <Input {...register('coverImage')} readOnly placeholder="Image URL will appear here" className="bg-gray-100/10" />
+              </>
+            ) : (
+              <Input 
+                {...register('coverImage')} 
+                placeholder="Enter image URL manually" 
+                className="bg-white/5"
+              />
+            )}
+            
             {errors.coverImage && <p className="text-red-500 text-xs mt-1">{errors.coverImage.message}</p>}
-            <Input {...register('coverImage')} readOnly placeholder="Image URL will appear here" className="mt-2" />
           </div>
 
           <div>
