@@ -4,6 +4,16 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
+### v1.37.0 - Admin Posts Management Page MINOR
+- Created dedicated posts management page at `/admin/posts` for comprehensive blog post administration
+- Implemented enhanced posts table with statistics cards showing total posts, published/draft counts, and total views
+- Added status toggle functionality allowing admins to publish/draft posts directly from the management interface
+- Enhanced posts table with additional columns: Featured status, excerpt preview, and improved action buttons
+- Integrated with existing admin navigation system and maintained consistent styling with AdminGlassCard components
+- Added empty state with call-to-action for creating first post when no posts exist
+- Improved user experience with better visual hierarchy, responsive design, and intuitive action buttons
+- Maintained full compatibility with existing edit/new post functionality and API endpoints
+
 ### v1.36.0 - Notion-Style Image Repositioning Interface MINOR
 - Replaced 3x3 button grid image positioning system with modern Notion-style click-and-drag interface
 - Implemented `NotionImageReposition` component with four-head arrow cursor and smooth drag interaction
