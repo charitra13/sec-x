@@ -16,6 +16,7 @@ import { BlogContainer } from '@/components/blog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { NotionImageReposition } from '@/components/ui/NotionImageReposition';
 
 // Dynamically import ReactQuill to avoid SSR issues with loading state
 const ReactQuill = dynamic(() => import('react-quill-new'), { 
@@ -289,49 +290,22 @@ export default function NewPostPage() {
                 </div>
               )}
 
-              {/* Image Position Controls */}
+              {/* Image Position Controls - Notion Style */}
               {watchCoverImage && (
-                <div className="mt-4 p-4 bg-white/5 rounded-lg border border-white/20">
+                <div className="mt-4">
                   <Label className="text-sm text-white mb-2 block">Image Position</Label>
-                  <div className="grid grid-cols-3 gap-2 mb-3">
-                    {[
-                      { value: 'top left', label: 'Top Left' },
-                      { value: 'top center', label: 'Top Center' },
-                      { value: 'top right', label: 'Top Right' },
-                      { value: 'center left', label: 'Center Left' },
-                      { value: 'center', label: 'Center' },
-                      { value: 'center right', label: 'Center Right' },
-                      { value: 'bottom left', label: 'Bottom Left' },
-                      { value: 'bottom center', label: 'Bottom Center' },
-                      { value: 'bottom right', label: 'Bottom Right' },
-                    ].map((position) => (
-                      <Button
-                        key={position.value}
-                        type="button"
-                        variant={watchImagePosition === position.value ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setValue('imagePosition', position.value)}
-                        className="text-xs p-2 h-auto"
-                      >
-                        {position.label}
-                      </Button>
-                    ))}
-                  </div>
-                  
-                  {/* Live Preview */}
-                  <div className="mt-3">
-                    <Label className="text-xs text-gray-400 mb-1 block">Preview:</Label>
-                    <div className="w-full h-24 rounded border border-white/20 overflow-hidden">
-                      <img
-                        src={watchCoverImage}
-                        alt="Position preview"
-                        className="w-full h-full object-cover"
-                        style={{ 
-                          objectPosition: watchImagePosition || 'center'
-                        }}
+                  <Controller
+                    name="imagePosition"
+                    control={control}
+                    render={({ field }) => (
+                      <NotionImageReposition
+                        imageUrl={watchCoverImage}
+                        initialPosition={field.value || 'center'}
+                        onPositionChange={field.onChange}
+                        className="w-full"
                       />
-                    </div>
-                  </div>
+                    )}
+                  />
                 </div>
               )}
             </div>

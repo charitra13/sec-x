@@ -557,3 +557,30 @@ button, .button, [role="button"] {
 .dropdown-exit-active {
   @apply opacity-0 scale-95 translate-y-1 transition-all duration-150 ease-in;
 }
+
+/* Notion-style image reposition */
+.notion-reposition-container {
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.notion-reposition-container:active {
+  cursor: grabbing !important;
+}
+
+/* Four-head arrow cursor override */
+.cursor-reposition {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M8 5L12 1L16 5M16 19L12 23L8 19M5 8L1 12L5 16M19 16L23 12L19 8' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 12 12, grab;
+}
+
+/* Smooth transitions for dragging */
+.reposition-transition {
+  transition: object-position 0.15s ease-out, filter 0.15s ease-out;
+}
+
+.reposition-dragging {
+  transition: none;
+}

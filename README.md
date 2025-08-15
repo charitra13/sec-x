@@ -4,6 +4,15 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
+### v1.36.0 - Notion-Style Image Repositioning Interface MINOR
+- Replaced 3x3 button grid image positioning system with modern Notion-style click-and-drag interface
+- Implemented `NotionImageReposition` component with four-head arrow cursor and smooth drag interaction
+- Added real-time visual feedback during drag operations with position indicators and dimming effects
+- Enhanced user experience with hover states, transition animations, and position information display
+- Maintained full backward compatibility with existing position strings ('center', 'top left', etc.)
+- Updated both blog creation (`/admin/posts/new`) and editing (`/admin/posts/edit/[id]`) pages to use new component
+- Added CSS enhancements for cursor states and transition effects for improved visual polish
+
 ### v1.35.1 - Navigation Publications Button Removal PATCH
 - Removed Publications button from both desktop and mobile navigation menus
 - Publications page remains fully accessible via direct URL navigation (/publications)
