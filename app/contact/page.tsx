@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import api from '@/lib/api'
 
 // Country codes data for the dropdown
 const COUNTRY_CODES = [
@@ -129,6 +130,7 @@ function ContactForm() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState<string>('')
   const [validationErrors, setValidationErrors] = useState({
     email: '',
     phone: ''
@@ -230,12 +232,67 @@ function ContactForm() {
     }
     
     setIsSubmitting(true)
+    setSubmitError('')
     
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSubmitSuccess(true)
-    }, 1000)
+    try {
+      // Prepare the data for submission
+      const submissionData = {
+        name: formData.name.trim(),
+        email: formData.email.trim().toLowerCase(),
+        company: formData.company?.trim() || undefined,
+        phone: formData.phone?.trim() || undefined,
+        countryCode: formData.countryCode,
+        serviceType: formData.serviceType || undefined,
+        message: formData.message.trim(),
+        formType: isAssessment ? 'assessment' : 'contact'
+      };
+
+      // Remove undefined fields
+      Object.keys(submissionData).forEach(key => {
+        if (submissionData[key as keyof typeof submissionData] === undefined) {
+          delete submissionData[key as keyof typeof submissionData];
+        }
+      });
+
+      // Submit to API
+      const response = await api.post('/contacts', submissionData);
+      
+      if (response.data.success) {
+        setSubmitSuccess(true);
+        // Reset form data
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          phone: '',
+          countryCode: '+91',
+          serviceType: '',
+          message: ''
+        });
+        setValidationErrors({ email: '', phone: '' });
+      } else {
+        throw new Error(response.data.message || 'Submission failed');
+      }
+    } catch (error: any) {
+      console.error('Contact form submission error:', error);
+      
+      // Handle different types of errors
+      let errorMessage = 'Sorry, there was an error submitting your message. Please try again.';
+      
+      if (error.response?.status === 429) {
+        errorMessage = 'Too many submissions. Please wait 15 minutes before trying again.';
+      } else if (error.response?.status === 400) {
+        errorMessage = error.response.data.message || 'Please check your input and try again.';
+      } else if (error.response?.status >= 500) {
+        errorMessage = 'Server error. Please try again later or contact us directly.';
+      } else if (error.message === 'Network Error') {
+        errorMessage = 'Network error. Please check your connection and try again.';
+      }
+      
+      setSubmitError(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   if (submitSuccess) {
@@ -360,6 +417,12 @@ function ContactForm() {
                 </span>
                 
                 <h3 className="text-lg lg:text-xl font-medium text-white mb-6">Send Message</h3>
+                
+                {submitError && (
+                  <div className="mb-4 p-3 bg-red-500/20 border border-red-400/50 rounded-lg">
+                    <p className="text-red-400 text-sm">{submitError}</p>
+                  </div>
+                )}
                 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>

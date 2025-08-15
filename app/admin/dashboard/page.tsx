@@ -128,6 +128,88 @@ export default function AdminDashboard() {
           </div>
         )}
       </AdminGlassCard>
+
+      <div className="mb-8">
+        <ContactStatsSection />
+      </div>
     </BlogContainer>
   );
-} 
+}
+
+// Contact Stats Section Component
+const ContactStatsSection = () => {
+  const { data: contactData } = useSWR('/contacts?limit=5', fetcher);
+  const contacts = contactData?.data?.contacts || [];
+  const stats = contactData?.data?.stats;
+
+  return (
+    <AdminGlassCard>
+      <div className="flex flex-row items-center justify-between mb-6">
+        <BlogTypography variant="h2" className="mb-0">
+          Recent Contacts ({stats?.total || 0})
+        </BlogTypography>
+        <Link href="/admin/contacts">
+          <Button className="bg-purple-600 hover:bg-purple-700 text-white">
+            Manage Contacts
+          </Button>
+        </Link>
+      </div>
+
+      {stats && (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div className="text-center">
+            <div className="text-lg font-bold text-blue-400">{stats.newCount}</div>
+            <div className="text-xs text-white/70">New</div>
+          </div>
+          <div className="text-center">
+            <div className="text-lg font-bold text-yellow-400">{stats.inProgressCount}</div>
+            <div className="text-xs text-white/70">In Progress</div>
+          </div>
+          <div className="text-center">
+            <div className="text-lg font-bold text-red-400">{stats.urgentCount}</div>
+            <div className="text-xs text-white/70">Urgent</div>
+          </div>
+          <div className="text-center">
+            <div className="text-lg font-bold text-purple-400">{stats.assessmentFormCount}</div>
+            <div className="text-xs text-white/70">Assessments</div>
+          </div>
+        </div>
+      )}
+
+      {contacts.length > 0 ? (
+        <div className="space-y-3">
+          {contacts.map((contact: any) => (
+            <div key={contact._id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+              <div>
+                <div className="font-medium text-white">{contact.name}</div>
+                <div className="text-sm text-white/70">{contact.email}</div>
+                {contact.company && (
+                  <div className="text-xs text-white/60">{contact.company}</div>
+                )}
+              </div>
+              <div className="text-right">
+                <div className={`text-xs px-2 py-1 rounded-full ${
+                  contact.status === 'new' ? 'bg-blue-500/20 text-blue-400' :
+                  contact.status === 'in-progress' ? 'bg-yellow-500/20 text-yellow-400' :
+                  contact.status === 'resolved' ? 'bg-green-500/20 text-green-400' :
+                  'bg-gray-500/20 text-gray-400'
+                }`}>
+                  {contact.status}
+                </div>
+                <div className="text-xs text-white/60 mt-1">
+                  {new Date(contact.createdAt).toLocaleDateString()}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-8">
+          <BlogTypography variant="body" className="text-white/60 mb-0">
+            No contact submissions yet.
+          </BlogTypography>
+        </div>
+      )}
+    </AdminGlassCard>
+  );
+}; 

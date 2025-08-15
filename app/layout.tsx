@@ -60,7 +60,16 @@ export default function RootLayout({
               {/* Footer */}
               <Footer />
             </div>
-            <Toaster position="bottom-right" />
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                style: {
+                  background: 'rgba(0, 0, 0, 0.8)',
+                  color: '#fff',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                },
+              }}
+            />
             <AuthTestingSuite />
           </ClientLayout>
           </WarmingProvider>
