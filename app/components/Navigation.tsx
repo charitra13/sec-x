@@ -79,9 +79,10 @@ export default function Navigation() {
             <Link href="/blog" className="text-white/60 hover:text-white transition-colors">
               Blog
             </Link>
-            <Link href="/publications" className="text-white/60 hover:text-white transition-colors">
+            {/* Publications link removed from navigation - page still accessible via direct URL */}
+            {/* <Link href="/publications" className="text-white/60 hover:text-white transition-colors">
               Publications
-            </Link>
+            </Link> */}
             {!loading && (
               <div className="flex items-center space-x-4">
                 <Link 
@@ -156,13 +157,14 @@ export default function Navigation() {
           >
             Blog
           </Link>
-          <Link 
+          {/* Publications link removed from mobile navigation - page still accessible via direct URL */}
+          {/* <Link 
             href="/publications" 
             className="text-xl font-medium text-white/90 hover:text-white transition-all duration-200 px-6 py-3 rounded-lg hover:bg-white/10"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Publications
-          </Link>
+          </Link> */}
         </div>
         <div className="flex flex-col items-center space-y-4 mt-8 pb-8">
           <Link

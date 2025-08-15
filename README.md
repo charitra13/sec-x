@@ -4,6 +4,12 @@ Comprehensive security solutions designed to protect, detect, and respond to cyb
 
 ## Version History
 
+### v1.35.1 - Navigation Publications Button Removal PATCH
+- Removed Publications button from both desktop and mobile navigation menus
+- Publications page remains fully accessible via direct URL navigation (/publications)
+- Maintained all existing Publications page functionality and code structure
+- Added clear code comments indicating the intentional removal for future reference
+
 ### v1.35.0 - Contact Form Integration & Management System MINOR
 - Implemented complete contact form API integration replacing simulated submissions with real backend calls
 - Added comprehensive contact management system at `/admin/contacts` with filtering, searching, pagination, and status/priority management
